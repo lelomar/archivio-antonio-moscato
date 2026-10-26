@@ -94,7 +94,7 @@ document.addEventListener('click',function(e){var t=e.target.closest('[data-tema
  else if(t.hasAttribute('data-y')){var y=t.getAttribute('data-y');if(st.y1==y&&st.y2==y){st.y1='';st.y2=''}else{st.y1=y;st.y2=y}}
  else{var r=t.getAttribute('data-rm');if(r=='q'){st.q='';$('q').value=''}else if(r=='y'){st.y1='';st.y2=''}else{var p=r.split(':'),f=p.shift(),v=p.join(':');st[f].splice(st[f].indexOf(v),1)}}
  st.p=1;run()});
-function fromHash(){readHash();$('q').value=st.q;document.querySelector('input[name=dove][value='+(st.dove=='tit'?'tit':'all')+']').checked=true;$('ord').value=st.ord;run()}
+function fromHash(){readHash();if(!location.hash.slice(1)&&location.search){var m=/[?&]q=([^&]*)/.exec(location.search);if(m)st.q=decodeURIComponent(m[1].replace(/\+/g,' '))}$('q').value=st.q;document.querySelector('input[name=dove][value='+(st.dove=='tit'?'tit':'all')+']').checked=true;$('ord').value=st.ord;run()}
 window.addEventListener('hashchange',function(){if(skip){skip=false;return}fromHash()});
 fromHash();
 })();

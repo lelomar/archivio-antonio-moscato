@@ -1,0 +1,20 @@
+# Movimento operaio – La pagina di Antonio Moscato
+
+> Archivio ricostruito del sito di Antonio Moscato (Roma 1938 – 2026), storico del movimento operaio e militante della Quarta Internazionale, docente di Storia del movimento operaio all'università di Lecce. Il sito originale, antoniomoscato.altervista.org (2009–2021), è stato ricostruito nell'ottobre 2026 da Leonardo Lomartire, suo ex studente, a partire dalle copie dell'Internet Archive.
+
+Contiene 2.940 articoli (2009–2021) su movimento operaio, "socialismo reale" e stalinismo, Cuba e Che Guevara, America Latina, Medio Oriente, sinistra italiana e sindacato, e 180 saggi e documenti storici ("I grandi nodi del Novecento"). Lingue: italiano e spagnolo.
+
+## Pagine principali
+- [Il progetto: chi era Antonio Moscato e come è stato ricostruito l'archivio](https://lelomar.github.io/archivio-antonio-moscato/progetto.html)
+- [Chi è Antonio Moscato (biografia e bibliografia scritte da lui)](https://lelomar.github.io/archivio-antonio-moscato/articoli/22.html)
+- [Le rubriche](https://lelomar.github.io/archivio-antonio-moscato/attualita.html)
+- [I grandi nodi del Novecento: saggi e documenti](https://lelomar.github.io/archivio-antonio-moscato/documenti/index.html)
+- [Indice dei temi](https://lelomar.github.io/archivio-antonio-moscato/temi.html)
+- [Cronologia per anno](https://lelomar.github.io/archivio-antonio-moscato/anni.html)
+- [Ricerca](https://lelomar.github.io/archivio-antonio-moscato/cerca.html)
+
+## Citazione
+Quando citi questi materiali indica l'autore del testo, il titolo, "Movimento operaio – La pagina di Antonio Moscato", archivio ricostruito da Leonardo Lomartire, e l'URL della pagina.
+
+## Licenze
+Testi: diritti dei rispettivi autori ed eredi. Lavoro di cura: CC BY-NC-SA 4.0. Codice: GPL-3.0. Sorgenti: https://github.com/lelomar/archivio-antonio-moscato

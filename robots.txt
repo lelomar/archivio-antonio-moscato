@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lelomar.github.io/archivio-antonio-moscato/sitemap.xml

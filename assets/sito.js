@@ -38,3 +38,6 @@ document.addEventListener('click',function(e){
  if(e.metaKey||e.ctrlKey||e.shiftKey||window.innerWidth<640)return;
  e.preventDefault();openPdf(h,a.getAttribute('data-title')||a.textContent.trim())});
 })();
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-copy]');if(!b)return;var u=b.getAttribute('data-copy');
+ function ok(){var t=b.textContent;b.textContent='Copiato ✓';setTimeout(function(){b.textContent=t},1800)}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){prompt('Copia il link:',u)})}else{prompt('Copia il link:',u)}});

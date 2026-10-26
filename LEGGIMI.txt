@@ -1,0 +1,18 @@
+MOVIMENTO OPERAIO - LA PAGINA DI ANTONIO MOSCATO
+Ricostruzione statica del sito antoniomoscato.altervista.org (2009-2021)
+
+Per consultarlo: apri il file index.html con un qualsiasi browser.
+Non serve internet né alcun server: si può copiare l'intera cartella
+SITO_MOSCATO su una chiavetta e aprirla su qualunque computer.
+
+Contenuto
+- articoli/     2940 articoli, uno per pagina
+- categorie/    le rubriche di "Attualità e polemiche"
+- anni/         la cronologia per anno e mese
+- documenti/    "I grandi nodi del Novecento": saggi e materiali in PDF, DOC, RTF
+- temi/         771 temi ricorrenti (persone, paesi, partiti, questioni)
+- cerca.html    ricerca a testo pieno con filtri per rubrica, periodo, tema e lingua
+                (funziona offline; la prima ricerca carica l'indice, qualche secondo)
+
+I link con il simbolo ↗ portano a siti esterni o a pagine che l'Internet
+Archive non aveva salvato: richiedono una connessione.

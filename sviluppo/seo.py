@@ -2,7 +2,7 @@
 import os,re,json,html,datetime,urllib.parse
 BASE='https://lelomar.github.io/archivio-antonio-moscato/'
 SITE='Movimento operaio – La pagina di Antonio Moscato'
-DEFDESC='Archivio ricostruito del sito di Antonio Moscato (1938–2026), storico del movimento operaio: 2.940 articoli e 180 saggi dal 2009 al 2021, con ricerca a testo pieno. Consultabile anche offline.'
+DEFDESC='Archivio ricostruito del sito di Antonio Moscato (1938–2026), storico del movimento operaio: 2.928 articoli e 180 saggi dal 2009 al 2021, con ricerca a testo pieno. Consultabile anche offline.'
 MOSCATO={"@type":"Person","@id":BASE+"#antonio-moscato","name":"Antonio Moscato","birthDate":"1938","birthPlace":"Roma","deathDate":"2026-10-24","jobTitle":"Storico del movimento operaio","affiliation":{"@type":"CollegeOrUniversity","name":"Università di Lecce"},"sameAs":["https://it.wikipedia.org/wiki/Antonio_Moscato"]}
 LL={"@type":"Person","@id":BASE+"#leonardo-lomartire","name":"Leonardo Lomartire","url":"https://lelomar.substack.com"}
 def clean(t,n=158):
@@ -21,6 +21,7 @@ def run(OUT,arts_info,today=None):
             if not f.endswith('.html'): continue
             p=os.path.join(dp,f); rel=os.path.relpath(p,OUT).replace(os.sep,'/')
             s=open(p,encoding='utf-8').read()
+            if 'name="robots" content="noindex"' in s: continue
             if 'property="og:title"' in s: s=re.sub(r'\n?<!--seo-->.*?<!--/seo-->','',s,flags=re.S); s=re.sub(r'<div class="share">.*?</div>','',s,flags=re.S)
             url=BASE+('' if rel=='index.html' else rel); urls.append((url,rel))
             pre='../'*rel.count('/')
@@ -37,7 +38,7 @@ def run(OUT,arts_info,today=None):
             if rel.startswith('anni/') and mm: desc=f"Tutti i {mm.group(1)} testi pubblicati nel {short} sul sito di Antonio Moscato, storico del movimento operaio, mese per mese."
             if rel=='progetto.html':
                 short='Sono rimasto seduto. L’archivio ritrovato di Antonio Moscato'
-                desc='Antonio Moscato (1938–2026), storico del movimento operaio, è stato il mio professore. Alla sua morte il suo sito era sparito: l’ho ricostruito. 2.940 articoli e 180 saggi, liberi e consultabili anche offline.' 
+                desc='Antonio Moscato (1938–2026), storico del movimento operaio, è stato il mio professore. Alla sua morte il suo sito era sparito: l’ho ricostruito. 2.928 articoli e 180 saggi, liberi e consultabili anche offline.' 
             if not desc or len(desc)<40: desc=f'{short}. {DEFDESC}'[:300]
             img=BASE+'assets/'+('og-progetto.png' if rel=='progetto.html' else 'og-archivio.png')
             otype='article' if rel.startswith(('articoli/','documenti/testo/')) or rel=='progetto.html' else 'website'
@@ -83,7 +84,7 @@ def run(OUT,arts_info,today=None):
 
 > Archivio ricostruito del sito di Antonio Moscato (Roma 1938 – 2026), storico del movimento operaio e militante della Quarta Internazionale, docente di Storia del movimento operaio all'università di Lecce. Il sito originale, antoniomoscato.altervista.org (2009–2021), è stato ricostruito nell'ottobre 2026 da Leonardo Lomartire, suo ex studente, a partire dalle copie dell'Internet Archive.
 
-Contiene 2.940 articoli (2009–2021) su movimento operaio, "socialismo reale" e stalinismo, Cuba e Che Guevara, America Latina, Medio Oriente, sinistra italiana e sindacato, e 180 saggi e documenti storici ("I grandi nodi del Novecento"). Lingue: italiano e spagnolo.
+Contiene 2.928 articoli (2009–2021) su movimento operaio, "socialismo reale" e stalinismo, Cuba e Che Guevara, America Latina, Medio Oriente, sinistra italiana e sindacato, e 180 saggi e documenti storici ("I grandi nodi del Novecento"). Lingue: italiano e spagnolo.
 
 ## Pagine principali
 - [Il progetto: chi era Antonio Moscato e come è stato ricostruito l'archivio]({BASE}progetto.html)

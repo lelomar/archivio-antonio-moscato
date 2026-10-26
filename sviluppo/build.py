@@ -1,4 +1,3 @@
-# Archivio Antonio Moscato – prima versione di Leonardo Lomartire (2026) – GPL-3.0 con attribuzione, vedi LICENZA.md
 import os,re,json,sys,urllib.parse,html,unicodedata,shutil,collections,hashlib
 from bs4 import BeautifulSoup, Comment
 WORK=os.environ.get('MOSCATO_WORK',os.path.dirname(os.path.abspath(__file__)) if '__file__' in globals() else '.')
@@ -75,6 +74,7 @@ def local_asset(path):
         if not os.path.exists(dst): shutil.copyfile(full,dst)
         return 'assets/img/'+name
     return None
+ART_REDIR={}
 SITE=re.compile(r'^(https?:)?//(www\.)?antoniomoscato\.altervista\.org(:80)?',re.I)
 def rewrite(href,pre):
     if not href: return href,False
@@ -90,7 +90,7 @@ def rewrite(href,pre):
     opt=q.get('option',[''])[0]; view=q.get('view',[''])[0]; task=q.get('task',[''])[0]
     absu='http://antoniomoscato.altervista.org'+(path if path.startswith('/') else '/'+path)
     if opt=='com_content' and view=='article':
-        i=num(q.get('id',[''])[0])
+        i=num(q.get('id',[''])[0]); i=ART_REDIR.get(i,i)
         if i in A: return pre+f'articoli/{i}.html',True
         return WB+absu,False
     if opt=='com_content' and view=='category':
@@ -124,7 +124,7 @@ def clean(html_s,pre):
     for t in body.select('.addthis_toolbox, .addthis_button, .sharedaddy, .jp-relatedposts, .pagenav, .wp-block-buttons'): t.decompose()
     for t in body.find_all('a'):
         hh=t.get('href') or ''
-        if t.get_text(strip=True) in ('Tweet','Condividi') or 'twitter.com/share' in hh or 'facebook.com/sharer' in hh or 'addthis.com' in hh: t.decompose()
+        if t.get_text(strip=True) in ('Tweet','Condividi','More Sharing Services','^') or t.get_text(strip=True).startswith('Share on ') or 'haut de la page' in (t.get('title') or '') or 'twitter.com/share' in hh or 'facebook.com/sharer' in hh or 'addthis.com' in hh: t.decompose()
     for t in body.find_all(['iframe','embed','object']):
         src=t.get('src') or t.get('data') or ''
         if re.search(r'facebook\.com/plugins|platform\.twitter|addthis|plusone|altervista',src): t.decompose(); continue
@@ -151,10 +151,13 @@ def clean(html_s,pre):
         elif t.name=='img':
             src=t.get('src','')
             h,ok=rewrite(src,pre)
+            if not t.get('alt'): t['alt']=''
             if ok and h and 'assets/img/' in h: t['src']=h; t['loading']='lazy'
             elif src.startswith(('http','//')) and not SITE.match(src): t['loading']='lazy'
             else: t.decompose()
     out=body.decode_contents() if body.name in ('body','html','[document]') else str(body)
+    out=re.sub(r'/\*\s*Style Definitions\s*\*/.*?\}','',out,flags=re.S)
+    out=re.sub(r'(Share on \w+\s*)+(More Sharing Services)?\s*\^?','',out)
     out=re.sub(r'(?:<p>\s*(?:(?:&nbsp;|<br/?>)\s*)*</p>\s*){2,}','<p></p>',out)
     return out
 NAV=[('index.html','Home'),('attualita.html','Attualità e polemiche'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Per anno'),('cerca.html','Cerca')]

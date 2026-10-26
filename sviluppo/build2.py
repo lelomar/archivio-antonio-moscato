@@ -3,6 +3,12 @@ WORK=os.environ.get('MOSCATO_WORK',os.path.dirname(os.path.abspath(__file__)))
 _src=open(os.path.join(WORK,'build.py')).read()
 exec(compile(_src[:_src.index('def li(')],'build_base','exec'))
 from bs4 import BeautifulSoup
+# pagine di servizio del vecchio sito e articoli pubblicati due volte
+DROP_ART={67:'index.html',273:'index.html',272:'index.html',25:'index.html',235:'cerca.html',119:'index.html'}
+DUP_ART={1946:1947,2033:2034,2040:2041,2264:2263,2020:2021,2279:2280}
+ART_REDIR.update(DUP_ART)
+arts=[a for a in arts if a['id'] not in DROP_ART and a['id'] not in DUP_ART]
+A={a['id']:a for a in arts}
 def slugify(t):
     t=unicodedata.normalize('NFKD',t.lower()); t=''.join(c for c in t if not unicodedata.combining(c))
     return re.sub(r'[^a-z0-9]+','-',t).strip('-')[:60] or 'x'
@@ -92,13 +98,13 @@ for a in arts:
     a['rel']=[i for i,_ in sc.most_common(6) if _>1.0][:6]
 print('prep ok',N,'kw',len(kwcount),'es',sum(1 for a in arts if a['lang']=='es'),flush=True)
 NAV=[('index.html','Home'),('attualita.html','Rubriche'),('temi.html','Temi'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Cronologia'),('accadde-oggi.html','Accadde oggi'),('cerca.html','Ricerca')]
-def page(title,content,pre,active='',body_cls=''):
-    nav=''.join(f'<a href="{pre}{h}"{" class=on" if h==active else ""}>{esc(t)}</a>' for h,t in NAV)
-    return f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+def page(title,content,pre,active='',body_cls='',lang='it'):
+    nav=''.join(f'<a href="{pre}{h}"{" class=on aria-current=page" if h==active else ""}>{esc(t)}</a>' for h,t in NAV)
+    return f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)} · Movimento operaio – La pagina di Antonio Moscato</title><link rel="stylesheet" href="{pre}assets/stile.css"><script src="{pre}assets/sito.js"></script></head>
-<body class="{body_cls}" data-pre="{pre}"><div id="prog"></div><div class="credit"><div class="wrap"><a href="{pre}progetto.html">Il progetto di recupero</a> a cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire · lelomar.substack.com</a></div></div><header class="top"><div class="wrap bar"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">La pagina di Antonio Moscato</span></a>
-<form class="mini" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca nell’archivio…" aria-label="Cerca"><button aria-label="Cerca">⌕</button></form></div>
-<div class="wrap"><nav class="mainnav">{nav}</nav></div></header><main class="wrap">{content}</main>
+<body class="{body_cls}" data-pre="{pre}"><a class="skip" href="#contenuto">Salta al contenuto</a><div id="prog" aria-hidden="true"></div><div class="credit"><div class="wrap"><a href="{pre}progetto.html">Il progetto di recupero</a> a cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire · lelomar.substack.com</a></div></div><header class="top"><div class="wrap bar"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">La pagina di Antonio Moscato</span></a>
+<form class="mini" role="search" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca nell’archivio…" aria-label="Cerca"><button aria-label="Cerca">⌕</button></form></div>
+<div class="wrap"><nav class="mainnav" aria-label="Menu principale">{nav}</nav></div></header><main class="wrap" id="contenuto" tabindex="-1">{content}</main>
 <footer class="foot"><div class="wrap"><p><b>Movimento operaio – La pagina di Antonio Moscato</b>. Ricostruzione statica, consultabile offline, del sito <em>antoniomoscato.altervista.org</em> (2009–2021), ricavata dalle copie conservate dall’Internet Archive. Codice libero (GPL-3.0) su <a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">GitHub</a>. Recupero, ricostruzione e cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire</a>.</p><p>I link segnati con ↗ portano a siti esterni o a pagine non recuperate e richiedono una connessione.</p></div></footer>
 </body></html>'''
 def chips(ks,pre,n=8):
@@ -131,7 +137,7 @@ for a in arts:
     same=''.join(f'<li><a href="{b["id"]}.html">{esc(b["title"])}</a><time>{hdate(b["date"])}</time></li>' for b in lst[max(0,i-2):i+3] if b is not a)
     yr=a['date'][:4]
     aside=f'''<aside class="side"><div class="box"><h4>Questo testo</h4><p><a href="../categorie/c{a['catid']}.html">{esc(catname(a['catid']))}</a><br>{hdate(a['date'])}{f' · <a href="../anni/{yr}.html">tutto il {yr}</a>' if yr else ''}<br>{rtime(a['words'])}</p>
-<div class="tools"><button onclick="fs(-1)" title="Testo più piccolo">A−</button><button onclick="fs(1)" title="Testo più grande">A+</button><button onclick="window.print()" title="Stampa">Stampa</button></div></div>
+<div class="tools"><button type="button" onclick="fs(-1)" title="Testo più piccolo" aria-label="Riduci il testo">A−</button><button type="button" onclick="fs(1)" title="Testo più grande" aria-label="Ingrandisci il testo">A+</button><button type="button" onclick="window.print()">Stampa</button></div></div>
 {f'<div class="box"><h4>Temi</h4><div class="chips">{chips(a["kws"],pre,14)}</div></div>' if a['kws'] else ''}
 {f'<div class="box"><h4>Testi correlati</h4><ul class="mini-list">{rel}</ul></div>' if rel else ''}
 <div class="box"><h4>Nella stessa rubrica</h4><ul class="mini-list">{same}</ul></div></aside>'''
@@ -139,7 +145,7 @@ for a in arts:
 <p class="meta"><time>{hdate(a["date"])}</time> · {rtime(a['words'])}{' · testo in spagnolo' if a['lang']=='es' else ''}</p>
 <div class="testo" id="testo">{a['body']}</div><p class="orig"><a href="{orig}" target="_blank" rel="noopener">Pagina originale sulla Wayback Machine ↗</a></p>
 <nav class="pnav">{pn}</nav></article>{aside}</div>'''
-    open(os.path.join(OUT,'articoli',f'{a["id"]}.html'),'w').write(page(a['title'],content,pre,'','pg-art'))
+    open(os.path.join(OUT,'articoli',f'{a["id"]}.html'),'w').write(page(a['title'],content,pre,'','pg-art',a['lang']))
 print('articles written',flush=True)
 cat_order=[c for c in SEC_CATS if c in bycat]+[-1]+[c for c in bycat if c not in SEC_CATS and c!=-1]
 CATDESC={28:'I commenti scritti a ridosso degli avvenimenti: la cronaca politica italiana e internazionale letta da sinistra.',20:'Le omissioni, i doppi standard e le rimozioni della politica e dell’informazione.',57:'Guerre, interventi e rivalità tra potenze.',6:'Il bilancio storico dell’URSS e dei paesi del “socialismo reale”, e le nostalgie che ha lasciato.',7:'Israele, Palestina, le rivolte arabe e la regione.',8:'Cuba, il Venezuela, il Brasile e le sinistre latinoamericane.',32:'Note ed editoriali in spagnolo, soprattutto di Guillermo Almeyra.',52:'Le newsletter inviate agli iscritti.',-1:'I testi dell’ultima fase del sito, sulla piattaforma WordPress.'}
@@ -160,8 +166,8 @@ for a in arts: years[a['date'][:4] or 's.d.'].append(a)
 ys=sorted([y for y in years if y!='s.d.' and '2009'<=y<='2021'])
 mx=max(len(years[y]) for y in ys)
 def histo(pre='',big=False):
-    bars=''.join(f'<a class="hb" href="{pre}anni/{y}.html" title="{y}: {len(years[y])} testi"><span style="height:{max(3,round(100*len(years[y])/mx))}%"></span><small>{y[2:] if not big else y}</small></a>' for y in ys)
-    return f'<div class="histo{" big" if big else ""}">{bars}</div>'
+    bars=''.join(f'<a class="hb" href="{pre}anni/{y}.html" title="{y}: {len(years[y])} testi" aria-label="{y}: {len(years[y])} testi"><span style="height:{max(3,round(100*len(years[y])/mx))}%"></span><small>{y[2:] if not big else y}</small></a>' for y in ys)
+    return f'<div class="histo{" big" if big else ""}" role="group" aria-label="Testi pubblicati per anno">{bars}</div>'
 open(os.path.join(OUT,'anni.html'),'w').write(page('Cronologia',f'<header class="phead"><h1>Cronologia</h1><p class="lead">Tutti i testi anno per anno. Clicca su una colonna per aprire l’anno.</p></header>{histo("",True)}<div class="ycards">'+''.join(f'<a class="ycard" href="anni/{y}.html"><b>{y}</b><span>{len(years[y])} testi</span></a>' for y in sorted(years,reverse=True))+'</div>','','anni.html'))
 for y,l in years.items():
     l.sort(key=sortkey,reverse=True)
@@ -247,9 +253,9 @@ for g,d in docs.items():
 <p class="meta">{esc(dmname(c))}{' · pubblicato il '+hdate(d['iso']) if d.get('iso') else ''} · {rtime(d['words'])}</p>{f'<div class="lead">{ds}</div>' if ds else ''}
 <p class="dlbar">{f'<a class="btn" href="../../{d["out"]}" data-title="{esc(t)}">Sfoglia il PDF originale</a><a class="btn alt" href="../../{d["out"]}" download>Scarica ({fsize(d["size"])})</a>' if ext=='PDF' else f'<a class="btn" href="../../{d["out"]}" download>Scarica il file originale ({ext}, {fsize(d["size"])})</a>'}</p>{note}
 <div class="testo doctext" id="testo">{BeautifulSoup('<div>'+(d.get('_body') or '')+'</div>','lxml').div.decode_contents() if False else ''}</div></article>
-<aside class="side"><div class="box"><h4>Questo documento</h4><p>{esc(dmname(c))}<br>{ext} · {fsize(d['size'])}<br>{rtime(d['words'])}</p><div class="tools"><button onclick="fs(-1)">A−</button><button onclick="fs(1)">A+</button><button onclick="window.print()">Stampa</button></div></div>
+<aside class="side"><div class="box"><h4>Questo documento</h4><p>{esc(dmname(c))}<br>{ext} · {fsize(d['size'])}<br>{rtime(d['words'])}</p><div class="tools"><button type="button" onclick="fs(-1)" aria-label="Riduci il testo">A−</button><button type="button" onclick="fs(1)" aria-label="Ingrandisci il testo">A+</button><button type="button" onclick="window.print()">Stampa</button></div></div>
 <div class="box"><h4>Nella stessa sezione</h4><ul class="mini-list">{''.join(f'<li><a href="{dlink(gg,x)}">{esc(x.get("title") or "")}</a></li>' for gg,x in sorted(docs_by_cat.get(c,[]),key=lambda z:(z[1].get("title") or "").lower()) if gg!=g)}</ul></div></aside></div>"""
-    open(os.path.join(OUT,'documenti','testo',f'{g}.html'),'w').write(page(t,content.replace('<div class="testo doctext" id="testo"></div>','<div class="testo doctext" id="testo">'+d['_body']+'</div>'),'../../','documenti/index.html','pg-art'))
+    open(os.path.join(OUT,'documenti','testo',f'{g}.html'),'w').write(page(t,content.replace('<div class="testo doctext" id="testo"></div>','<div class="testo doctext" id="testo">'+d['_body']+'</div>'),'../../','documenti/index.html','pg-art',d.get('lang','it')))
 for g,d in docs.items():
     dtxt=BeautifulSoup(d.get('ldesc') or '','lxml').get_text(' ').strip()
     href=d.get('page') or d.get('out') or f'documenti/cat{d.get("cat",0)}.html#d{g}'
@@ -297,11 +303,11 @@ home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {len
 <h2 class="sec">Gli ultimi testi</h2><article class="leadart"><div class="em"><time>{hdate(lead['date'])}</time> <a class="rb" href="categorie/c{lead['catid']}.html">{esc(catname(lead['catid']))}</a></div><h3><a href="articoli/{lead['id']}.html">{esc(lead['title'])}</a></h3><p class="exc">{esc(lead['exc'])}</p></article><ul class="entries">{featured}</ul>
 <script src="assets/meta.js"></script><script src="assets/oggi.js"></script>'''
 open(os.path.join(OUT,'index.html'),'w').write(page('Home',home,'','index.html','pg-home'))
-search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto il testo dei 2.940 articoli e tra i documenti. Restringi con i filtri a sinistra; i risultati si aggiornano mentre scrivi.</p></header>
+search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto il testo dei 2.928 articoli e tra i documenti. Restringi con i filtri a sinistra; i risultati si aggiornano mentre scrivi.</p></header>
 <form class="bigsearch" onsubmit="S.run();return false"><input id="q" type="search" placeholder="Parole o “frase esatta”…" autocomplete="off" aria-label="Testo da cercare"><button>Cerca</button></form>
 <div class="sopts"><label><input type="radio" name="dove" value="all" checked> in tutto il testo</label><label><input type="radio" name="dove" value="tit"> solo nei titoli e temi</label>
 <span class="sp"></span><label>Ordina per <select id="ord"><option value="rel">pertinenza</option><option value="new">più recenti</option><option value="old">meno recenti</option></select></label></div>
-<p id="status" class="hint"></p>
+<p id="status" class="hint" role="status" aria-live="polite"></p>
 <div class="sgrid"><aside class="facets" id="facets">
 <div class="box"><h4>Periodo</h4><div class="yrange"><select id="y1"></select><span>–</span><select id="y2"></select></div><div id="fhist" class="histo small"></div></div>
 <div class="box"><h4>Rubriche</h4><div id="fcat"></div></div>
@@ -352,6 +358,8 @@ _mhtml=f"""<h2 id="mancanti">L’elenco dei documenti da ritrovare</h2>
 <p>Chi ne ha una copia può scrivermi a <a href="mailto:lelomar@gmail.com">lelomar@gmail.com</a> o attraverso <a href="https://lelomar.substack.com" target="_blank" rel="noopener">lelomar.substack.com</a>, indicando il titolo. Ogni documento ha anche una scheda pubblica sulla lavagna <a href="https://github.com/users/lelomar/projects/2" target="_blank" rel="noopener">Caccia ai documenti di Antonio Moscato</a>: lì si può commentare, segnalare di averlo o allegare direttamente il file, e seguire a che punto è la ricerca.</p>"""
 _pt=_pt.replace('<!--MANCANTI-->',_mhtml)
 open(os.path.join(OUT,'progetto.html'),'w').write(page('Sono rimasto seduto. L’archivio ritrovato di Antonio Moscato',f'<div class="artgrid"><article class="art progetto"><p class="crumb">Il progetto</p><h1>Sono rimasto seduto</h1><p class="meta">Perché esiste questa copia del sito di Antonio Moscato, come è stata fatta, cosa manca</p><div class="testo" id="testo">{_pt}</div></article><aside class="side"><div class="box"><h4>In breve</h4><p>Antonio Moscato (Roma 1938 – 2026)<br>Sito originale: 2009–2021<br>{len(arts)} articoli · {nrec} documenti su {len(docs)}<br>Ricostruito nell’ottobre 2026</p></div><div class="box"><h4>Per cominciare</h4><ul class="mini-list"><li><a href="articoli/22.html">Chi è Antonio Moscato</a></li><li><a href="documenti/index.html">I grandi nodi del Novecento</a></li><li><a href="attualita.html">Le rubriche</a></li><li><a href="cerca.html">La ricerca</a></li><li><a href="#mancanti">I documenti da ritrovare</a></li><li><a href="#tecnica">Codice e licenze</a></li></ul></div><div class="box"><h4>Codice aperto</h4><p><a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">github.com/lelomar/archivio-antonio-moscato</a><br>Codice GPL-3.0 · cura CC BY-NC-SA 4.0</p></div><div class="box"><h4>Copia di sicurezza</h4><p><a href="https://archive.org/details/archivio-antonio-moscato" target="_blank" rel="noopener">Internet Archive</a><br>archivio completo in ZIP, da scaricare e conservare<br><a href="https://doi.org/10.5281/zenodo.23670900" target="_blank" rel="noopener">DOI 10.5281/zenodo.23670900</a> · Zenodo</p></div></aside></div>','','','pg-art'))
+for _i,_t in list(DROP_ART.items())+[(k,f'articoli/{v}.html') for k,v in DUP_ART.items()]:
+    open(os.path.join(OUT,'articoli',f'{_i}.html'),'w').write(f'<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=../{_t}"><link rel="canonical" href="../{_t}"><title>Pagina spostata</title></head><body><p>Questa pagina è stata spostata: <a href="../{_t}">vai alla pagina</a>.</p></body></html>')
 import subprocess as _sp, importlib.util as _iu
 _sp.run([sys.executable,os.path.join(WORK,'og.py'),OUT],check=False)
 _spec=_iu.spec_from_file_location('seo',os.path.join(WORK,'seo.py')); _seo=_iu.module_from_spec(_spec); _spec.loader.exec_module(_seo)

@@ -11,7 +11,7 @@ di Antonio Moscato, per decenni docente di Storia del movimento operaio all'univ
 Dopo la sua chiusura è stato ricostruito nell'ottobre 2026, a partire dalle copie conservate
 dall'Internet Archive, come archivio statico che funziona **senza server e senza internet**.
 
-- 2.940 articoli (2009–2021), divisi nelle rubriche originali
+- 2.928 articoli (2009–2021), divisi nelle rubriche originali
 - 180 dei 247 documenti di *I grandi nodi del Novecento*, con pagine di lettura nel browser
 - ricerca a testo pieno su articoli e documenti, con filtri per rubrica, periodo, tema e lingua
 - 732 temi ricavati dalle parole chiave originali, cronologia anno per anno

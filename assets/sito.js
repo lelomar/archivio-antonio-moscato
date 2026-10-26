@@ -24,7 +24,7 @@ function close(){if(!box)return;box.remove();box=null;document.documentElement.c
 function openPdf(href,title){
  last=document.activeElement;close();
  var name=decodeURIComponent(href.split('/').pop().split('#')[0]);
- box=document.createElement('div');box.className='pdfmodal';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');
+ box=document.createElement('div');box.className='pdfmodal';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Documento PDF: '+(title||name));
  box.innerHTML='<div class="pm-back"></div><div class="pm-win"><div class="pm-bar"><span class="pm-t">'+esc(title||name)+'</span>'+
   '<a class="pm-b" href="'+esc(href)+'" download="'+esc(name)+'">Scarica</a><a class="pm-b" href="'+esc(href)+'" target="_blank" rel="noopener">Nuova scheda</a>'+
   '<button class="pm-x" aria-label="Chiudi">✕</button></div><iframe class="pm-f" src="'+esc(href)+'#view=FitH" title="'+esc(title||name)+'"></iframe></div>';

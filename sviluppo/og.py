@@ -40,7 +40,7 @@ spaced(d,(80*S,86*S),'ARCHIVIO RITROVATO · 2009–2021',f(L+'Lato-Black.ttf',19
 d.text((76*S,128*S),'Movimento',font=f(F+'P052-Bold.otf',96*S),fill=CREAM)
 d.text((76*S,232*S),'operaio',font=f(F+'P052-Bold.otf',96*S),fill=CREAM)
 d.text((80*S,352*S),'La pagina di Antonio Moscato',font=f(F+'P052-Italic.otf',42*S),fill=CREAM)
-d.text((80*S,432*S),'2.940 articoli · 180 saggi e documenti',font=f(L+'Lato-Bold.ttf',25*S),fill=CREAM)
+d.text((80*S,432*S),'2.928 articoli · 180 saggi e documenti',font=f(L+'Lato-Bold.ttf',25*S),fill=CREAM)
 d.text((80*S,468*S),'ricerca a testo pieno · consultabile anche offline',font=f(L+'Lato-Regular.ttf',23*S),fill=CREAM)
 footer(d); save(im,'og-archivio.png')
 # 2. progetto

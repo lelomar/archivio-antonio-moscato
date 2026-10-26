@@ -157,7 +157,7 @@ others=''.join(f'<li><a href="categorie/c{c}.html">{esc(catname(c))}</a> <span c
 open(os.path.join(OUT,'attualita.html'),'w').write(page('Rubriche',f'<header class="phead"><h1>Le rubriche</h1><p class="lead">Articoli, commenti a caldo e polemiche, nelle rubriche in cui il sito era organizzato.</p></header><div class="rgrid">{"".join(rcard(c) for c in main_c)}</div><h2 class="sec">Altre pagine</h2><ul class="plain">{others}</ul>','','attualita.html'))
 years=collections.defaultdict(list)
 for a in arts: years[a['date'][:4] or 's.d.'].append(a)
-ys=sorted([y for y in years if y!='s.d.'])
+ys=sorted([y for y in years if y!='s.d.' and '2009'<=y<='2021'])
 mx=max(len(years[y]) for y in ys)
 def histo(pre='',big=False):
     bars=''.join(f'<a class="hb" href="{pre}anni/{y}.html" title="{y}: {len(years[y])} testi"><span style="height:{max(3,round(100*len(years[y])/mx))}%"></span><small>{y[2:] if not big else y}</small></a>' for y in ys)
@@ -184,9 +184,13 @@ for k in tlist:
     open(os.path.join(OUT,'temi',f'{KWSLUG[k]}.html'),'w').write(page(kwname(k),content,'../','temi.html'))
 top=[k for k,_ in kwcount.most_common(70)]
 mxk=kwcount[top[0]]
-def cloud(pre):
-    ts=sorted(top,key=lambda k:norm(kwname(k)))
-    return '<div class="cloud">'+''.join(f'<a href="{pre}temi/{KWSLUG[k]}.html" style="font-size:{0.85+1.25*math.sqrt(kwcount[k]/mxk):.2f}em" title="{kwcount[k]} testi">{esc(kwname(k))}</a>' for k in ts)+'</div>'
+def cloud(pre,n=70):
+    sel=top[:n]; ts=sorted(sel,key=lambda k:norm(kwname(k)))
+    rank={k:i for i,k in enumerate(sel)}
+    def lvl(k):
+        i=rank[k]/len(sel)
+        return 'c3' if i<.2 else 'c2' if i<.55 else 'c1'
+    return '<div class="cloud">'+''.join(f'<a class="{lvl(k)}" href="{pre}temi/{KWSLUG[k]}.html" title="{kwcount[k]} testi">{esc(kwname(k))}<sup>{kwcount[k]}</sup></a>' for k in ts)+'</div>'
 letters=collections.OrderedDict()
 for k in tlist: letters.setdefault((norm(kwname(k))[:1] or '#').upper(),[]).append(k)
 az='<nav class="jump">'+''.join(f'<a href="#l{L}">{L}</a>' for L in letters)+'</nav>'
@@ -286,7 +290,7 @@ home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {len
 <form class="bigsearch" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca tra articoli e documenti: Togliatti, Grecia, Guevara…" aria-label="Cerca"><button>Cerca</button></form>
 <p class="quick"><a href="progetto.html">Il progetto di recupero</a> · <a href="cerca.html">ricerca avanzata</a> · <a href="#" onclick="return aCaso()">un testo a caso</a></p></section>
 <h2 class="sec">Le rubriche</h2><div class="rgrid">{"".join(rcard(c) for c in main_c[:6])}</div><p class="more-l"><a href="attualita.html">Tutte le rubriche →</a></p>
-<div class="two"><section><h2 class="sec">Temi ricorrenti</h2>{cloud("")}<p class="more-l"><a href="temi.html">Indice completo dei temi →</a></p></section>
+<div class="two"><section><h2 class="sec">Temi ricorrenti</h2>{cloud("",30)}<p class="more-l"><a href="temi.html">Indice completo dei temi →</a></p></section>
 <section><h2 class="sec">Dodici anni di scritti</h2>{histo("")}<p class="hint">Testi pubblicati per anno: clicca una colonna per aprirlo.</p></section></div>
 <section id="oggi" class="oggi"></section>
 <h2 class="sec">I grandi nodi del Novecento</h2><p class="lead">I saggi e i libri esauriti, materia del lavoro di storico del movimento operaio.</p><div class="cards">{nodes}</div><p class="more-l"><a href="documenti/index.html">Tutti i documenti →</a></p>

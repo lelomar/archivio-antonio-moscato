@@ -1,5 +1,7 @@
 # Movimento operaio – La pagina di Antonio Moscato
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23670900.svg)](https://doi.org/10.5281/zenodo.23670900)
+
 **Archivio ricostruito del sito di Antonio Moscato (Roma 1938 – 2026), storico del movimento operaio**
 
 🔗 Consultabile online: **https://lelomar.github.io/archivio-antonio-moscato/**
@@ -13,6 +15,8 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 - 180 dei 247 documenti di *I grandi nodi del Novecento*, con pagine di lettura nel browser
 - ricerca a testo pieno su articoli e documenti, con filtri per rubrica, periodo, tema e lingua
 - 732 temi ricavati dalle parole chiave originali, cronologia anno per anno
+
+🔖 **Citazione permanente:** DOI [10.5281/zenodo.23670900](https://doi.org/10.5281/zenodo.23670900) (Zenodo, CERN) — oppure il pulsante «Cite this repository».
 
 💾 **Copia di sicurezza:** [Internet Archive](https://archive.org/details/archivio-antonio-moscato) — archivio completo in ZIP, da scaricare e conservare.
 

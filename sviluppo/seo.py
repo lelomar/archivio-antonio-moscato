@@ -43,7 +43,7 @@ def run(OUT,arts_info,today=None):
             otype='article' if rel.startswith(('articoli/','documenti/testo/')) or rel=='progetto.html' else 'website'
             ld=[]
             if rel=='index.html':
-                ld=[{"@context":"https://schema.org","@type":"WebSite","@id":BASE+"#site","name":SITE,"alternateName":"Archivio Antonio Moscato","url":BASE,"inLanguage":"it","description":DEFDESC,"about":MOSCATO,"creator":LL,"license":"https://creativecommons.org/licenses/by-nc-sa/4.0/","sameAs":["https://archive.org/details/archivio-antonio-moscato","https://github.com/lelomar/archivio-antonio-moscato"],"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"cerca.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}]
+                ld=[{"@context":"https://schema.org","@type":"WebSite","@id":BASE+"#site","name":SITE,"alternateName":"Archivio Antonio Moscato","url":BASE,"inLanguage":"it","description":DEFDESC,"about":MOSCATO,"creator":LL,"license":"https://creativecommons.org/licenses/by-nc-sa/4.0/","identifier":"https://doi.org/10.5281/zenodo.23670900","sameAs":["https://doi.org/10.5281/zenodo.23670900","https://archive.org/details/archivio-antonio-moscato","https://github.com/lelomar/archivio-antonio-moscato"],"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"cerca.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}]
             elif rel=='progetto.html':
                 ld=[{"@context":"https://schema.org","@type":"Article","headline":short,"description":desc,"url":url,"image":img,"inLanguage":"it","datePublished":"2026-10-26","author":LL,"about":MOSCATO,"isPartOf":{"@id":BASE+"#site"}}]
             elif rel.startswith('articoli/'):
@@ -93,10 +93,11 @@ Contiene 2.940 articoli (2009–2021) su movimento operaio, "socialismo reale" e
 - [Indice dei temi]({BASE}temi.html)
 - [Cronologia per anno]({BASE}anni.html)
 - [Ricerca]({BASE}cerca.html)
+- [DOI permanente (Zenodo)](https://doi.org/10.5281/zenodo.23670900)
 - [Copia completa scaricabile su Internet Archive](https://archive.org/details/archivio-antonio-moscato)
 
 ## Citazione
-Quando citi questi materiali indica l'autore del testo, il titolo, "Movimento operaio – La pagina di Antonio Moscato", archivio ricostruito da Leonardo Lomartire, e l'URL della pagina.
+Per citare l'archivio nel suo insieme: Lomartire, L. (2026). Movimento operaio – La pagina di Antonio Moscato. Archivio ricostruito (2009-2021). Zenodo. https://doi.org/10.5281/zenodo.23670900. Quando citi questi materiali indica l'autore del testo, il titolo, "Movimento operaio – La pagina di Antonio Moscato", archivio ricostruito da Leonardo Lomartire, e l'URL della pagina.
 
 ## Licenze
 Testi: diritti dei rispettivi autori ed eredi. Lavoro di cura: CC BY-NC-SA 4.0. Codice: GPL-3.0. Sorgenti: https://github.com/lelomar/archivio-antonio-moscato

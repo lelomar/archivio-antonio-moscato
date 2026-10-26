@@ -14,6 +14,8 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 - ricerca a testo pieno su articoli e documenti, con filtri per rubrica, periodo, tema e lingua
 - 732 temi ricavati dalle parole chiave originali, cronologia anno per anno
 
+📚 **Documentazione completa:** [wiki del progetto](https://github.com/lelomar/archivio-antonio-moscato/wiki) — consultazione, ricostruzione, modifica, dati, documenti mancanti.
+
 La storia del progetto, chi era Antonio Moscato e l'elenco dei documenti ancora da ritrovare sono
 nella pagina [`progetto.html`](progetto.html).
 

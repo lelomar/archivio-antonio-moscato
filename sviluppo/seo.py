@@ -43,7 +43,7 @@ def run(OUT,arts_info,today=None):
             otype='article' if rel.startswith(('articoli/','documenti/testo/')) or rel=='progetto.html' else 'website'
             ld=[]
             if rel=='index.html':
-                ld=[{"@context":"https://schema.org","@type":"WebSite","@id":BASE+"#site","name":SITE,"alternateName":"Archivio Antonio Moscato","url":BASE,"inLanguage":"it","description":DEFDESC,"about":MOSCATO,"creator":LL,"license":"https://creativecommons.org/licenses/by-nc-sa/4.0/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"cerca.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}]
+                ld=[{"@context":"https://schema.org","@type":"WebSite","@id":BASE+"#site","name":SITE,"alternateName":"Archivio Antonio Moscato","url":BASE,"inLanguage":"it","description":DEFDESC,"about":MOSCATO,"creator":LL,"license":"https://creativecommons.org/licenses/by-nc-sa/4.0/","sameAs":["https://archive.org/details/archivio-antonio-moscato","https://github.com/lelomar/archivio-antonio-moscato"],"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":BASE+"cerca.html?q={search_term_string}"},"query-input":"required name=search_term_string"}}]
             elif rel=='progetto.html':
                 ld=[{"@context":"https://schema.org","@type":"Article","headline":short,"description":desc,"url":url,"image":img,"inLanguage":"it","datePublished":"2026-10-26","author":LL,"about":MOSCATO,"isPartOf":{"@id":BASE+"#site"}}]
             elif rel.startswith('articoli/'):
@@ -93,6 +93,7 @@ Contiene 2.940 articoli (2009–2021) su movimento operaio, "socialismo reale" e
 - [Indice dei temi]({BASE}temi.html)
 - [Cronologia per anno]({BASE}anni.html)
 - [Ricerca]({BASE}cerca.html)
+- [Copia completa scaricabile su Internet Archive](https://archive.org/details/archivio-antonio-moscato)
 
 ## Citazione
 Quando citi questi materiali indica l'autore del testo, il titolo, "Movimento operaio – La pagina di Antonio Moscato", archivio ricostruito da Leonardo Lomartire, e l'URL della pagina.

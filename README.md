@@ -20,6 +20,8 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 
 💾 **Copia di sicurezza:** [Internet Archive](https://archive.org/details/archivio-antonio-moscato) — archivio completo in ZIP, da scaricare e conservare.
 
+🧭 **Wikidata:** [Q141880166](https://www.wikidata.org/wiki/Q141880166) — la scheda dell’archivio, collegata a quella di [Antonio Moscato (Q3619928)](https://www.wikidata.org/wiki/Q3619928).
+
 📚 **Documentazione completa:** [wiki del progetto](https://github.com/lelomar/archivio-antonio-moscato/wiki) — consultazione, ricostruzione, modifica, dati, documenti mancanti.
 
 La storia del progetto, chi era Antonio Moscato e l'elenco dei documenti ancora da ritrovare sono

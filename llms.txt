@@ -14,6 +14,7 @@ Contiene 2.928 articoli (2009–2021) su movimento operaio, "socialismo reale" e
 - [Ricerca](https://lelomar.github.io/archivio-antonio-moscato/cerca.html)
 - [DOI permanente (Zenodo)](https://doi.org/10.5281/zenodo.23670900)
 - [Copia completa scaricabile su Internet Archive](https://archive.org/details/archivio-antonio-moscato)
+- [Scheda Wikidata dell’archivio (Q141880166)](https://www.wikidata.org/wiki/Q141880166)
 
 ## Citazione
 Per citare l'archivio nel suo insieme: Lomartire, L. (2026). Movimento operaio – La pagina di Antonio Moscato. Archivio ricostruito (2009-2021). Zenodo. https://doi.org/10.5281/zenodo.23670900. Quando citi questi materiali indica l'autore del testo, il titolo, "Movimento operaio – La pagina di Antonio Moscato", archivio ricostruito da Leonardo Lomartire, e l'URL della pagina.

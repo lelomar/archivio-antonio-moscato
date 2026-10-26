@@ -15,7 +15,8 @@
   "related_identifiers": [
     {"identifier": "https://lelomar.github.io/archivio-antonio-moscato/", "relation": "isSupplementTo", "resource_type": "other"},
     {"identifier": "https://archive.org/details/archivio-antonio-moscato", "relation": "isIdenticalTo", "resource_type": "dataset"},
-    {"identifier": "https://github.com/lelomar/archivio-antonio-moscato/wiki", "relation": "isDocumentedBy", "resource_type": "other"}
+    {"identifier": "https://github.com/lelomar/archivio-antonio-moscato/wiki", "relation": "isDocumentedBy", "resource_type": "other"},
+    {"identifier": "https://www.wikidata.org/wiki/Q141880166", "relation": "isDescribedBy", "resource_type": "other"}
   ],
   "notes": "Prima versione a cura di Leonardo Lomartire (https://lelomar.substack.com), ottobre 2026."
 }

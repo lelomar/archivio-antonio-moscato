@@ -1,4 +1,3 @@
-# Archivio Antonio Moscato – prima versione di Leonardo Lomartire (2026) – GPL-3.0 con attribuzione, vedi LICENZA.md
 import os,re,json,sys,math,collections,html,unicodedata
 WORK=os.environ.get('MOSCATO_WORK',os.path.dirname(os.path.abspath(__file__)))
 _src=open(os.path.join(WORK,'build.py')).read()
@@ -92,7 +91,7 @@ for a in arts:
             dy=abs(int(a['date'][:4])-int(b['date'][:4])); sc[bid]-=0.15*dy
     a['rel']=[i for i,_ in sc.most_common(6) if _>1.0][:6]
 print('prep ok',N,'kw',len(kwcount),'es',sum(1 for a in arts if a['lang']=='es'),flush=True)
-NAV=[('index.html','Home'),('attualita.html','Rubriche'),('temi.html','Temi'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Cronologia'),('cerca.html','Ricerca')]
+NAV=[('index.html','Home'),('attualita.html','Rubriche'),('temi.html','Temi'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Cronologia'),('accadde-oggi.html','Accadde oggi'),('cerca.html','Ricerca')]
 def page(title,content,pre,active='',body_cls=''):
     nav=''.join(f'<a href="{pre}{h}"{" class=on" if h==active else ""}>{esc(t)}</a>' for h,t in NAV)
     return f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -289,9 +288,10 @@ home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {len
 <h2 class="sec">Le rubriche</h2><div class="rgrid">{"".join(rcard(c) for c in main_c[:6])}</div><p class="more-l"><a href="attualita.html">Tutte le rubriche →</a></p>
 <div class="two"><section><h2 class="sec">Temi ricorrenti</h2>{cloud("")}<p class="more-l"><a href="temi.html">Indice completo dei temi →</a></p></section>
 <section><h2 class="sec">Dodici anni di scritti</h2>{histo("")}<p class="hint">Testi pubblicati per anno: clicca una colonna per aprirlo.</p></section></div>
+<section id="oggi" class="oggi"></section>
 <h2 class="sec">I grandi nodi del Novecento</h2><p class="lead">I saggi e i libri esauriti, materia del lavoro di storico del movimento operaio.</p><div class="cards">{nodes}</div><p class="more-l"><a href="documenti/index.html">Tutti i documenti →</a></p>
 <h2 class="sec">Gli ultimi testi</h2><article class="leadart"><div class="em"><time>{hdate(lead['date'])}</time> <a class="rb" href="categorie/c{lead['catid']}.html">{esc(catname(lead['catid']))}</a></div><h3><a href="articoli/{lead['id']}.html">{esc(lead['title'])}</a></h3><p class="exc">{esc(lead['exc'])}</p></article><ul class="entries">{featured}</ul>
-<script src="assets/meta.js"></script>'''
+<script src="assets/meta.js"></script><script src="assets/oggi.js"></script>'''
 open(os.path.join(OUT,'index.html'),'w').write(page('Home',home,'','index.html','pg-home'))
 search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto il testo dei 2.940 articoli e tra i documenti. Restringi con i filtri a sinistra; i risultati si aggiornano mentre scrivi.</p></header>
 <form class="bigsearch" onsubmit="S.run();return false"><input id="q" type="search" placeholder="Parole o “frase esatta”…" autocomplete="off" aria-label="Testo da cercare"><button>Cerca</button></form>
@@ -311,6 +311,9 @@ for f in ['indice.js']:
     p=os.path.join(OUT,'assets',f)
     if os.path.exists(p): os.remove(p)
 
+
+_og='<header class="phead"><p class="kick">Accadde oggi</p><h1 id="ot"></h1><p class="lead">Cosa pubblicava Antonio Moscato sul suo sito in questo giorno dell’anno, dal 2009 al 2021. Scegli una data o scorri i giorni.</p><p class="meta" id="on"></p></header><div class="ocontrols"><button type="button" id="oprev">← Giorno prima</button><select id="od" aria-label="Giorno"></select><select id="om" aria-label="Mese"></select><button type="button" id="onext">Giorno dopo →</button><button type="button" id="otoday">Oggi</button></div><div id="oggi-pagina"><ul class="entries" id="ol"></ul></div><p class="hint">Il pulsante «Copia per i social» prepara una riga pronta da incollare, con il link al testo.</p><script src="assets/meta.js"></script><script src="assets/oggi.js"></script>'
+open(os.path.join(OUT,'accadde-oggi.html'),'w').write(page('Accadde oggi',_og,'','accadde-oggi.html'))
 _pt=open(os.path.join(WORK,'progetto.html')).read()
 _rpf=os.path.join(root,'recupero','rapporto.json'); _mif=os.path.join(root,'recupero','mancanti.json')
 _rp=json.load(open(_rpf)) if os.path.exists(_rpf) else {}
@@ -344,5 +347,10 @@ _mhtml=f"""<h2 id="mancanti">L’elenco dei documenti da ritrovare</h2>
 <details><summary>{len(inc)} documenti incompleti</summary>{_tab(inc)}</details>
 <p>Chi ne ha una copia può scrivermi a <a href="mailto:lelomar@gmail.com">lelomar@gmail.com</a> o attraverso <a href="https://lelomar.substack.com" target="_blank" rel="noopener">lelomar.substack.com</a>, indicando il titolo.</p>"""
 _pt=_pt.replace('<!--MANCANTI-->',_mhtml)
-open(os.path.join(OUT,'progetto.html'),'w').write(page('Il progetto',f'<div class="artgrid"><article class="art progetto"><p class="crumb">Il progetto</p><h1>Sono rimasto seduto</h1><p class="meta">Perché esiste questa copia del sito di Antonio Moscato, come è stata fatta, cosa manca</p><div class="testo" id="testo">{_pt}</div></article><aside class="side"><div class="box"><h4>In breve</h4><p>Antonio Moscato (Roma 1938 – 2026)<br>Sito originale: 2009–2021<br>{len(arts)} articoli · {nrec} documenti su {len(docs)}<br>Ricostruito nell’ottobre 2026</p></div><div class="box"><h4>Per cominciare</h4><ul class="mini-list"><li><a href="articoli/22.html">Chi è Antonio Moscato</a></li><li><a href="documenti/index.html">I grandi nodi del Novecento</a></li><li><a href="attualita.html">Le rubriche</a></li><li><a href="cerca.html">La ricerca</a></li><li><a href="#mancanti">I documenti da ritrovare</a></li><li><a href="#tecnica">Codice e licenze</a></li></ul></div><div class="box"><h4>Codice aperto</h4><p><a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">github.com/lelomar/archivio-antonio-moscato</a><br>Codice GPL-3.0 · cura CC BY-NC-SA 4.0</p></div></aside></div>','','','pg-art'))
+open(os.path.join(OUT,'progetto.html'),'w').write(page('Sono rimasto seduto. L’archivio ritrovato di Antonio Moscato',f'<div class="artgrid"><article class="art progetto"><p class="crumb">Il progetto</p><h1>Sono rimasto seduto</h1><p class="meta">Perché esiste questa copia del sito di Antonio Moscato, come è stata fatta, cosa manca</p><div class="testo" id="testo">{_pt}</div></article><aside class="side"><div class="box"><h4>In breve</h4><p>Antonio Moscato (Roma 1938 – 2026)<br>Sito originale: 2009–2021<br>{len(arts)} articoli · {nrec} documenti su {len(docs)}<br>Ricostruito nell’ottobre 2026</p></div><div class="box"><h4>Per cominciare</h4><ul class="mini-list"><li><a href="articoli/22.html">Chi è Antonio Moscato</a></li><li><a href="documenti/index.html">I grandi nodi del Novecento</a></li><li><a href="attualita.html">Le rubriche</a></li><li><a href="cerca.html">La ricerca</a></li><li><a href="#mancanti">I documenti da ritrovare</a></li><li><a href="#tecnica">Codice e licenze</a></li></ul></div><div class="box"><h4>Codice aperto</h4><p><a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">github.com/lelomar/archivio-antonio-moscato</a><br>Codice GPL-3.0 · cura CC BY-NC-SA 4.0</p></div></aside></div>','','','pg-art'))
+import subprocess as _sp, importlib.util as _iu
+_sp.run([sys.executable,os.path.join(WORK,'og.py'),OUT],check=False)
+_spec=_iu.spec_from_file_location('seo',os.path.join(WORK,'seo.py')); _seo=_iu.module_from_spec(_spec); _spec.loader.exec_module(_seo)
+_ai={str(a['id']):{'date':a['date'],'lang':a['lang'],'kws':[kwname(k) for k in a['kws']],'cat':catname(a['catid'])} for a in arts}
+print('seo pagine',_seo.run(OUT,_ai),flush=True)
 print('DONE',flush=True)

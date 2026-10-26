@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 Ricordi di Antonio Moscato, domande e idee"
+    url: https://github.com/lelomar/archivio-antonio-moscato/discussions
+    about: "Per raccontare un ricordo, fare una domanda o proporre un'idea, usa le Discussions."
+  - name: "✉️ Scrivi al curatore"
+    url: https://lelomar.substack.com
+    about: "Leonardo Lomartire · lelomar@gmail.com"

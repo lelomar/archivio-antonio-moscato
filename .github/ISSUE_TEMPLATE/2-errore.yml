@@ -1,0 +1,20 @@
+name: "🛠 Segnala un errore"
+description: "Un refuso, una data sbagliata, un link che non funziona, due temi da unire."
+title: "[Errore] "
+labels: ["errore"]
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: Pagina
+      description: L'indirizzo della pagina in cui hai trovato il problema.
+      placeholder: "https://lelomar.github.io/archivio-antonio-moscato/articoli/…"
+    validations:
+      required: true
+  - type: textarea
+    id: descrizione
+    attributes:
+      label: Cosa non va
+      description: Descrivi il problema e, se la conosci, la correzione.
+    validations:
+      required: true

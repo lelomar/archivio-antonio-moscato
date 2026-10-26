@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Se usi o citi questo archivio, ti chiediamo di citarlo come indicato qui. Per i singoli testi indica anche autore, titolo e data dell'articolo."
+title: "Movimento operaio – La pagina di Antonio Moscato. Archivio ricostruito (2009-2021)"
+abstract: "Archivio ricostruito del sito di Antonio Moscato (1938-2026), storico del movimento operaio e docente all'università di Lecce: 2.940 articoli e 180 saggi recuperati dalle copie dell'Internet Archive, consultabili online e offline."
+type: dataset
+authors:
+  - family-names: Lomartire
+    given-names: Leonardo
+    email: lelomar@gmail.com
+    website: "https://lelomar.substack.com"
+version: "1.0.0"
+date-released: "2026-10-26"
+url: "https://lelomar.github.io/archivio-antonio-moscato/"
+repository-code: "https://github.com/lelomar/archivio-antonio-moscato"
+repository-artifact: "https://archive.org/details/archivio-antonio-moscato"
+license:
+  - GPL-3.0-only
+  - CC-BY-NC-SA-4.0
+keywords:
+  - Antonio Moscato
+  - movimento operaio
+  - storia contemporanea
+  - Quarta Internazionale
+  - archivio web
+  - Wayback Machine

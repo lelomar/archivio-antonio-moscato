@@ -1,0 +1,34 @@
+name: "📄 Ho ritrovato un documento"
+description: "Hai una copia di uno dei documenti mancanti o incompleti? Segnalalo qui."
+title: "[Ritrovato] "
+labels: ["segnalazione documento"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Grazie! Ogni documento ritrovato torna al suo posto nell'archivio. L'elenco dei mancanti è sulla [lavagna](https://github.com/users/lelomar/projects/2) e nella [pagina del progetto](https://lelomar.github.io/archivio-antonio-moscato/progetto.html#mancanti).
+  - type: input
+    id: titolo
+    attributes:
+      label: Titolo del documento
+      description: Come compare nell'elenco dei documenti mancanti.
+      placeholder: "es. Andrés Nin e la rivoluzione spagnola"
+    validations:
+      required: true
+  - type: textarea
+    id: file
+    attributes:
+      label: Il file
+      description: Trascina qui il file (PDF, DOC, RTF, anche una scansione). Se non puoi allegarlo, scrivi come possiamo averlo.
+    validations:
+      required: true
+  - type: textarea
+    id: provenienza
+    attributes:
+      label: Da dove viene
+      description: Facoltativo. Dove l'hai trovato, se è la versione completa, se ci sono differenze.
+  - type: input
+    id: credito
+    attributes:
+      label: Nome per i ringraziamenti
+      description: Facoltativo. Il nome con cui vuoi essere ringraziato in CREDITI.md. Lascia vuoto se preferisci restare anonimo.

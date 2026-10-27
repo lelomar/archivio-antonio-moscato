@@ -8,6 +8,9 @@ Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i 
 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
 
+### Aggiunto
+- Nella pagina dei temi, i collegamenti per scaricare il vocabolario in CSV, JSON e SKOS, le parole chiave originali e le voci da verificare.
+
 ## [1.2.0] – 27 ottobre 2026
 
 ### Aggiunto

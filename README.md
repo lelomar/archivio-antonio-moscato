@@ -12,9 +12,10 @@ Dopo la sua chiusura è stato ricostruito nell'ottobre 2026, a partire dalle cop
 dall'Internet Archive, come archivio statico che funziona **senza server e senza internet**.
 
 - 2.928 articoli (2009–2021), divisi nelle rubriche originali
-- 180 dei 247 documenti di *I grandi nodi del Novecento*, con pagine di lettura nel browser
+- 180 dei 247 documenti di *I grandi nodi del Novecento* (170 integri e 10 incompleti, troncati al primo megabyte); degli altri 67, 56 non sono mai stati salvati e 11 erano video o audio esterni; pagine di lettura nel browser
 - ricerca a testo pieno su articoli e documenti, con filtri per rubrica, periodo, tema e lingua
-- 721 temi ricavati dalle parole chiave originali (208 collegati a Wikidata), cronologia anno per anno
+- 713 temi con una propria pagina, su 2.948 voci del vocabolario: ogni voce è classificata come persona, organizzazione, luogo, evento, concetto o pubblicazione, 208 sono collegate a Wikidata (e da lì a VIAF, SBN e GeoNames); le parole chiave originali degli articoli restano intatte
+- cronologia anno per anno
 - autore di ogni testo con il grado di certezza, data di scrittura dove il testo la dichiara, scheda d'archivio e citazione pronta
 - link ai siti esterni verso le copie d'archivio dei giorni in cui Moscato li citava, con l'indirizzo originale accanto
 
@@ -26,7 +27,7 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 
 📜 **Registro delle versioni:** [CHANGELOG.md](CHANGELOG.md) — che cosa cambia da una versione all'altra.
 
-🗂️ **Dati e verifiche:** [catalogo dei metadati](dati/catalogo-articoli.csv) (CSV, JSON, Dublin Core), [manifesto di integrità SHA-256](dati/manifesto-integrita.csv) e [confronto con la Wayback Machine](dati/confronto-wayback.md), [vocabolario dei temi](dati/vocabolario-temi.csv) e [link esterni](dati/link-esterni.csv). Verifica dei file: `shasum -a 256 -c SHA256SUMS`. Guida: [dati/LEGGIMI.md](dati/LEGGIMI.md).
+🗂️ **Dati e verifiche:** [catalogo dei metadati](dati/catalogo-articoli.csv) (CSV, JSON, Dublin Core), [manifesto di integrità SHA-256](dati/manifesto-integrita.csv) e [confronto con la Wayback Machine](dati/confronto-wayback.md), [vocabolario dei temi](dati/vocabolario-temi.csv) e [link esterni](dati/link-esterni.csv); [provenienza a livelli](dati/MODELLO.md) di ogni testo, dall'originale alla pagina dell'archivio, e [conteggi](dati/conteggi.json). Verifica dei file: `shasum -a 256 -c SHA256SUMS`. Guida: [dati/LEGGIMI.md](dati/LEGGIMI.md).
 
 📚 **Documentazione completa:** [wiki del progetto](https://github.com/lelomar/archivio-antonio-moscato/wiki) — consultazione, ricostruzione, modifica, dati, documenti mancanti.
 

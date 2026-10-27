@@ -8,6 +8,20 @@ Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i 
 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
 
+## [1.2.0] – 27 ottobre 2026
+
+### Aggiunto
+- Provenienza a livelli per ogni testo e documento: originale, cattura della Wayback Machine, testo estratto o convertito, edizione HTML e interventi, come oggetti distinti con identificativo, impronta SHA-256 e relazione con il livello da cui derivano (`dati/provenienza.json`, `dati/provenienza.csv`, `dati/eventi.csv`, `dati/MODELLO.md`). La scheda d'archivio di ogni articolo mostra la catena.
+- Vocabolario dei temi a due livelli. Le parole chiave originali sono conservate intatte, articolo per articolo, con il trattamento ricevuto (`dati/parole-chiave-originali.csv`) e nella scheda d'archivio di ogni articolo. Le entità normalizzate sono classificate per tipo (persona, organizzazione, luogo, evento, concetto, pubblicazione), con identificativi Wikidata, VIAF, SBN e GeoNames dove esistono; il vocabolario si scarica anche in SKOS. L'indice dei temi si filtra per tipo, e ogni pagina di tema riporta le parole chiave originali da cui deriva.
+- Elenco delle voci ambigue da verificare (`dati/vocabolario-da-verificare.csv`), segnalate anche nelle pagine dei temi.
+- `dati/conteggi.json`: i numeri dell'archivio calcolati a ogni costruzione, con un controllo che ferma la costruzione se i totali non tornano e uno che segnala le cifre superate nei testi descrittivi.
+
+### Corretto
+- Vocabolario: unificate le grafie diverse dello stesso soggetto (per esempio «Art. 18» e «Articolo 18», «Trockij» e «Trotskij», «Irak» e «Iraq»); unificati i cognomi usati da soli con il nome completo quando nei testi compare una sola persona con quel cognome; divise le parole chiave che contenevano due soggetti per una virgola mancante («Tsipras Grecia»). I vecchi indirizzi delle pagine dei temi unificati rinviano a quelli nuovi.
+- Conteggio dei documenti reso esplicito: 247 = 180 nell'archivio (170 integri e 10 incompleti) + 67 assenti (56 mai salvati e 11 video o audio esterni). Prima il testo poteva far credere che i 10 incompleti fossero esclusi dai 180, e la home indicava 247 documenti senza dire quanti sono consultabili.
+- Nel catalogo, un documento ritrovato dopo la prima ricostruzione ma anch'esso troncato (gid 273) risultava «ritrovato» e non «incompleto»: stato del file e modo del recupero sono ora due campi distinti (`stato`, `recupero`).
+- Descrizione del repository GitHub e testi di presentazione: 2.928 articoli, non 2.940 (il numero dei testi estratti prima di togliere 6 pagine di servizio e 6 doppie pubblicazioni). Nella cronaca della ricostruzione, i post WordPress già presenti sono 62, non 63.
+
 ## [1.1.0] – ottobre 2026
 
 ### Aggiunto

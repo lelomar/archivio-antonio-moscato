@@ -377,3 +377,25 @@ h3.vh .d{font:500 14px var(--sans);color:var(--mute);font-stretch:100%}
 .testo a.lx-na{text-decoration-style:dotted}
 .testo .lx-n{font:600 .62em var(--sans);text-transform:uppercase;color:var(--mute);margin-left:.25em;vertical-align:super;line-height:0}
 @media print{.testo a.lx-o,.testo .lx-n{display:none}}
+/* Scheda d'archivio: i livelli dal sito originale alla pagina */
+.scheda ol.livelli{list-style:none;counter-reset:liv;margin:0 0 0 12px;padding:0;border-left:3px solid var(--red)}
+.scheda ol.livelli>li{counter-increment:liv;position:relative;padding:0 0 12px 34px}
+.scheda ol.livelli>li::before{content:counter(liv);position:absolute;left:-13px;top:0;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font:800 12px/22px var(--sans);text-align:center}
+.scheda ol.livelli b{font-weight:800}
+.scheda .lid{font:600 12px var(--sans);color:var(--mute);margin-left:6px;letter-spacing:.02em}
+.scheda .ld{display:block}
+.scheda .ld ul{margin:4px 0 0;padding-left:18px}
+.scheda .ld li{margin:2px 0}
+.scheda .hint{font-size:13.5px;color:var(--mute);margin:4px 0 0}
+
+/* Temi: tipi di entità e parole chiave originali */
+.tipi{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}.tipi button{cursor:pointer;min-height:36px}
+.tipi-f[data-f="persona"] .entry:not([data-tipo="persona"]){display:none!important}.tipi-f[data-f="persona"] .ygroup:not(:has(.entry[data-tipo="persona"])){display:none}
+.tipi-f[data-f="organizzazione"] .entry:not([data-tipo="organizzazione"]){display:none!important}.tipi-f[data-f="organizzazione"] .ygroup:not(:has(.entry[data-tipo="organizzazione"])){display:none}
+.tipi-f[data-f="luogo"] .entry:not([data-tipo="luogo"]){display:none!important}.tipi-f[data-f="luogo"] .ygroup:not(:has(.entry[data-tipo="luogo"])){display:none}
+.tipi-f[data-f="evento"] .entry:not([data-tipo="evento"]){display:none!important}.tipi-f[data-f="evento"] .ygroup:not(:has(.entry[data-tipo="evento"])){display:none}
+.tipi-f[data-f="concetto"] .entry:not([data-tipo="concetto"]){display:none!important}.tipi-f[data-f="concetto"] .ygroup:not(:has(.entry[data-tipo="concetto"])){display:none}
+.tipi-f[data-f="pubblicazione"] .entry:not([data-tipo="pubblicazione"]){display:none!important}.tipi-f[data-f="pubblicazione"] .ygroup:not(:has(.entry[data-tipo="pubblicazione"])){display:none}
+.tipi-f[data-f="non-classificato"] .entry:not([data-tipo="non-classificato"]){display:none!important}.tipi-f[data-f="non-classificato"] .ygroup:not(:has(.entry[data-tipo="non-classificato"])){display:none}
+.tipi-f[data-f]:not([data-f=""]) .jump{display:none}
+.phead .forme{font:14px/1.5 var(--sans);color:var(--mute);margin:.5em 0 0;max-width:760px}

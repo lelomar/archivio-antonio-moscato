@@ -20,6 +20,20 @@ DEFAULTSET=norm('movimento operaio, anticapitalismo, antistalinismo, democrazia 
 kwdisp=collections.defaultdict(collections.Counter)
 _TA=json.load(open(os.path.join(WORK,'temi_alias.json')))
 ALIAS=_TA['alias']; DISP=_TA['display']
+_TCF=os.path.join(WORK,'temi_classificazione.json'); _TC=json.load(open(_TCF,encoding='utf-8')) if os.path.exists(_TCF) else {}
+_LAB2K={v:k for k,v in DISP.items()}
+def _lk(l): return _LAB2K.get(l) or norm(l)
+for _s,_t in _TC.get('unisci',{}).items(): ALIAS[norm(_s)]=_lk(_t)
+for _s,_t in _TC.get('dividi',{}).items(): ALIAS[norm(_s)]=[_lk(x) for x in _t]
+for _s,_t in _TC.get('visualizza',{}).items(): DISP[_lk(_s)]=_t
+for _t in {x for v in _TC.get('dividi',{}).values() for x in v}: DISP.setdefault(_lk(_t),_t)
+def _risolvi(k,seen=()):
+    t=ALIAS.get(k,k)
+    if isinstance(t,list): return [y for x in t for y in _risolvi(x,seen+(k,))]
+    if t==k or t in seen: return [t]
+    return _risolvi(t,seen+(k,))
+_GENERICHE=('movimento operaio','anticapitalismo','antistalinismo','democrazia operaia','internazionalismo','rivoluzione')
+ORIGKW=[]  # (id articolo, posizione, forma originale, trattamento, [chiavi dei temi])
 ES=set('el la los las que de y en por para con una del al es se como pero sus su muy fue han esta este entre sobre tambien gobierno'.split())
 IT=set('il lo la gli le che di e in per con una del al è si come ma suoi suo molto fu hanno questa questo tra sulla anche governo non'.split())
 DCONV=os.path.join(WORK,'dconv')
@@ -56,13 +70,18 @@ for g,d in docs.items():
 print('doc texts',sum(1 for d in docs.values() if d.get('page')),flush=True)
 for a in arts:
     raw=a.get('kw') or ''
-    ks=[]
-    if norm(raw)!=DEFAULTSET:
-        for x in raw.split(','):
-            x=x.strip(); k=norm(x)
-            if not k or k in ('movimento operaio','anticapitalismo','antistalinismo','democrazia operaia','internazionalismo','rivoluzione'): continue
-            k=ALIAS.get(k,k)
-            if k not in ks: ks.append(k); kwdisp[k][x]+=1
+    ks=[]; _def=norm(raw)==DEFAULTSET
+    for _i,x in enumerate([y.strip() for y in raw.split(',')]):
+        if not x: continue
+        k=norm(x)
+        if _def: ORIGKW.append((a['id'],_i+1,x,'esclusa: è l’elenco predefinito del sito, non scelto per l’articolo',[])); continue
+        if not k: ORIGKW.append((a['id'],_i+1,x,'esclusa: senza lettere',[])); continue
+        if k in _GENERICHE: ORIGKW.append((a['id'],_i+1,x,'esclusa: comune a quasi tutto il sito',[])); continue
+        tg=list(dict.fromkeys(_risolvi(k)))
+        ORIGKW.append((a['id'],_i+1,x,'tema' if tg==[k] else ('divisa in più temi' if len(tg)>1 else 'unificata con un’altra forma'),tg))
+        for t in tg:
+            if t not in ks: ks.append(t)
+            if len(tg)==1: kwdisp[t][x]+=1
     a['kws']=ks
     a['body']=clean(a['html'],'../')
     txt=BeautifulSoup(a['body'],'lxml').get_text(' ')
@@ -80,6 +99,14 @@ def kwname(k):
     n=KWN.get(k,k); return n[:1].upper()+n[1:] if n.islower() else n
 kwcount=collections.Counter(k for a in arts for k in a['kws'])
 KWSLUG={k:slugify(k) for k in kwcount}
+_spec_v=__import__('importlib.util').util.spec_from_file_location('vocabolario',os.path.join(WORK,'vocabolario.py')); _VOC=__import__('importlib.util').util.module_from_spec(_spec_v); _spec_v.loader.exec_module(_VOC)
+TIPO,AMBT=_VOC.classifica(_TC,kwcount,_lk,_risolvi)
+_IDF=os.path.join(WORK,'temi_identificativi.json'); IDENT=json.load(open(_IDF)) if os.path.exists(_IDF) else {}
+FORME=collections.defaultdict(collections.Counter)
+for _o in ORIGKW:
+    for _k in _o[4]: FORME[_k][_o[2]]+=1
+ORIG_ART=collections.defaultdict(list)
+for _o in ORIGKW: ORIG_ART[str(_o[0])].append(_o)
 N=len(arts); inv=collections.defaultdict(list)
 for a in arts:
     for k in a['kws']: inv[k].append(a)
@@ -156,6 +183,35 @@ _MESI='gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottob
 def _tsd(ts): return f"{int(ts[6:8])} {_MESI[int(ts[4:6])-1]} {ts[:4]}" if len(ts)>=8 else ''
 def _apa_name(n):
     p=n.split(); return (p[-1]+', '+'. '.join(x[0] for x in p[:-1])+'.') if len(p)>1 else n
+_LWB=json.load(open(os.path.join(WORK,'link_wayback.json'))) if os.path.exists(os.path.join(WORK,'link_wayback.json')) else {}
+_VER=json.load(open(os.path.join(OUT,'.zenodo.json'))).get('version','') if os.path.exists(os.path.join(OUT,'.zenodo.json')) else ''
+_DUPIN={}
+for _k,_v in DUP_ART.items(): _DUPIN.setdefault(str(_v),[]).append(str(_k))
+def _interventi(a):
+    b=a['body']; c=collections.Counter()
+    for h in re.findall(r'<a\s[^>]*href="([^"]+)"',b):
+        h=html.unescape(h)
+        if re.match(r'(\.\./)+(articoli|categorie|documenti|temi|anni|cerca)',h): c['int']+=1
+        elif 'web.archive.org/web/' in h and 'antoniomoscato' in h: c['wbi']+=1
+        elif re.match(r'https?://',h) and 'archive.org' not in h and 'antoniomoscato' not in h:
+            st=(_LWB.get(h.strip()) or {}).get('stato')
+            if st=='archiviato': c['ea']+=1
+            elif st=='non archiviato': c['en']+=1
+        elif h.startswith('#'): c['note']+=1
+    c['img']=len(re.findall(r'<img[^>]+src="(\.\./)+assets/img/',b))
+    out=['pulizia del codice della pagina (menu, script, pulsanti di condivisione, stili di Word): il testo non è stato modificato']
+    def pl(n,s1,s2): return f'{n} {s1 if n==1 else s2}'
+    if c['int']: out.append(pl(c['int'],'collegamento al vecchio sito ricondotto','collegamenti al vecchio sito ricondotti')+' alle pagine di questo archivio')
+    if c['wbi']: out.append(pl(c['wbi'],'collegamento','collegamenti')+' a pagine non conservate, indirizzat'+('o' if c['wbi']==1 else 'i')+' alla Wayback Machine (↗)')
+    if c['ea']: out.append(pl(c['ea'],'link esterno indirizzato','link esterni indirizzati')+' alla copia d’archivio dell’epoca, con l’indirizzo originale accanto («orig.»)')
+    if c['en']: out.append(pl(c['en'],'link esterno senza copia d’archivio, segnato','link esterni senza copia d’archivio, segnati')+' «non archiviato»')
+    if c['img']: out.append(pl(c['img'],'immagine recuperata','immagini recuperate')+' e inclusa'+('' if c['img']==1 else '')+' nell’archivio')
+    if c['note']: out.append(pl(c['note'],'rimando interno','rimandi interni')+' (note, indici) res'+('o' if c['note']==1 else 'i')+' funzionant'+('e' if c['note']==1 else 'i'))
+    cert=a.get('cert','')
+    out.append('autore '+({'verificata':'confermato da una segnalazione','alta':'ricavato da una firma nel testo','media':'proposto dal programma, da verificare','bassa':'proposto dal programma, da verificare','presunta':'presunto: nessuna firma, testo pubblicato sul sito di Moscato'}.get(cert,'da verificare')))
+    if a.get('scritto'): out.append('data di scrittura ricavata dal testo')
+    for d in _DUPIN.get(str(a['id']),[]): out.append(f'unito il doppione AM-{d}, pubblicato due volte')
+    return out
 def scheda(a,url):
     u,ts=_PROV.get(str(a['id']),('',''))
     wb=('https://web.archive.org/web/'+ts+'/'+u) if ts else ''
@@ -168,11 +224,22 @@ def scheda(a,url):
     rows=[('Identificativo',f'AM-{a["id"]}'),('Autore',esc(aut)+(f' <span class="d">({esc(a["mosc"])})</span>' if a['mosc'] and a['autore']!='Antonio Moscato' else '')+(f' <span class="d">· attribuzione {"presunta" if a["cert"]=="presunta" else "da verificare"}</span>' if a['cert'] in ('presunta','media','bassa') else '')),
           ('Pubblicato sul sito',d)]
     if a.get('scritto'): rows.append(('Data di scrittura',esc(a['scritto'])+' <span class="d">(secondo il testo)</span>'))
-    rows+= [('Indirizzo originale',f'<span class="u">{esc(u)}</span>' if u else '—'),
-          ('Copia usata',f'<a href="{esc(wb)}" target="_blank" rel="noopener">Wayback Machine, {_tsd(ts)}</a>' if wb else '—'),
-          ('Criteri di edizione','<a href="../criteri.html">come è stato trattato il testo</a>')]
+    _ok=ORIG_ART.get(str(a['id']),[])
+    if _ok:
+        _esc=[o for o in _ok if not o[4]]
+        rows.append(('Parole chiave originali',', '.join(f'«{esc(o[2])}»' for o in _ok)+(' <span class="d">(elenco predefinito del sito, non usato per i temi)</span>' if _esc and len(_esc)==len(_ok) and 'predefinito' in _esc[0][3] else '')))
     dl=''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in rows)
+    _id='AM-'+str(a['id']); _nw=f"{len((a.get('plain') or '').split()):,}".replace(',','.')
+    _iv=''.join(f'<li>{esc(x)}</li>' for x in _interventi(a))
+    _cop=f'<a href="{esc(wb)}" target="_blank" rel="noopener">Wayback Machine, {_tsd(ts)}</a>' if wb else 'copia non identificata'
+    liv=(f'<li><b>Originale</b> <span class="lid">{_id}.o</span><span class="ld">Pubblicato sul sito antoniomoscato.altervista.org il {d}. <span class="u">{esc(u)}</span></span></li>'
+         f'<li><b>Cattura</b> <span class="lid">{_id}.c</span><span class="ld">La copia da cui viene il testo: {_cop}.</span></li>'
+         f'<li><b>Testo estratto</b> <span class="lid">{_id}.t</span><span class="ld">Il corpo dell’articolo, estratto dalla copia senza modificarne le parole: {_nw} parole.</span></li>'
+         f'<li><b>Edizione</b> <span class="lid">{_id}.e</span><span class="ld">Questa pagina, nella versione {_VER} dell’archivio.</span></li>'
+         f'<li><b>Interventi</b><span class="ld"><ul>{_iv}</ul></span></li>')
     return f'''<section class="scheda" aria-labelledby="sch-{a['id']}"><h2 id="sch-{a['id']}">Scheda d’archivio</h2><dl>{dl}</dl>
+<h3>Dal sito originale a questa pagina</h3><ol class="livelli">{liv}</ol>
+<p class="hint">Ogni livello ha un identificativo, un’impronta SHA-256 e il legame con quello da cui deriva nei <a href="../dati/provenienza.csv">dati di provenienza</a>; le regole seguite sono nei <a href="../criteri.html">criteri di edizione</a>, il modello è spiegato nella <a href="https://github.com/lelomar/archivio-antonio-moscato/blob/main/dati/MODELLO.md" target="_blank" rel="noopener">guida ai dati</a>.</p>
 <h3>Come citare</h3><p class="cit" id="cit1-{a['id']}">{cit}</p><button type="button" class="cpy" data-copy-from="#cit1-{a['id']}">Copia la citazione</button>
 <p class="cit apa" id="cit2-{a['id']}"><span class="d">APA</span> {apa}</p><button type="button" class="cpy" data-copy-from="#cit2-{a['id']}">Copia in formato APA</button></section>'''
 for c in bycat: bycat[c].sort(key=sortkey,reverse=True)
@@ -234,29 +301,33 @@ for y,l in years.items():
     open(os.path.join(OUT,'anni',f'{y}.html'),'w').write(page(str(y),content,'../','anni.html'))
 # temi
 _TWD=json.load(open(os.path.join(WORK,'temi_wikidata.json'))) if os.path.exists(os.path.join(WORK,'temi_wikidata.json')) else {}
-def _wd(k): return _TWD.get(kwname(k)) or _TWD.get(k)
+_WDK={}
+for _n,_e in _TWD.items():
+    for _k in _risolvi(_lk(_n)): _WDK.setdefault(_k,_e)
+def _wd(k): return _WDK.get(k) or _TWD.get(kwname(k)) or _TWD.get(k)
 tlist=sorted([k for k in kwcount if kwcount[k]>=3],key=lambda k:norm(kwname(k)))
 for k in tlist:
     l=sorted(inv[k],key=sortkey,reverse=True)
     co=collections.Counter(x for a in l for x in a['kws'] if x!=k)
     near=''.join(f'<a class="chip" href="{KWSLUG[x]}.html">{esc(kwname(x))} <small>{n}</small></a>' for x,n in co.most_common(16) if kwcount[x]>=3)
     _w=_wd(k); _wdl=(' · <a class="wd" href="https://www.wikidata.org/wiki/'+_w['id']+'" target="_blank" rel="noopener" title="'+esc(_w.get('desc',''))+'">scheda Wikidata '+_w['id']+' ↗</a>') if _w else ''
-    content=f'<p class="crumb"><a href="../temi.html">Temi</a></p><header class="phead"><h1>{esc(kwname(k))}</h1><p class="meta">{len(l)} testi · <a href="../cerca.html#tema={urllib.parse.quote(k)}">apri nella ricerca avanzata</a>{_wdl}</p></header>'+(f'<div class="box near"><h4>Temi collegati</h4><div class="chips">{near}</div></div>' if near else '')+entries_by_year(l,'../',True)
+    _id=IDENT.get((_w or {}).get('id',''),{})
+    _wdl+=(f' · <a class="wd" href="https://viaf.org/viaf/{_id["viaf"]}" target="_blank" rel="noopener">VIAF ↗</a>' if _id.get('viaf') else '')+(f' · <a class="wd" href="https://opac.sbn.it/nome/{_id["sbn"]}" target="_blank" rel="noopener">SBN ↗</a>' if _id.get('sbn') else '')+(f' · <a class="wd" href="https://www.geonames.org/{_id["geonames"]}" target="_blank" rel="noopener">GeoNames ↗</a>' if _id.get('geonames') else '')
+    _tp,_st=TIPO.get(k,('non classificato',''))
+    _fo=FORME.get(k,{})
+    _fol='; '.join(f'«{esc(f)}» ({n})' for f,n in _fo.most_common()) if _fo else ''
+    _amb=(f'<p class="note warn">Voce da verificare: {esc(AMBT[k])}. Se sai a chi o a che cosa si riferiscono i testi, <a href="mailto:lelomar@gmail.com?subject=correzione%20proposta%20progetto%20moscato">scrivilo</a> o <a href="https://github.com/lelomar/archivio-antonio-moscato/issues/new" target="_blank" rel="noopener">segnalalo su GitHub</a>.</p>' if k in AMBT else '')
+    content=f'<p class="crumb"><a href="../temi.html">Temi</a> · <a href="../temi.html#tipo-{_tp.replace(" ","-")}">{esc(_VOC.ETI.get(_tp,_tp))}</a></p><header class="phead"><h1>{esc(kwname(k))}</h1><p class="meta">{len(l)} testi · <a href="../cerca.html#tema={urllib.parse.quote(k)}">apri nella ricerca avanzata</a>{_wdl}</p>'+(f'<p class="forme">Parole chiave originali: {_fol}</p>' if _fol else '')+f'{_amb}</header>'+(f'<div class="box near"><h4>Temi collegati</h4><div class="chips">{near}</div></div>' if near else '')+entries_by_year(l,'../',True)
     open(os.path.join(OUT,'temi',f'{KWSLUG[k]}.html'),'w').write(page(kwname(k),content,'../','temi.html'))
 # rinvii per i temi unificati (vecchi indirizzi delle pagine dei temi)
 _GEN={KWSLUG[k] for k in tlist}
 for _ak,_av in ALIAS.items():
     _old=slugify(_ak)
+    if isinstance(_av,list): continue
+    _av=_risolvi(_av)[0]
     if _av in KWSLUG and kwcount.get(_av,0)>=3 and _old!=KWSLUG[_av] and _old not in _GEN:
         open(os.path.join(OUT,'temi',_old+'.html'),'w').write(f'<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url={KWSLUG[_av]}.html"><link rel="canonical" href="{KWSLUG[_av]}.html"><title>Tema spostato</title></head><body><p>Questo tema è stato unificato: <a href="{KWSLUG[_av]}.html">{esc(kwname(_av))}</a>.</p></body></html>')
-_var=collections.defaultdict(list)
-for _ak,_av in ALIAS.items(): _var[_av].append(_ak)
-_voc=[{'id':KWSLUG[k],'etichetta':kwname(k),'chiave':k,'varianti':'; '.join(sorted(set(_var.get(k,[])))),'testi':kwcount[k],'wikidata':(_wd(k) or {}).get('id',''),'wikidata_descrizione':(_wd(k) or {}).get('desc',''),'pagina':'https://lelomar.github.io/archivio-antonio-moscato/temi/'+KWSLUG[k]+'.html' if kwcount[k]>=3 else ''} for k in sorted(kwcount,key=lambda k:(-kwcount[k],kwname(k)))]
-os.makedirs(os.path.join(OUT,'dati'),exist_ok=True)
-import csv as _csv
-with open(os.path.join(OUT,'dati','vocabolario-temi.csv'),'w',newline='',encoding='utf-8-sig') as _f:
-    _w=_csv.DictWriter(_f,fieldnames=list(_voc[0].keys())); _w.writeheader(); _w.writerows(_voc)
-json.dump({'meta':{'titolo':'Vocabolario dei temi','descrizione':'Temi ricavati dalle parole chiave assegnate agli articoli, con le varianti unificate e il collegamento a Wikidata per i principali.','licenza':'CC BY-NC-SA 4.0'},'temi':_voc},open(os.path.join(OUT,'dati','vocabolario-temi.json'),'w'),ensure_ascii=False,indent=1)
+print('vocabolario',_VOC.run(OUT,WORK,kwcount,KWSLUG,kwname,ORIGKW,TIPO,AMBT,_wd,IDENT,{str(a['id']):a for a in arts}),flush=True)
 json.dump({KWSLUG[k]:_wd(k)['id'] for k in kwcount if _wd(k)},open(os.path.join(WORK,'_temi_slug_wd.json'),'w'))
 top=[k for k,_ in kwcount.most_common(70)]
 mxk=kwcount[top[0]]
@@ -270,8 +341,10 @@ def cloud(pre,n=70):
 letters=collections.OrderedDict()
 for k in tlist: letters.setdefault((norm(kwname(k))[:1] or '#').upper(),[]).append(k)
 az='<nav class="jump">'+''.join(f'<a href="#l{L}">{L}</a>' for L in letters)+'</nav>'
-groups=''.join(f'<section class="ygroup" id="l{L}"><h2 class="yr">{L}</h2><ul class="tlist">'+''.join(f'<li class="entry" data-t="{esc(norm(kwname(k)))}"><a href="temi/{KWSLUG[k]}.html">{esc(kwname(k))}</a> <small>{kwcount[k]}</small></li>' for k in v)+'</ul></section>' for L,v in letters.items())
-open(os.path.join(OUT,'temi.html'),'w').write(page('Temi',f'<header class="phead"><h1>Temi</h1><p class="lead">Persone, paesi, partiti e questioni attorno a cui ruotano i testi, ricavati dalle parole chiave che Moscato assegnava agli articoli. Qui {len(tlist)} temi con almeno tre testi.</p></header><h2 class="sec">I più ricorrenti</h2>{cloud("")}<h2 class="sec">Tutti i temi</h2><div class="filt"><input type="search" placeholder="Cerca un tema, es. Trotskij" oninput="filtra(this.value)"><span id="fcount"></span></div>{az}{groups}','','temi.html'))
+groups=''.join(f'<section class="ygroup" id="l{L}"><h2 class="yr">{L}</h2><ul class="tlist">'+''.join(f'<li class="entry" data-t="{esc(norm(kwname(k)))}" data-tipo="{TIPO.get(k,("",""))[0].replace(" ","-")}"><a href="temi/{KWSLUG[k]}.html">{esc(kwname(k))}</a> <small>{kwcount[k]}</small></li>' for k in v)+'</ul></section>' for L,v in letters.items())
+_tc=collections.Counter(TIPO.get(k,('non classificato',''))[0] for k in tlist)
+tipobar='<div class="tipi" role="group" aria-label="Mostra per tipo"><button type="button" class="chip on" data-tipo="">Tutti <small>'+str(len(tlist))+'</small></button>'+''.join(f'<button type="button" class="chip" data-tipo="{t.replace(" ","-")}" id="tipo-{t.replace(" ","-")}">{_VOC.ETI[t]} <small>{_tc[t]}</small></button>' for t in _VOC.TIPI if _tc[t])+'</div>'
+open(os.path.join(OUT,'temi.html'),'w').write(page('Temi',f'<header class="phead"><h1>Temi</h1><p class="lead">Persone, paesi, partiti e questioni attorno a cui ruotano i testi, ricavati dalle parole chiave che Moscato assegnava agli articoli. Qui {len(tlist)} temi con almeno tre testi.</p></header><h2 class="sec">I più ricorrenti</h2>{cloud("")}<h2 class="sec">Tutti i temi</h2><p class="hint">Ogni tema è ricondotto a un tipo: persona, organizzazione, luogo, evento storico, concetto o pubblicazione. Le parole chiave originali degli articoli restano come erano: ogni pagina di tema le riporta, e l’elenco completo è nei <a href="dati/parole-chiave-originali.csv">dati</a>. Come sono stati unificati e classificati i temi è spiegato nei <a href="criteri.html#temi">criteri di edizione</a>.</p>{tipobar}<div class="filt"><input type="search" placeholder="Cerca un tema, es. Trotskij" oninput="filtra(this.value)"><span id="fcount"></span></div><div class="tipi-f">{az}{groups}</div>','','temi.html'))
 print('pages ok',len(tlist),flush=True)
 docs_by_cat=collections.defaultdict(list)
 for g,d in docs.items(): docs_by_cat[d.get('cat',0)].append((g,d))
@@ -335,7 +408,28 @@ topd=list(dict.fromkeys(DMSUB.get(1,[])+[x for x in DMSUB.get(0,[]) if x!=1 and 
 topd=[x for x in topd if count(x)]
 dcards=''.join(f'<a class="card" href="{{pre}}documenti/cat{x}.html"><b>{esc(dmname(x))}</b><span>{count(x)} documenti</span></a>' for x in topd)
 nrec=sum(1 for d in docs.values() if d.get('out'))
-open(os.path.join(OUT,'documenti','index.html'),'w').write(page('I grandi nodi del Novecento',f'<header class="phead"><h1>I grandi nodi del Novecento</h1><p class="lead">Saggi, capitoli di libri esauriti e materiali d’archivio che il sito offriva in download: {len(docs)} documenti, {nrec} dei quali recuperati e apribili da qui.</p></header><div class="filt"><input type="search" placeholder="Filtra i documenti di questa pagina…" oninput="filtra(this.value)"><span id="fcount"></span></div><div class="cards">{dcards.replace("{pre}","../")}</div>'+doclist(1,'../')+doclist(0,'../')+'<p class="hint">Per cercare dentro tutti i documenti usa la <a href="../cerca.html">ricerca</a>.</p>','../','documenti/index.html'))
+# --- conteggi: unica fonte per tutti i numeri dichiarati (dati/conteggi.json) ---
+_rpc=os.path.join(root,'recupero','rapporto.json'); _rpc=json.load(open(_rpc)) if os.path.exists(_rpc) else {}
+_din=[d for d in docs.values() if d.get('out')]; _dout=[(g,d) for g,d in docs.items() if not d.get('out')]
+CONTI={'articoli':len(arts),'articoli_joomla_estratti':len(D['arts']),'articoli_wordpress':len(D['wp']),'articoli_wordpress_unici':len(WP),
+ 'pagine_di_servizio_escluse':1+len(DROP_ART),'doppioni_uniti':len(DUP_ART),
+ 'documenti':len(docs),'documenti_in_archivio':nrec,'documenti_integri':sum(1 for d in _din if not d.get('broken')),'documenti_incompleti':sum(1 for d in _din if d.get('broken')),
+ 'documenti_assenti':len(_dout),'documenti_audio_video':sum(1 for g,d in _dout if dmname(d.get('cat',0))=='Audio e video'),
+ 'documenti_ritrovati_dopo':sum(1 for g,d in docs.items() if d.get('out') and (_rpc.get(str(g)) or {}).get('file')),
+ 'documenti_ritrovati_dopo_incompleti':sum(1 for g,d in docs.items() if d.get('out') and d.get('broken') and (_rpc.get(str(g)) or {}).get('file'))}
+CONTI['documenti_mancanti']=CONTI['documenti_assenti']-CONTI['documenti_audio_video']
+CONTI['temi_con_pagina']=len(tlist); CONTI['temi_nel_vocabolario']=len(kwcount)
+for _t in ('persona','organizzazione','luogo','evento','concetto','pubblicazione','non classificato'): CONTI['temi_'+_t.replace(' ','_')]=sum(1 for k in kwcount if TIPO.get(k,('',''))[0]==_t)
+CONTI['temi_da_verificare']=len(AMBT)
+CONTI['temi_con_wikidata']=sum(1 for k in kwcount if _wd(k))
+CONTI['articoli_prima_della_pulizia']=CONTI['articoli_joomla_estratti']-1+CONTI['articoli_wordpress_unici']
+assert CONTI['documenti_integri']+CONTI['documenti_incompleti']+CONTI['documenti_mancanti']+CONTI['documenti_audio_video']==CONTI['documenti'],CONTI
+assert CONTI['articoli_prima_della_pulizia']-CONTI['pagine_di_servizio_escluse']+1-CONTI['doppioni_uniti']==CONTI['articoli'],CONTI
+def _n(v): return f'{v:,}'.replace(',','.')
+os.makedirs(os.path.join(OUT,'dati'),exist_ok=True)
+json.dump(CONTI,open(os.path.join(OUT,'dati','conteggi.json'),'w'),ensure_ascii=False,indent=1)
+_ci,_cn,_ca,_cm,_cv=(CONTI[k] for k in ('documenti_integri','documenti_incompleti','documenti_assenti','documenti_mancanti','documenti_audio_video'))
+open(os.path.join(OUT,'documenti','index.html'),'w').write(page('I grandi nodi del Novecento',f'<header class="phead"><h1>I grandi nodi del Novecento</h1><p class="lead">Saggi, capitoli di libri esauriti e materiali d’archivio che il sito offriva in download: {len(docs)} documenti censiti. {nrec} sono qui e si aprono da questa pagina: {_ci} integri e {_cn} incompleti, troncati al primo megabyte. Gli altri {_ca} mancano: {_cm} non sono mai stati salvati dall’Internet Archive, {_cv} erano video o audio esterni.</p></header><div class="filt"><input type="search" placeholder="Filtra i documenti di questa pagina…" oninput="filtra(this.value)"><span id="fcount"></span></div><div class="cards">{dcards.replace("{pre}","../")}</div>'+doclist(1,'../')+doclist(0,'../')+'<p class="hint">Per cercare dentro tutti i documenti usa la <a href="../cerca.html">ricerca</a>.</p>','../','documenti/index.html'))
 # data for JS
 CATS={str(c):catname(c) for c in bycat}; CATS['doc']='Documenti · I grandi nodi del Novecento'
 meta=[[str(a['id']),a['title'],a['date'],a['catid'],a['lang'],a['kws'],a['exc'],a['words']] for a in arts]
@@ -361,7 +455,7 @@ lead=recent[0]
 featured=''.join(entry(a,'') for a in recent[1:6])
 nodes=''.join(f'<a class="card" href="documenti/cat{x}.html"><b>{esc(dmname(x))}</b><span>{count(x)} documenti</span></a>' for x in topd[:9])
 chi='<a href="biografia.html">Chi era Antonio Moscato</a>' if 22 in A else ''
-home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {len(arts)} articoli · {len(docs)} documenti</p><h1>Movimento operaio<span>Il sito di Antonio Moscato, ricostruito</span></h1>
+home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {_n(len(arts))} articoli · {nrec} documenti su {len(docs)}</p><h1>Movimento operaio<span>Il sito di Antonio Moscato, ricostruito</span></h1>
 <blockquote>Il sito «è nato dalla proposta di alcuni studenti di raccogliere e quindi non far disperdere una notevole quantità di saggi, articoli, libri ormai esauriti da tempo».<cite>Antonio Moscato, dalla pagina di benvenuto · {chi}</cite></blockquote></div>
 <form class="bigsearch" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca tra articoli e documenti: Togliatti, Grecia, Guevara…" aria-label="Cerca"><button>Cerca</button></form>
 <p class="quick"><a href="progetto.html">Il progetto di recupero</a> · <a href="cerca.html">ricerca avanzata</a> · <a href="#" onclick="return aCaso()">un testo a caso</a></p></section>
@@ -395,6 +489,7 @@ for f in ['indice.js']:
 _og='<header class="phead"><p class="kick">Accadde oggi</p><h1 id="ot"></h1><p class="lead">Cosa pubblicava Antonio Moscato sul suo sito in questo giorno dell’anno, dal 2009 al 2021. Scegli una data o scorri i giorni.</p><p class="meta" id="on"></p></header><div class="ocontrols"><button type="button" id="oprev">← Giorno prima</button><select id="od" aria-label="Giorno"></select><select id="om" aria-label="Mese"></select><button type="button" id="onext">Giorno dopo →</button><button type="button" id="otoday">Oggi</button></div><div id="oggi-pagina"><ul class="entries" id="ol"></ul></div><p class="hint">Il pulsante «Copia per i social» prepara una riga pronta da incollare, con il link al testo.</p><script src="assets/meta.js"></script><script src="assets/oggi.js"></script>'
 open(os.path.join(OUT,'accadde-oggi.html'),'w').write(page('Accadde oggi',_og,'','accadde-oggi.html'))
 _pt=open(os.path.join(WORK,'progetto.html')).read()
+for _k,_v in CONTI.items(): _pt=_pt.replace('{{'+_k+'}}',_n(_v))
 _rpf=os.path.join(root,'recupero','rapporto.json'); _mif=os.path.join(root,'recupero','mancanti.json')
 _rp=json.load(open(_rpf)) if os.path.exists(_rpf) else {}
 _mi=json.load(open(_mif)) if os.path.exists(_mif) else [{'gid':g,'title':d.get('title',''),'filename':d.get('filename','')} for g,d in sorted(docs.items()) if not d.get('out')]
@@ -485,6 +580,9 @@ _ai={str(a['id']):{'date':a['date'],'lang':a['lang'],'kws':[kwname(k) for k in a
 print('seo pagine',_seo.run(OUT,_ai),flush=True)
 _spec=_iu.spec_from_file_location('catalogo',os.path.join(WORK,'catalogo.py')); _cat=_iu.module_from_spec(_spec); _spec.loader.exec_module(_cat)
 print('catalogo',_cat.run(OUT,root,WORK,arts,docs,catname,dmname,kwname),flush=True)
+_spec=_iu.spec_from_file_location('provenienza',os.path.join(WORK,'provenienza.py')); _pv=_iu.module_from_spec(_spec); _spec.loader.exec_module(_pv)
+print('provenienza',_pv.run(OUT,root,WORK,arts,docs,dmname,DUP_ART),flush=True)
 _sp.run([sys.executable,os.path.join(WORK,'confronto.py'),root,OUT,'200'],check=False,stdout=_sp.DEVNULL)
 _sp.run([sys.executable,os.path.join(WORK,'integrita.py'),OUT],check=False)
+_sp.run([sys.executable,os.path.join(WORK,'verifica_conteggi.py'),OUT,root],check=False)
 print('DONE',flush=True)

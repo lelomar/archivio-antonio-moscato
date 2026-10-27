@@ -81,3 +81,9 @@ document.addEventListener('click',function(e){
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-copy]');if(!b)return;var u=b.getAttribute('data-copy');
  function ok(){var t=b.textContent;b.textContent='Copiato ✓';setTimeout(function(){b.textContent=t},1800)}
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){prompt('Copia il link:',u)})}else{prompt('Copia il link:',u)}});
+
+/* Indice dei temi: filtro per tipo di entità (persona, organizzazione, luogo…) */
+document.addEventListener('DOMContentLoaded',function(){var b=document.querySelector('.tipi'),w=document.querySelector('.tipi-f');if(!b||!w)return;
+ function set(t){t=t||'';w.setAttribute('data-f',t);b.querySelectorAll('button').forEach(function(x){var on=(x.getAttribute('data-tipo')||'')===t;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false')})}
+ b.addEventListener('click',function(e){var x=e.target.closest('button');if(!x)return;set(x.getAttribute('data-tipo'));try{history.replaceState(null,'',x.getAttribute('data-tipo')?'#tipo-'+x.getAttribute('data-tipo'):location.pathname)}catch(_){}});
+ var h=location.hash.match(/^#tipo-(.+)$/);set(h?decodeURIComponent(h[1]):'')});

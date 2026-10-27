@@ -56,11 +56,12 @@ def run(OUT,root,work,arts,docs,catname,dmname,kwname):
     rows_d=[]
     for g,d in sorted(docs.items()):
         r=rap.get(str(g)) or {}
-        if d.get('out') and r.get('file'): stato='ritrovato dopo la ricostruzione'
-        elif d.get('out') and d.get('broken'): stato='troncato a 1 MB'
-        elif d.get('out'): stato='recuperato'
+        # stato del file e modo del recupero sono due informazioni distinte
+        if d.get('out') and d.get('broken'): stato='incompleto (troncato a 1 MB)'
+        elif d.get('out'): stato='integro'
         elif dmname(d.get('cat',0))=='Audio e video': stato='audio/video non archiviato'
         else: stato='mancante'
+        recupero=('recupero mirato (dopo la prima ricostruzione)' if r.get('file') else 'prima ricostruzione') if d.get('out') else ''
         orig=f"http://antoniomoscato.altervista.org/index.php?option=com_docman&task=doc_download&gid={g}&Itemid=2"
         if r.get('from'):
             m=re.match(r'https://web\.archive\.org/web/(\d+)/(.*)',r['from']); ts,u=(m.group(1),m.group(2)) if m else ('',orig)
@@ -69,7 +70,7 @@ def run(OUT,root,work,arts,docs,catname,dmname,kwname):
         page=d.get('page') or d.get('out') or ''
         ext=(d.get('out') or '').rsplit('.',1)[-1].upper() if d.get('out') else ''
         rows_d.append({'id':f'd{g}','tipo':'documento','titolo':(d.get('title') or d.get('filename') or '').replace(' hot!',''),'autore':'','nota_autore':'','attribuzione':'da verificare',
-            'data':d.get('iso','') or '','rubrica':dmname(d.get('cat',0)),'lingua':d.get('lang','it'),'formato':ext,'stato':stato,
+            'data':d.get('iso','') or '','rubrica':dmname(d.get('cat',0)),'lingua':d.get('lang','it'),'formato':ext,'stato':stato,'recupero':recupero,
             'dimensione_byte':d.get('size','') or '','nome_file_originale':d.get('filename') or '','file_archivio':d.get('out') or '',
             'url_archivio':(BASE+page) if page else '','url_originale':html.unescape(u),'wayback_timestamp':ts,
             'wayback_url':(WB+ts+'/'+html.unescape(u)) if ts else ''})

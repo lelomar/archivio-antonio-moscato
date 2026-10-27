@@ -1,0 +1,298 @@
+{
+ "data_verifica": "2026-10-27",
+ "verificati": 29,
+ "identici": 23,
+ "risultati": [
+  {
+   "id": "14",
+   "titolo": "Una polemica su Guerre e Pace",
+   "wayback": "https://web.archive.org/web/20200919065237id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=14:una-polemica-su-guerre-e-pace&catid=6:il-dibattito-sul-qsocialismo-realeq&Itemid=15",
+   "sha256_locale": "4c2a979f1764dfe0ceada553ac2ae2971429c2322594014c8d307caa8468390b",
+   "sha256_wayback": "4c2a979f1764dfe0ceada553ac2ae2971429c2322594014c8d307caa8468390b",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "22",
+   "titolo": "Chi è Antonio Moscato",
+   "wayback": "https://web.archive.org/web/20210419220037id_/http://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=22&Itemid=33",
+   "sha256_locale": "0a62d132cf9d33c8674a3f6010b02c5e2561b64781d3a33eafbe761d7b221250",
+   "sha256_wayback": "c8e75c49908bead9742517ae4f0ccad8d6ae70bf7c2ec42b392acd45883dedca",
+   "esito": "diverso",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "182",
+   "titolo": "Lander y Chávez",
+   "wayback": "https://web.archive.org/web/20201027184421id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=182:lander-y-chavez&catid=32:actualidad-latinoamericana&Itemid=42",
+   "sha256_locale": "cbcb892bc9daf81940733d9e363461b4512672a4bc226a3b36507cde6c31e736",
+   "sha256_wayback": "cbcb892bc9daf81940733d9e363461b4512672a4bc226a3b36507cde6c31e736",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "168",
+   "titolo": "Haiti, un debito odioso",
+   "wayback": "https://web.archive.org/web/20200923235047id_/http://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=168:haiti-un-debito-odioso&catid=20:ipocrisie-e-dimenticanze&Itemid=31",
+   "sha256_locale": "289cb6c0bfe3e0e514ff67b30ea79f7a720a3c16a93317b9a24c2cfaadbb1463",
+   "sha256_wayback": "2d7e9bc73d89c99bac765b8a8e69f21253df8976a892f5328f37b9849018a1f6",
+   "esito": "diverso",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "646",
+   "titolo": "Disgustoso ma chiarificatore",
+   "wayback": "https://web.archive.org/web/20200926152019id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=646:disgustoso-ma-chiarificatore&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "05ba708bb5633442d080a6f1ea7f9f444d4517d62ae1eb4c2582e7ec7d875ad2",
+   "sha256_wayback": "05ba708bb5633442d080a6f1ea7f9f444d4517d62ae1eb4c2582e7ec7d875ad2",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "496",
+   "titolo": "Il labirinto colombiano",
+   "wayback": "https://web.archive.org/web/20200926050301id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=496:il-labirinto-colombiano&catid=8:lamerica-latina&Itemid=16",
+   "sha256_locale": "8b34bf14eb8cf6d83b8d22d4f1e0c35984346d4378fabd82ccff264b1a9bde1b",
+   "sha256_wayback": "8b34bf14eb8cf6d83b8d22d4f1e0c35984346d4378fabd82ccff264b1a9bde1b",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "607",
+   "titolo": "Siria, una rivolta eroica",
+   "wayback": "https://web.archive.org/web/20210119191434id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=607:siria-una-rivolta-eroica&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "813ecf38ed72ff59cca4dfd0bd7f4fcbf59e5be8eaf01d3d60c1a06bb029c50a",
+   "sha256_wayback": "813ecf38ed72ff59cca4dfd0bd7f4fcbf59e5be8eaf01d3d60c1a06bb029c50a",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "828",
+   "titolo": "L’Argentina recupera il suo petrolio?***",
+   "wayback": "https://web.archive.org/web/20201203180303id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=828:largentina-recupera-il-suo-petrolio&catid=8:lamerica-latina&Itemid=16",
+   "sha256_locale": "9d3057456c643d7a25cbee7c19e2d9a0893d864fd3fce312d15c874da6745366",
+   "sha256_wayback": "9d3057456c643d7a25cbee7c19e2d9a0893d864fd3fce312d15c874da6745366",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1082",
+   "titolo": "Con Gaza",
+   "wayback": "https://web.archive.org/web/20200930233124id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1082:con-gaza&catid=7:medio-oriente-e-mondo-arabo-islamico&Itemid=17",
+   "sha256_locale": "52e26d33f1a54968c44d9abf49648d328720b5f46e1bb42d7cfcf04eef85d9f4",
+   "sha256_wayback": "52e26d33f1a54968c44d9abf49648d328720b5f46e1bb42d7cfcf04eef85d9f4",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "913",
+   "titolo": "Mazzeo: fermare la guerra è possibile",
+   "wayback": "https://web.archive.org/web/20201205184525id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=913:mazzeo-fermare-la-guerra-e-possibile&catid=20:ipocrisie-e-dimenticanze&Itemid=31",
+   "sha256_locale": "2b3e271080b24a07fbd11358462ba59824af3e1963dfb65f89275b1ef0b8e20c",
+   "sha256_wayback": "2b3e271080b24a07fbd11358462ba59824af3e1963dfb65f89275b1ef0b8e20c",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1177",
+   "titolo": "È colpa nostra…",
+   "wayback": "https://web.archive.org/web/20201205184220id_/http://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1177:e-colpa-nostra&catid=20:ipocrisie-e-dimenticanze&Itemid=31",
+   "sha256_locale": "bc20addd60d7acd6e0459b0ce73bfcfce6ff46b165e42ca73801e9c9ae2a399a",
+   "sha256_wayback": "73a7d41bcef2158a56551d323060fd00a0abe4a69d404fe3aba93c03d5effba2",
+   "esito": "diverso",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1208",
+   "titolo": "Katz: un bilancio dei Kirchner",
+   "wayback": "https://web.archive.org/web/20201130210607id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1208:katz-un-bilancio-dei-kirchner&catid=8:lamerica-latina&Itemid=16",
+   "sha256_locale": "a8748331daf91a2212ce89ad381514b5944be1cc5676c25cabf7b329bd3b386e",
+   "sha256_wayback": "a8748331daf91a2212ce89ad381514b5944be1cc5676c25cabf7b329bd3b386e",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1446",
+   "titolo": "No Tav: per Caselli terrorista è chi resiste",
+   "wayback": "https://web.archive.org/web/20201027042422id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1446:no-tav-per-caselli-terrorista-e-chi-resiste&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "0aafe08e39392f5d41a9679d52c295c0212f0816bdc3a533811847e5ccd98dd6",
+   "sha256_wayback": "0aafe08e39392f5d41a9679d52c295c0212f0816bdc3a533811847e5ccd98dd6",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1251",
+   "titolo": "F35 e spese militari, le alternative possibili",
+   "wayback": "https://web.archive.org/web/20201203171611id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1251:f35-e-spese-militari-le-alternative-possibili&catid=57:imperialismi&Itemid=73",
+   "sha256_locale": "8f90547a0674e8491b67019d984521ff5508345e72ff0d224a87fa4fb3850e8e",
+   "sha256_wayback": "8f90547a0674e8491b67019d984521ff5508345e72ff0d224a87fa4fb3850e8e",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1800",
+   "titolo": "Il nuovo culto di Berlinguer",
+   "wayback": "https://web.archive.org/web/20210116183216id_/http://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1800:il-nuovo-culto-di-berlinguer&catid=20:ipocrisie-e-dimenticanze&Itemid=31",
+   "sha256_locale": "3f4ccd82e1786ca5925d6b6ee3cdf79d4b34d8adcec18cf9d8429f04e82090e0",
+   "sha256_wayback": "be9ba0d0e50d31484ba7d1e20760c44dd6a137f83282e9b2277c51c9c95370fd",
+   "esito": "diverso",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1902",
+   "titolo": "Euro o non euro: quel che ha da venire poi…",
+   "wayback": "https://web.archive.org/web/20210417235316id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1902:euro-o-non-euro-quel-che-ha-da-venire-poi&catid=57:imperialismi&Itemid=73",
+   "sha256_locale": "41c80217a43e363ef2d667829885c9aeedc2499188277be519e6c0df03a171d9",
+   "sha256_wayback": "41c80217a43e363ef2d667829885c9aeedc2499188277be519e6c0df03a171d9",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "1978",
+   "titolo": "Ferrario: Economia mondiale: allacciatevi le cinture! (1)",
+   "wayback": "https://web.archive.org/web/20210127013538id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=1978:ferrario-economia-mondiale-allacciatevi-le-cinture-1&catid=57:imperialismi&Itemid=73",
+   "sha256_locale": "8a68e9d0a4ee3a09778fd4455a29b42769533d3640780d39a9c55496a62fd98b",
+   "sha256_wayback": "8a68e9d0a4ee3a09778fd4455a29b42769533d3640780d39a9c55496a62fd98b",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2388",
+   "titolo": "Da Atene, un’altra riflessione sulle elezioni greche",
+   "wayback": "https://web.archive.org/web/20200930222657id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2388:da-atene-unaltra-riflessione-sulle-elezioni-greche&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "6cc010a18f7e318f35611e49ae48663bec84e68cb406d4bd5028df498fe52310",
+   "sha256_wayback": "6cc010a18f7e318f35611e49ae48663bec84e68cb406d4bd5028df498fe52310",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2045",
+   "titolo": "La guerra di Renzi ai lavoratori",
+   "wayback": "https://web.archive.org/web/20210127004226id_/http://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2045:la-guerra-di-renzi-ai-lavoratori&catid=20:ipocrisie-e-dimenticanze&Itemid=31",
+   "sha256_locale": "78f642492241688fe346555911174e55fb0a3eb4c4ccef7b7439fe7ea3121340",
+   "sha256_wayback": "a03f488febe7a44478c79ec7474c6983c75ad994df4a523efb2faeb04d380d21",
+   "esito": "diverso",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2433",
+   "titolo": "Kouvelakis - Il Portogallo visto dalla Grecia",
+   "wayback": "https://web.archive.org/web/20201001083123id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2433:kouvelakis-il-portogallo-visto-dalla-grecia&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "eb83de1d770e31d14ed85a422771ee73d0eb07d87b5ab675cdef5361eb8c0d3b",
+   "sha256_wayback": "eb83de1d770e31d14ed85a422771ee73d0eb07d87b5ab675cdef5361eb8c0d3b",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2098",
+   "titolo": "Gli inizi del governo Syriza in Grecia: un granello di sabbia negli ingranaggi",
+   "wayback": "https://web.archive.org/web/20200930231654id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2098:gli-inizi-del-governo-syriza-in-grecia-un-granello-di-sabbia-negli-ingranaggi&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "702c7341eb8f0189a8093da2c481f9f577cb363aed342e6d8341aae75e80df8c",
+   "sha256_wayback": "702c7341eb8f0189a8093da2c481f9f577cb363aed342e6d8341aae75e80df8c",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2506",
+   "titolo": "Egitto - Quali prospettive  per la nuova ondata di scioperi?",
+   "wayback": "https://web.archive.org/web/20200925105330id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2506:egitto-quali-prospettive-per-la-nuova-ondata-di-scioperi&catid=7:medio-oriente-e-mondo-arabo-islamico&Itemid=17",
+   "sha256_locale": "3040ee015dc6f6ae293db2e5596e35e7dec3856d582e07de98694b466634d84f",
+   "sha256_wayback": "3040ee015dc6f6ae293db2e5596e35e7dec3856d582e07de98694b466634d84f",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2684",
+   "titolo": "Messico, candidatura presidenziale dell’EZLN",
+   "wayback": "https://web.archive.org/web/20200922090655id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2684:messico-candidatura-presidenziale-dellezln&catid=8:lamerica-latina&Itemid=16",
+   "sha256_locale": "5fcd50418ed7c44f86dceccb6659d27e76406cdf722e484e5c188d4384e80c62",
+   "sha256_wayback": "5fcd50418ed7c44f86dceccb6659d27e76406cdf722e484e5c188d4384e80c62",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2869",
+   "titolo": "A cinquant’anni dalla morte di un grande marxista",
+   "wayback": "https://web.archive.org/web/20210127012013id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2869:a-cinquantanni-dalla-morte-di-un-grande-marxista&catid=6:il-dibattito-sul-qsocialismo-realeq&Itemid=15",
+   "sha256_locale": "703ddf0c7ffcb93d9dfb7ea7c2ed6b9a9065c0ec229bf0fdcc46d6efd36921fe",
+   "sha256_wayback": "703ddf0c7ffcb93d9dfb7ea7c2ed6b9a9065c0ec229bf0fdcc46d6efd36921fe",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2850",
+   "titolo": "Catalogna | Dal «danno irreparabile» al 1° ottobre",
+   "wayback": "https://web.archive.org/web/20201022205843id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2850:catalogna--dal-ldanno-irreparabiler-al-1d-ottobre&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "23fcf524736c39034366e622c91cc344ca289f8fe9d10d8978a467e854f767cf",
+   "sha256_wayback": "23fcf524736c39034366e622c91cc344ca289f8fe9d10d8978a467e854f767cf",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "2972",
+   "titolo": "Slovenia | Crolla il centrosinistra e avanza la destra. Ma avanza anche la sinistra...",
+   "wayback": "https://web.archive.org/web/20201109034309id_/http://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=2972:slovenia--crolla-il-centrosinistra-e-avanza-la-destra-ma-avanza-anche-la-sinistra&catid=28:allordine-del-giorno-i-commenti-a-caldo&Itemid=39",
+   "sha256_locale": "a536832c0aff0d973e8efc0ab4fe6b6eb52ba017db3bb48234e73051364f4327",
+   "sha256_wayback": "1dcc1d7832e5045c5ab0d4abe3ac72892e3153f4ffaa7f75dca36f40a4ad32f1",
+   "esito": "diverso",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "3121",
+   "titolo": "L’ex ILVA e gli F35",
+   "wayback": "https://web.archive.org/web/20201204165949id_/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=3121:lex-ilva-e-gli-f35&catid=20:ipocrisie-e-dimenticanze&Itemid=31",
+   "sha256_locale": "d9773a1d1c74775689c5fd2b62810e96e2a31573255b0fae2af3309778f273dc",
+   "sha256_wayback": "d9773a1d1c74775689c5fd2b62810e96e2a31573255b0fae2af3309778f273dc",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "3163",
+   "titolo": "La ripresa dell’attività economica ci spedirà all’inferno,  di Mike Davis",
+   "wayback": "https://web.archive.org/web/20210116181139id_/https://antoniomoscato.altervista.org/index.php?view=article&catid=20%3Aipocrisie-e-dimenticanze&id=3163%3A2020-07-03-13-58-38&tmpl=component&print=1&layout=default&page=&option=com_content&Itemid=31",
+   "sha256_locale": "9b773a5bd4449d247b8092fef77a4a999a4746b83aeff3af93d037bd32cd5acc",
+   "sha256_wayback": "9b773a5bd4449d247b8092fef77a4a999a4746b83aeff3af93d037bd32cd5acc",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  },
+  {
+   "id": "3189",
+   "titolo": "Cina | Successi economici e scosse sociali",
+   "wayback": "https://web.archive.org/web/20210419225232id_/http://www.antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=3189:cina--successi-economici-e-scosse-sociali&catid=57:imperialismi&Itemid=73",
+   "sha256_locale": "0aed74dac753eb5d049575016e77d9da21cf67a5f4d1905666d431f8a47b6be5",
+   "sha256_wayback": "0aed74dac753eb5d049575016e77d9da21cf67a5f4d1905666d431f8a47b6be5",
+   "esito": "identico",
+   "testo": "identico",
+   "differenze_testo": []
+  }
+ ],
+ "testi_identici": 29
+}

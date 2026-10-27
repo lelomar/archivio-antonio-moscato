@@ -1,0 +1,31 @@
+name: "✍️ Correggi l'autore di un testo"
+description: "L'autore indicato per un articolo è sbagliato, incerto o mancante."
+title: "[Autore] "
+labels: ["autore"]
+body:
+  - type: markdown
+    attributes:
+      value: "Grazie. Ogni testo dell'archivio indica chi l'ha scritto; molte attribuzioni sono state ricavate in automatico dalle firme nel testo e vanno verificate. Dicci chi è l'autore giusto e, se puoi, da dove lo sai."
+  - type: input
+    id: articolo
+    attributes:
+      label: Articolo
+      placeholder: "https://lelomar.github.io/archivio-antonio-moscato/articoli/…"
+    validations:
+      required: true
+  - type: input
+    id: autore_attuale
+    attributes:
+      label: Autore indicato ora
+  - type: input
+    id: autore_corretto
+    attributes:
+      label: Autore corretto
+      description: "Nome e cognome. Se il testo ha una nota o una postilla di Antonio Moscato, indicalo."
+    validations:
+      required: true
+  - type: textarea
+    id: fonte
+    attributes:
+      label: Da dove lo sai
+      description: "Una firma nel testo, la pubblicazione originale, un ricordo diretto…"

@@ -139,6 +139,7 @@ def clean(html_s,pre):
         st=t.get('style','') or ''
         keep='; '.join(m.group(1) for m in KEEPSTY.finditer(st))
         al=t.get('align'); cls=t.get('class')
+        if t.get('name') and not t.get('id') and re.match(r'^[A-Za-z_][\w.:-]*$',str(t.get('name'))): t['id']=t['name']  # ancore delle note (Word: name="_ftn1")
         t.attrs={k:v for k,v in t.attrs.items() if k in ('href','src','alt','title','colspan','rowspan','id')}
         if cls and 'embed' in cls: t['class']='embed'
         if keep: t['style']=keep
@@ -164,8 +165,8 @@ NAV=[('index.html','Home'),('attualita.html','Attualità e polemiche'),('documen
 def page(title,content,pre,active=''):
     nav=''.join(f'<a href="{pre}{h}"{" class=on" if h==active else ""}>{esc(t)}</a>' for h,t in NAV)
     return f'''<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(title)} · Movimento operaio – La pagina di Antonio Moscato</title><link rel="stylesheet" href="{pre}assets/stile.css"></head>
-<body><header class="top"><div class="wrap"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">La pagina di Antonio Moscato</span></a>
+<title>{esc(title)} · Movimento operaio, il sito di Antonio Moscato ricostruito</title><link rel="stylesheet" href="{pre}assets/stile.css"></head>
+<body><header class="top"><div class="wrap"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">Il sito di Antonio Moscato, ricostruito</span></a>
 <nav>{nav}</nav></div></header><main class="wrap">{content}</main>
 <footer class="wrap foot"><p>Ricostruzione statica, consultabile offline, del sito <em>antoniomoscato.altervista.org</em> (2009–2021), ricavata dalle copie conservate dall’Internet Archive. I link segnati con ↗ portano a pagine esterne o non recuperate e richiedono una connessione.</p></footer></body></html>'''
 def sortkey(a): return (a['date'] or '0000', str(a['id']))
@@ -273,7 +274,7 @@ rl=''.join(li(a,'') for a in recent)
 chi='<a href="articoli/22.html">Chi è Antonio Moscato</a>' if 22 in A else ''
 arc='<a href="articoli/74.html">Indice dell’Archivio</a>' if 74 in A else ''
 links=' · '.join(x for x in [chi,arc,'<a href="cerca.html">Cerca nel sito</a>'] if x)
-home=f'''<section class="hero"><h1>Movimento operaio<span>La pagina di Antonio Moscato</span></h1>
+home=f'''<section class="hero"><h1>Movimento operaio<span>Il sito di Antonio Moscato, ricostruito</span></h1>
 <blockquote>Il sito «è nato dalla proposta di alcuni studenti di raccogliere e quindi non far disperdere una notevole quantità di saggi, articoli, libri ormai esauriti da tempo».<cite>Antonio Moscato, dalla pagina di benvenuto</cite></blockquote>
 <p class="links">{links}</p></section>
 <div class="cards big"><a class="card" href="attualita.html"><b>Attualità e polemiche</b><span>{len(arts)} articoli, 2009–2021</span></a>

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "Se usi o citi questo archivio, ti chiediamo di citarlo come indicato qui. Per i singoli testi indica anche autore, titolo e data dell'articolo."
-title: "Movimento operaio – La pagina di Antonio Moscato. Archivio ricostruito (2009-2021)"
+title: "Movimento operaio. Il sito di Antonio Moscato (2009-2021), ricostruito"
 abstract: "Archivio ricostruito del sito di Antonio Moscato (1938-2026), storico del movimento operaio e docente all'università di Lecce: 2.928 articoli e 180 saggi recuperati dalle copie dell'Internet Archive, consultabili online e offline."
 type: dataset
 authors:
@@ -9,8 +9,8 @@ authors:
     email: lelomar@gmail.com
     website: "https://lelomar.substack.com"
 doi: "10.5281/zenodo.23670900"
-version: "1.0.2"
-date-released: "2026-10-26"
+version: "1.1.0"
+date-released: "2026-10-27"
 url: "https://lelomar.github.io/archivio-antonio-moscato/"
 repository-code: "https://github.com/lelomar/archivio-antonio-moscato"
 repository-artifact: "https://archive.org/details/archivio-antonio-moscato"

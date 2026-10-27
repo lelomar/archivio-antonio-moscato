@@ -97,15 +97,15 @@ for a in arts:
             dy=abs(int(a['date'][:4])-int(b['date'][:4])); sc[bid]-=0.15*dy
     a['rel']=[i for i,_ in sc.most_common(6) if _>1.0][:6]
 print('prep ok',N,'kw',len(kwcount),'es',sum(1 for a in arts if a['lang']=='es'),flush=True)
-NAV=[('index.html','Home'),('attualita.html','Rubriche'),('temi.html','Temi'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Cronologia'),('accadde-oggi.html','Accadde oggi'),('cerca.html','Ricerca')]
+NAV=[('index.html','Home'),('attualita.html','Rubriche'),('temi.html','Temi'),('autori.html','Autori'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Cronologia'),('accadde-oggi.html','Accadde oggi'),('cerca.html','Ricerca')]
 def page(title,content,pre,active='',body_cls='',lang='it'):
     nav=''.join(f'<a href="{pre}{h}"{" class=on aria-current=page" if h==active else ""}>{esc(t)}</a>' for h,t in NAV)
     return f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(title)} · Movimento operaio – La pagina di Antonio Moscato</title><link rel="stylesheet" href="{pre}assets/stile.css"><script src="{pre}assets/sito.js"></script></head>
-<body class="{body_cls}" data-pre="{pre}"><a class="skip" href="#contenuto">Salta al contenuto</a><div id="prog" aria-hidden="true"></div><div class="credit"><div class="wrap"><a href="{pre}progetto.html">Il progetto di recupero</a> a cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire · lelomar.substack.com</a></div></div><header class="top"><div class="wrap bar"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">La pagina di Antonio Moscato</span></a>
-<form class="mini" role="search" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca nell’archivio…" aria-label="Cerca"><button aria-label="Cerca">⌕</button></form></div>
-<div class="wrap"><nav class="mainnav" aria-label="Menu principale">{nav}</nav></div></header><main class="wrap" id="contenuto" tabindex="-1">{content}</main>
-<footer class="foot"><div class="wrap"><p><b>Movimento operaio – La pagina di Antonio Moscato</b>. Ricostruzione statica, consultabile offline, del sito <em>antoniomoscato.altervista.org</em> (2009–2021), ricavata dalle copie conservate dall’Internet Archive. Codice libero (GPL-3.0) su <a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">GitHub</a>. Recupero, ricostruzione e cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire</a>.</p><p>I link segnati con ↗ portano a siti esterni o a pagine non recuperate e richiedono una connessione.</p></div></footer>
+<title>{esc(title)} · Movimento operaio, il sito di Antonio Moscato ricostruito</title><link rel="stylesheet" href="{pre}assets/stile.css"><script src="{pre}assets/sito.js"></script></head>
+<body class="{body_cls}" data-pre="{pre}"><a class="skip" href="#contenuto">Salta al contenuto</a><div id="prog" aria-hidden="true"></div><div class="credit"><div class="wrap"><a href="{pre}progetto.html">Il progetto di recupero</a> a cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire · lelomar.substack.com</a></div></div><header class="top"><div class="wrap bar"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">Il sito di Antonio Moscato, ricostruito</span></a>
+<form class="mini" role="search" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca nell’archivio…" aria-label="Cerca"><button aria-label="Cerca">⌕</button></form><button class="hamb" type="button" aria-expanded="false" aria-controls="menu"><span class="hl" aria-hidden="true"></span>Menu</button></div>
+<div class="wrap"><nav class="mainnav" id="menu" aria-label="Menu principale">{nav}</nav></div></header><main class="wrap" id="contenuto" tabindex="-1">{content}</main>
+<footer class="foot"><div class="wrap"><p><b>Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito</b>. Versione statica, consultabile offline, del sito <em>antoniomoscato.altervista.org</em> (2009–2021), ricavata dalle copie conservate dall’Internet Archive. <a href="{pre}criteri.html">Criteri di edizione</a>. Codice libero (GPL-3.0) su <a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">GitHub</a>. Recupero, ricostruzione e cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire</a>.</p><p>I link segnati con ↗ portano a siti esterni o a pagine non recuperate e richiedono una connessione.</p></div></footer>
 </body></html>'''
 def chips(ks,pre,n=8):
     return ''.join(f'<a class="chip" href="{pre}temi/{KWSLUG[k]}.html">{esc(kwname(k))}</a>' if kwcount[k]>=3 else f'<a class="chip" href="{pre}cerca.html#tema={urllib.parse.quote(k)}">{esc(kwname(k))}</a>' for k in ks[:n])
@@ -125,6 +125,56 @@ def rtime(w):
     m=max(1,round(w/220)); return f'{m} min di lettura'
 bycat=collections.defaultdict(list)
 for a in arts: bycat[a['catid']].append(a)
+# --- autori: proposte automatiche + correzioni verificate ---
+import urllib.parse as _up
+_AUT={r['id']:r for r in json.load(open(os.path.join(WORK,'autori_proposte.json')))}
+_COR=json.load(open(os.path.join(WORK,'autori_correzioni.json'))) if os.path.exists(os.path.join(WORK,'autori_correzioni.json')) else {}
+for _k,_v in _COR.items():
+    if _k in _AUT: _AUT[_k].update(_v); _AUT[_k]['certezza']='verificata'
+for a in arts:
+    r=_AUT.get(str(a['id']),{}); a['autore']=r.get('autore') or ''; a['cert']=r.get('certezza','presunta'); a['mosc']=r.get('moscato','')
+_DS=json.load(open(os.path.join(WORK,'date_scrittura.json'))) if os.path.exists(os.path.join(WORK,'date_scrittura.json')) else {}
+_DC=json.load(open(os.path.join(WORK,'date_correzioni.json'))) if os.path.exists(os.path.join(WORK,'date_correzioni.json')) else {}
+_DS.update(_DC)
+for a in arts:
+    d=_DS.get(str(a['id'])); a['scritto']=d['etichetta'] if d else ''; a['scritto_ind']=d.get('indizio','') if d else ''
+GH='https://github.com/lelomar/archivio-antonio-moscato/issues/new'
+MAILTO='lelomar@gmail.com'
+def segnala(a,url):
+    gh=GH+'?'+_up.urlencode({'template':'3-autore.yml','title':'[Autore] '+a['title'][:80],'articolo':url,'autore_attuale':a['autore'] or 'non indicato','labels':'autore'},quote_via=_up.quote)
+    ml='mailto:'+MAILTO+'?subject='+_up.quote('correzione proposta progetto moscato')+'&body='+_up.quote('Articolo: '+url+'\n\n')
+    return f'<aside class="segnala"><p><b>Sai qualcosa in più su questo testo?</b> Un autore da correggere, una data, un errore: segnalalo.</p><p class="sg-l"><a class="btn" href="{gh}" target="_blank" rel="noopener">Segnala su GitHub</a><a class="btn alt" href="{ml}">Scrivi una email</a></p></aside>'
+def byline(a):
+    if not a['autore']: return '<p class="byline">Autore da identificare <span class="cert c-bassa">da verificare</span></p>'
+    lab={'media':'<span class="cert c-media">attribuzione da verificare</span>','presunta':'<span class="cert c-pres">attribuzione presunta</span>','bassa':'<span class="cert c-media">da verificare</span>'}.get(a['cert'],'')
+    m=f' <span class="mosc">· con {esc(a["mosc"].replace(" di Antonio Moscato",""))} di Antonio Moscato</span>' if a['mosc'] and a['autore']!='Antonio Moscato' else ''
+    return f'<p class="byline">di <b>{esc(a["autore"])}</b>{m} {lab}</p>'
+import importlib.util as _iu2
+_cs=_iu2.spec_from_file_location('catalogo_p',os.path.join(WORK,'catalogo.py')); _cp=_iu2.module_from_spec(_cs); _cs.loader.exec_module(_cp)
+_PROV=_cp.provenienza(root,WORK,arts)
+_MESI='gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre'.split()
+def _tsd(ts): return f"{int(ts[6:8])} {_MESI[int(ts[4:6])-1]} {ts[:4]}" if len(ts)>=8 else ''
+def _apa_name(n):
+    p=n.split(); return (p[-1]+', '+'. '.join(x[0] for x in p[:-1])+'.') if len(p)>1 else n
+def scheda(a,url):
+    u,ts=_PROV.get(str(a['id']),('',''))
+    wb=('https://web.archive.org/web/'+ts+'/'+u) if ts else ''
+    aut=a['autore'] or 'Autore non identificato'
+    d=hdate(a['date']) if a['date'] else 's.d.'
+    cit=(f"{esc(aut)}, «{esc(a['title'])}», in <em>Movimento operaio – La pagina di Antonio Moscato</em>, {d}; ora in <em>Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito</em>, a cura di Leonardo Lomartire, 2026, {url} (consultato il <span class=\"oggi\">…</span>). DOI: 10.5281/zenodo.23670900.")
+    ya=a['date'][:4] if a['date'] else 's.d.'
+    _an=' & '.join(_apa_name(x) for x in re.split(r'\s+e\s+',aut)); _gm=(', '+str(int(a['date'][8:10]))+' '+_MESI[int(a['date'][5:7])-1]) if a['date'] else ''
+    apa=(f"{esc(_an)} ({ya}{_gm}). <em>{esc(a['title'])}</em>. In L. Lomartire (a cura di), <em>Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito</em>. Zenodo. https://doi.org/10.5281/zenodo.23670900 · {url}")
+    rows=[('Identificativo',f'AM-{a["id"]}'),('Autore',esc(aut)+(f' <span class="d">({esc(a["mosc"])})</span>' if a['mosc'] and a['autore']!='Antonio Moscato' else '')+(f' <span class="d">· attribuzione {"presunta" if a["cert"]=="presunta" else "da verificare"}</span>' if a['cert'] in ('presunta','media','bassa') else '')),
+          ('Pubblicato sul sito',d)]
+    if a.get('scritto'): rows.append(('Data di scrittura',esc(a['scritto'])+' <span class="d">(secondo il testo)</span>'))
+    rows+= [('Indirizzo originale',f'<span class="u">{esc(u)}</span>' if u else '—'),
+          ('Copia usata',f'<a href="{esc(wb)}" target="_blank" rel="noopener">Wayback Machine, {_tsd(ts)}</a>' if wb else '—'),
+          ('Criteri di edizione','<a href="../criteri.html">come è stato trattato il testo</a>')]
+    dl=''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k,v in rows)
+    return f'''<section class="scheda" aria-labelledby="sch-{a['id']}"><h2 id="sch-{a['id']}">Scheda d’archivio</h2><dl>{dl}</dl>
+<h3>Come citare</h3><p class="cit" id="cit1-{a['id']}">{cit}</p><button type="button" class="cpy" data-copy-from="#cit1-{a['id']}">Copia la citazione</button>
+<p class="cit apa" id="cit2-{a['id']}"><span class="d">APA</span> {apa}</p><button type="button" class="cpy" data-copy-from="#cit2-{a['id']}">Copia in formato APA</button></section>'''
 for c in bycat: bycat[c].sort(key=sortkey,reverse=True)
 for a in arts:
     pre='../'; lst=bycat[a['catid']]; i=lst.index(a)
@@ -142,8 +192,8 @@ for a in arts:
 {f'<div class="box"><h4>Testi correlati</h4><ul class="mini-list">{rel}</ul></div>' if rel else ''}
 <div class="box"><h4>Nella stessa rubrica</h4><ul class="mini-list">{same}</ul></div></aside>'''
     content=f'''<div class="artgrid"><article class="art"><p class="crumb">{crumb}</p><h1>{esc(a["title"])}</h1>
-<p class="meta"><time>{hdate(a["date"])}</time> · {rtime(a['words'])}{' · testo in spagnolo' if a['lang']=='es' else ''}</p>
-<div class="testo" id="testo">{a['body']}</div><p class="orig"><a href="{orig}" target="_blank" rel="noopener">Pagina originale sulla Wayback Machine ↗</a></p>
+{byline(a)}<p class="meta">{('pubblicato sul sito il <time datetime="'+a['date']+'">'+hdate(a['date'])+'</time>') if a['date'] else 'data di pubblicazione non nota'}{(' · <span class="scritto" title="'+esc(a['scritto_ind'])+'">'+esc(a['scritto'])+', secondo il testo</span>') if a['scritto'] else ''} · {rtime(a['words'])}{' · testo in spagnolo' if a['lang']=='es' else ''}</p>
+<div class="testo" id="testo">{a['body']}</div>{scheda(a,'https://lelomar.github.io/archivio-antonio-moscato/articoli/'+str(a['id'])+'.html')}{segnala(a,'https://lelomar.github.io/archivio-antonio-moscato/articoli/'+str(a['id'])+'.html')}<p class="orig"><a href="{orig}" target="_blank" rel="noopener">Pagina originale sulla Wayback Machine ↗</a></p>
 <nav class="pnav">{pn}</nav></article>{aside}</div>'''
     open(os.path.join(OUT,'articoli',f'{a["id"]}.html'),'w').write(page(a['title'],content,pre,'','pg-art',a['lang']))
 print('articles written',flush=True)
@@ -153,7 +203,9 @@ def span(c):
     ys=[a['date'][:4] for a in bycat[c] if a['date']]; return f'{min(ys)}–{max(ys)}' if ys else ''
 for c in cat_order:
     if c not in bycat: continue
-    content=f'<p class="crumb"><a href="../attualita.html">Rubriche</a></p><header class="phead"><h1>{esc(catname(c))}</h1><p class="lead">{esc(CATDESC.get(c,""))}</p><p class="meta">{len(bycat[c])} testi · {span(c)}</p></header>'+entries_by_year(bycat[c],'../')
+    _yc=collections.Counter(a['date'][:4] for a in bycat[c] if a['date'] and '2009'<=a['date'][:4]<='2021'); _mx=max(_yc.values()) if _yc else 1
+    _bars=''.join(f'<a class="rb-y{" z" if not _yc.get(str(y)) else ""}" href="#y{y}" title="{y}: {_yc.get(str(y),0)} testi"><span style="height:{max(2,round(100*_yc.get(str(y),0)/_mx))}%"></span><small>{str(y)[2:]}</small></a>' for y in range(2009,2022))
+    content=f'<p class="crumb"><a href="../attualita.html">Rubriche</a></p><header class="rhead"><h1>{esc(catname(c))}</h1><p class="lead">{esc(CATDESC.get(c,""))}</p><div class="rh-row"><p class="rh-n"><b>{len(bycat[c])}</b> testi<br>{span(c)}</p><div class="rh-h" aria-label="Testi per anno">{_bars}</div></div></header>'+entries_by_year(bycat[c],'../')
     open(os.path.join(OUT,'categorie',f'c{c}.html'),'w').write(page(catname(c),content,'../','attualita.html'))
 def rcard(c,pre=''):
     last=''.join(f'<li><a href="{pre}articoli/{a["id"]}.html">{esc(a["title"])}</a></li>' for a in bycat[c][:3])
@@ -181,13 +233,31 @@ for y,l in years.items():
     content=f'<p class="crumb"><a href="../anni.html">Cronologia</a></p><header class="phead"><h1>{y}</h1><p class="meta">{len(l)} testi</p></header>{nav}{filt}{jump}{body}{nav}'
     open(os.path.join(OUT,'anni',f'{y}.html'),'w').write(page(str(y),content,'../','anni.html'))
 # temi
+_TWD=json.load(open(os.path.join(WORK,'temi_wikidata.json'))) if os.path.exists(os.path.join(WORK,'temi_wikidata.json')) else {}
+def _wd(k): return _TWD.get(kwname(k)) or _TWD.get(k)
 tlist=sorted([k for k in kwcount if kwcount[k]>=3],key=lambda k:norm(kwname(k)))
 for k in tlist:
     l=sorted(inv[k],key=sortkey,reverse=True)
     co=collections.Counter(x for a in l for x in a['kws'] if x!=k)
     near=''.join(f'<a class="chip" href="{KWSLUG[x]}.html">{esc(kwname(x))} <small>{n}</small></a>' for x,n in co.most_common(16) if kwcount[x]>=3)
-    content=f'<p class="crumb"><a href="../temi.html">Temi</a></p><header class="phead"><h1>{esc(kwname(k))}</h1><p class="meta">{len(l)} testi · <a href="../cerca.html#tema={urllib.parse.quote(k)}">apri nella ricerca avanzata</a></p></header>'+(f'<div class="box near"><h4>Temi collegati</h4><div class="chips">{near}</div></div>' if near else '')+entries_by_year(l,'../',True)
+    _w=_wd(k); _wdl=(' · <a class="wd" href="https://www.wikidata.org/wiki/'+_w['id']+'" target="_blank" rel="noopener" title="'+esc(_w.get('desc',''))+'">scheda Wikidata '+_w['id']+' ↗</a>') if _w else ''
+    content=f'<p class="crumb"><a href="../temi.html">Temi</a></p><header class="phead"><h1>{esc(kwname(k))}</h1><p class="meta">{len(l)} testi · <a href="../cerca.html#tema={urllib.parse.quote(k)}">apri nella ricerca avanzata</a>{_wdl}</p></header>'+(f'<div class="box near"><h4>Temi collegati</h4><div class="chips">{near}</div></div>' if near else '')+entries_by_year(l,'../',True)
     open(os.path.join(OUT,'temi',f'{KWSLUG[k]}.html'),'w').write(page(kwname(k),content,'../','temi.html'))
+# rinvii per i temi unificati (vecchi indirizzi delle pagine dei temi)
+_GEN={KWSLUG[k] for k in tlist}
+for _ak,_av in ALIAS.items():
+    _old=slugify(_ak)
+    if _av in KWSLUG and kwcount.get(_av,0)>=3 and _old!=KWSLUG[_av] and _old not in _GEN:
+        open(os.path.join(OUT,'temi',_old+'.html'),'w').write(f'<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url={KWSLUG[_av]}.html"><link rel="canonical" href="{KWSLUG[_av]}.html"><title>Tema spostato</title></head><body><p>Questo tema è stato unificato: <a href="{KWSLUG[_av]}.html">{esc(kwname(_av))}</a>.</p></body></html>')
+_var=collections.defaultdict(list)
+for _ak,_av in ALIAS.items(): _var[_av].append(_ak)
+_voc=[{'id':KWSLUG[k],'etichetta':kwname(k),'chiave':k,'varianti':'; '.join(sorted(set(_var.get(k,[])))),'testi':kwcount[k],'wikidata':(_wd(k) or {}).get('id',''),'wikidata_descrizione':(_wd(k) or {}).get('desc',''),'pagina':'https://lelomar.github.io/archivio-antonio-moscato/temi/'+KWSLUG[k]+'.html' if kwcount[k]>=3 else ''} for k in sorted(kwcount,key=lambda k:(-kwcount[k],kwname(k)))]
+os.makedirs(os.path.join(OUT,'dati'),exist_ok=True)
+import csv as _csv
+with open(os.path.join(OUT,'dati','vocabolario-temi.csv'),'w',newline='',encoding='utf-8-sig') as _f:
+    _w=_csv.DictWriter(_f,fieldnames=list(_voc[0].keys())); _w.writeheader(); _w.writerows(_voc)
+json.dump({'meta':{'titolo':'Vocabolario dei temi','descrizione':'Temi ricavati dalle parole chiave assegnate agli articoli, con le varianti unificate e il collegamento a Wikidata per i principali.','licenza':'CC BY-NC-SA 4.0'},'temi':_voc},open(os.path.join(OUT,'dati','vocabolario-temi.json'),'w'),ensure_ascii=False,indent=1)
+json.dump({KWSLUG[k]:_wd(k)['id'] for k in kwcount if _wd(k)},open(os.path.join(WORK,'_temi_slug_wd.json'),'w'))
 top=[k for k,_ in kwcount.most_common(70)]
 mxk=kwcount[top[0]]
 def cloud(pre,n=70):
@@ -290,8 +360,8 @@ recent=[a for a in recent if 'ricostruzione' not in a['title'].lower()][:6]
 lead=recent[0]
 featured=''.join(entry(a,'') for a in recent[1:6])
 nodes=''.join(f'<a class="card" href="documenti/cat{x}.html"><b>{esc(dmname(x))}</b><span>{count(x)} documenti</span></a>' for x in topd[:9])
-chi='<a href="articoli/22.html">Chi è Antonio Moscato</a>' if 22 in A else ''
-home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {len(arts)} articoli · {len(docs)} documenti</p><h1>Movimento operaio<span>La pagina di Antonio Moscato</span></h1>
+chi='<a href="biografia.html">Chi era Antonio Moscato</a>' if 22 in A else ''
+home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {len(arts)} articoli · {len(docs)} documenti</p><h1>Movimento operaio<span>Il sito di Antonio Moscato, ricostruito</span></h1>
 <blockquote>Il sito «è nato dalla proposta di alcuni studenti di raccogliere e quindi non far disperdere una notevole quantità di saggi, articoli, libri ormai esauriti da tempo».<cite>Antonio Moscato, dalla pagina di benvenuto · {chi}</cite></blockquote></div>
 <form class="bigsearch" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca tra articoli e documenti: Togliatti, Grecia, Guevara…" aria-label="Cerca"><button>Cerca</button></form>
 <p class="quick"><a href="progetto.html">Il progetto di recupero</a> · <a href="cerca.html">ricerca avanzata</a> · <a href="#" onclick="return aCaso()">un testo a caso</a></p></section>
@@ -357,12 +427,64 @@ _mhtml=f"""<h2 id="mancanti">L’elenco dei documenti da ritrovare</h2>
 <details><summary>{len(inc)} documenti incompleti</summary>{_tab(inc)}</details>
 <p>Chi ne ha una copia può scrivermi a <a href="mailto:lelomar@gmail.com">lelomar@gmail.com</a> o attraverso <a href="https://lelomar.substack.com" target="_blank" rel="noopener">lelomar.substack.com</a>, indicando il titolo. Ogni documento ha anche una scheda pubblica sulla lavagna <a href="https://github.com/users/lelomar/projects/2" target="_blank" rel="noopener">Caccia ai documenti di Antonio Moscato</a>: lì si può commentare, segnalare di averlo o allegare direttamente il file, e seguire a che punto è la ricerca.</p>"""
 _pt=_pt.replace('<!--MANCANTI-->',_mhtml)
-open(os.path.join(OUT,'progetto.html'),'w').write(page('Sono rimasto seduto. L’archivio ritrovato di Antonio Moscato',f'<div class="artgrid"><article class="art progetto"><p class="crumb">Il progetto</p><h1>Sono rimasto seduto</h1><p class="meta">Perché esiste questa copia del sito di Antonio Moscato, come è stata fatta, cosa manca</p><div class="testo" id="testo">{_pt}</div></article><aside class="side"><div class="box"><h4>In breve</h4><p>Antonio Moscato (Roma 1938 – 2026)<br>Sito originale: 2009–2021<br>{len(arts)} articoli · {nrec} documenti su {len(docs)}<br>Ricostruito nell’ottobre 2026</p></div><div class="box"><h4>Per cominciare</h4><ul class="mini-list"><li><a href="articoli/22.html">Chi è Antonio Moscato</a></li><li><a href="documenti/index.html">I grandi nodi del Novecento</a></li><li><a href="attualita.html">Le rubriche</a></li><li><a href="cerca.html">La ricerca</a></li><li><a href="#mancanti">I documenti da ritrovare</a></li><li><a href="#tecnica">Codice e licenze</a></li></ul></div><div class="box"><h4>Codice aperto</h4><p><a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">github.com/lelomar/archivio-antonio-moscato</a><br>Codice GPL-3.0 · cura CC BY-NC-SA 4.0</p></div><div class="box"><h4>Copia di sicurezza</h4><p><a href="https://archive.org/details/archivio-antonio-moscato" target="_blank" rel="noopener">Internet Archive</a><br>archivio completo in ZIP, da scaricare e conservare<br><a href="https://doi.org/10.5281/zenodo.23670900" target="_blank" rel="noopener">DOI 10.5281/zenodo.23670900</a> · Zenodo</p></div></aside></div>','','','pg-art'))
+def _md(md):
+    """Converte il registro delle versioni (Markdown semplice) in HTML."""
+    def inl(t):
+        t=esc(t)
+        t=re.sub(r'\[([^\]]+)\]\(([^)]+)\)',lambda m:'<a href="'+(m.group(2) if m.group(2).startswith('http') else 'https://github.com/lelomar/archivio-antonio-moscato/blob/main/'+m.group(2))+'" target="_blank" rel="noopener">'+m.group(1)+'</a>',t)
+        t=re.sub(r'\*\*([^*]+)\*\*',r'<b>\1</b>',t); t=re.sub(r'\*([^*]+)\*',r'<em>\1</em>',t); t=re.sub(r'`([^`]+)`',r'<code>\1</code>',t)
+        return t
+    out=[];inlist=False
+    for ln in md.splitlines():
+        if ln.startswith('# '): continue
+        if ln.startswith('- '):
+            if not inlist: out.append('<ul class="vers">'); inlist=True
+            out.append('<li>'+inl(ln[2:])+'</li>'); continue
+        if inlist: out.append('</ul>'); inlist=False
+        if ln.startswith('## '): out.append('<h3 class="vh">'+inl(re.sub(r'^\[([^\]]+)\]',r'\1',ln[3:]))+'</h3>')
+        elif ln.startswith('### '): out.append('<h4 class="vk">'+inl(ln[4:])+'</h4>')
+        elif ln.strip(): out.append('<p>'+inl(ln)+'</p>')
+    if inlist: out.append('</ul>')
+    return '\n'.join(out)
+_cl=os.path.join(OUT,'CHANGELOG.md')
+if os.path.exists(_cl):
+    _pt=_pt.replace('<!--VERSIONI-->','<h2>Le versioni</h2>\n<details class="versioni"><summary>Che cosa è cambiato da una versione all’altra</summary>'+_md(open(_cl,encoding='utf-8').read())+'</details>')
+open(os.path.join(OUT,'progetto.html'),'w').write(page('Sono rimasto seduto. L’archivio ritrovato di Antonio Moscato',f'<div class="artgrid"><article class="art progetto"><p class="crumb">Il progetto</p><h1>Sono rimasto seduto</h1><p class="meta">Perché esiste questa copia del sito di Antonio Moscato, come è stata fatta, cosa manca</p><div class="testo" id="testo">{_pt}</div></article><aside class="side"><div class="box"><h4>In breve</h4><p>Antonio Moscato (Roma 1938 – 2026)<br>Sito originale: 2009–2021<br>{len(arts)} articoli · {nrec} documenti su {len(docs)}<br>Ricostruito nell’ottobre 2026</p></div><div class="box"><h4>Per cominciare</h4><ul class="mini-list"><li><a href="biografia.html">Chi era Antonio Moscato</a></li><li><a href="documenti/index.html">I grandi nodi del Novecento</a></li><li><a href="attualita.html">Le rubriche</a></li><li><a href="cerca.html">La ricerca</a></li><li><a href="#mancanti">I documenti da ritrovare</a></li><li><a href="#tecnica">Codice e licenze</a></li></ul></div><div class="box"><h4>Codice aperto</h4><p><a href="https://github.com/lelomar/archivio-antonio-moscato" target="_blank" rel="noopener">github.com/lelomar/archivio-antonio-moscato</a><br>Codice GPL-3.0 · cura CC BY-NC-SA 4.0</p></div><div class="box"><h4>Copia di sicurezza</h4><p><a href="https://archive.org/details/archivio-antonio-moscato" target="_blank" rel="noopener">Internet Archive</a><br>archivio completo in ZIP, da scaricare e conservare<br><a href="https://doi.org/10.5281/zenodo.23670900" target="_blank" rel="noopener">DOI 10.5281/zenodo.23670900</a> · Zenodo</p></div></aside></div>','','','pg-art'))
+_cf=os.path.join(WORK,'criteri.html')
+if os.path.exists(_cf):
+    open(os.path.join(OUT,'criteri.html'),'w').write(page('Criteri di edizione','<div class="artgrid"><article class="art progetto">'+open(_cf).read()+'</article></div>','','progetto.html'))
+_bf=os.path.join(WORK,'biografia.html')
+if os.path.exists(_bf):
+    open(os.path.join(OUT,'biografia.html'),'w').write(page('Antonio Moscato (1938–2026)','<div class="artgrid"><article class="art progetto bio">'+open(_bf).read()+'</article></div>','','biografia.html'))
+_byA=collections.defaultdict(list)
+for a in arts: _byA[a['autore'] or 'Autore da identificare'].append(a)
+def _li(a): return f'<li><a href="articoli/{a["id"]}.html">{esc(a["title"])}</a> <span class="d">{hdate(a["date"])}</span></li>'
+_others=sorted([k for k in _byA if k not in ('Antonio Moscato','Autore da identificare')],key=lambda k:(-len(_byA[k]),k))
+_idx=''.join(f'<details class="aut"><summary><b>{esc(k)}</b> <span class="d">{len(_byA[k])} test{"o" if len(_byA[k])==1 else "i"}</span></summary><ul class="plain">{"".join(_li(a) for a in sorted(_byA[k],key=sortkey))}</ul></details>' for k in _others)
+_nm=len(_byA.get('Antonio Moscato',[])); _ni=sum(1 for a in arts if a['mosc'].startswith('introduzione')); _np=sum(1 for a in arts if a['mosc'].startswith('postilla'))
+open(os.path.join(OUT,'autori.html'),'w').write(page('Gli autori',f'''<header class="rhead"><h1>Gli autori</h1><p class="lead">Il sito di Moscato era anche una piccola rivista: accanto ai suoi scritti ospitava articoli, interventi e traduzioni di {len(_others)} autori diversi, spesso presentati da una sua nota.</p><div class="rh-row"><p class="rh-n"><b>{_nm}</b> testi di Antonio Moscato</p><p class="rh-n"><b>{sum(len(_byA[k]) for k in _others)}</b> di altri autori</p><p class="rh-n"><b>{_ni+_np}</b> con una sua nota o postilla</p></div></header>
+<p>Le attribuzioni sono state ricavate dalle firme presenti nei testi: la sigla «a.m.» o il nome di Moscato, le righe «di…», i nomi che aprono o chiudono l’articolo. Quelle incerte sono segnate come <em>da verificare</em> e raccolte nella pagina <a href="autori-da-verificare.html">Autori da verificare</a>, dove chiunque può aiutare a correggerle.</p>
+<h2 class="sec">Gli altri autori</h2>{_idx}''','','autori.html'))
+_ver=[a for a in arts if a['cert'] in ('media','bassa') or not a['autore']]
+_byV=collections.defaultdict(list)
+for a in _ver: _byV[a['autore'] or 'Autore da identificare'].append(a)
+_vk=sorted(_byV,key=lambda k:(k=='Autore da identificare',k))
+_vhtml=''.join(f'<h3 class="vh">{esc(k)} <span class="d">proposto per {len(_byV[k])} test{"o" if len(_byV[k])==1 else "i"}</span></h3><ul class="plain">{"".join(_li(a) for a in sorted(_byV[k],key=sortkey))}</ul>' for k in _vk)
+_mt='mailto:'+MAILTO+'?subject='+_up.quote('correzione proposta progetto moscato')
+open(os.path.join(OUT,'autori-da-verificare.html'),'w').write(page('Autori da verificare',f'''<header class="rhead"><h1>Autori da verificare</h1><p class="lead">Per {len(_ver)} testi non siamo sicuri di chi li abbia scritti. Il programma che ha letto l’archivio ha trovato un nome, ma potrebbe essere la persona di cui si parla e non l’autore; per alcuni testi non ha trovato nulla. Se li riconosci, aiutaci.</p></header>
+<div class="segnala"><p><b>Come aiutare.</b> Apri il testo, e in fondo trovi «Segnala su GitHub» e «Scrivi una email»: il modulo e l’email arrivano già con l’indirizzo dell’articolo, a te basta scrivere il nome giusto e, se puoi, da dove lo sai. Chi non usa GitHub può scrivere direttamente a <a href="{_mt}">{MAILTO}</a>, con oggetto «correzione proposta progetto moscato».</p></div>
+<p class="hint">Sono raggruppati per autore proposto: chi conosce bene un autore riconosce in un colpo d’occhio i testi che sono davvero suoi.</p>{_vhtml}''','','autori.html'))
 for _i,_t in list(DROP_ART.items())+[(k,f'articoli/{v}.html') for k,v in DUP_ART.items()]:
     open(os.path.join(OUT,'articoli',f'{_i}.html'),'w').write(f'<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=../{_t}"><link rel="canonical" href="../{_t}"><title>Pagina spostata</title></head><body><p>Questa pagina è stata spostata: <a href="../{_t}">vai alla pagina</a>.</p></body></html>')
 import subprocess as _sp, importlib.util as _iu
+_spec=_iu.spec_from_file_location('link_archivio',os.path.join(WORK,'link_archivio.py')); _la=_iu.module_from_spec(_spec); _spec.loader.exec_module(_la)
+print('link esterni',_la.run(OUT,WORK),flush=True)
 _sp.run([sys.executable,os.path.join(WORK,'og.py'),OUT],check=False)
 _spec=_iu.spec_from_file_location('seo',os.path.join(WORK,'seo.py')); _seo=_iu.module_from_spec(_spec); _spec.loader.exec_module(_seo)
-_ai={str(a['id']):{'date':a['date'],'lang':a['lang'],'kws':[kwname(k) for k in a['kws']],'cat':catname(a['catid'])} for a in arts}
+_ai={str(a['id']):{'date':a['date'],'lang':a['lang'],'kws':[kwname(k) for k in a['kws']],'cat':catname(a['catid']),'autore':a['autore'],'cert':a['cert'],'mosc':a['mosc'],'scritto':a['scritto']} for a in arts}
 print('seo pagine',_seo.run(OUT,_ai),flush=True)
+_spec=_iu.spec_from_file_location('catalogo',os.path.join(WORK,'catalogo.py')); _cat=_iu.module_from_spec(_spec); _spec.loader.exec_module(_cat)
+print('catalogo',_cat.run(OUT,root,WORK,arts,docs,catname,dmname,kwname),flush=True)
+_sp.run([sys.executable,os.path.join(WORK,'confronto.py'),root,OUT,'200'],check=False,stdout=_sp.DEVNULL)
+_sp.run([sys.executable,os.path.join(WORK,'integrita.py'),OUT],check=False)
 print('DONE',flush=True)

@@ -1,0 +1,27 @@
+{
+ "campione": 200,
+ "confrontati": 200,
+ "seme": 1938,
+ "conservato_medio": 99.91,
+ "conservato_mediano": 100.0,
+ "conservato_min": 98.78,
+ "ricostruzioni_identiche_%": 53.5,
+ "sopra_99": 198,
+ "sotto_95": 0,
+ "senza_aggiunte_medio": 99.87,
+ "titoli_identici": 200,
+ "perdite_ricorrenti": [
+  [
+   "uno due tre",
+   1
+  ],
+  [
+   "facebook twitter pinterest",
+   1
+  ],
+  [
+   "2428 facebook twitter pinterest",
+   1
+  ]
+ ]
+}

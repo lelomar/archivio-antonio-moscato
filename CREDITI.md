@@ -6,7 +6,7 @@
 Taranto, ottobre 2026 · [lelomar.substack.com](https://lelomar.substack.com)
 
 Recupero dall'Internet Archive, ricostruzione, cura, indici, testi di presentazione e
-progettazione dell'archivio *Movimento operaio – La pagina di Antonio Moscato*.
+progettazione dell'archivio *Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito*.
 Il lavoro tecnico è stato svolto con l'assistenza di Claude (Anthropic).
 
 ## Obbligo di attribuzione
@@ -29,6 +29,10 @@ questo progetto, in tutto o in parte, deve conservare**:
 ## Contributi successivi
 
 <!-- Aggiungi qui il tuo nome, la data e una riga su cosa hai fatto. -->
+
+## Caratteri tipografici
+
+La grafica usa Archivo (Omnibus-Type) e Literata (TypeTogether), distribuiti con licenza SIL Open Font License 1.1; i testi delle licenze sono in `assets/fonts/`.
 
 ## Testi
 

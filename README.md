@@ -1,4 +1,4 @@
-# Movimento operaio – La pagina di Antonio Moscato
+# Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23670900.svg)](https://doi.org/10.5281/zenodo.23670900)
 
@@ -21,6 +21,10 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 💾 **Copia di sicurezza:** [Internet Archive](https://archive.org/details/archivio-antonio-moscato) — archivio completo in ZIP, da scaricare e conservare.
 
 🧭 **Wikidata:** [Q141880166](https://www.wikidata.org/wiki/Q141880166) — la scheda dell’archivio, collegata a quella di [Antonio Moscato (Q3619928)](https://www.wikidata.org/wiki/Q3619928).
+
+📜 **Registro delle versioni:** [CHANGELOG.md](CHANGELOG.md) — che cosa cambia da una versione all'altra.
+
+🗂️ **Dati e verifiche:** [catalogo dei metadati](dati/catalogo-articoli.csv) (CSV, JSON, Dublin Core), [manifesto di integrità SHA-256](dati/manifesto-integrita.csv) e [confronto con la Wayback Machine](dati/confronto-wayback.md). Verifica dei file: `shasum -a 256 -c SHA256SUMS`. Guida: [dati/LEGGIMI.md](dati/LEGGIMI.md).
 
 📚 **Documentazione completa:** [wiki del progetto](https://github.com/lelomar/archivio-antonio-moscato/wiki) — consultazione, ricostruzione, modifica, dati, documenti mancanti.
 

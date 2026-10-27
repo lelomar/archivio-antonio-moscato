@@ -1,0 +1,846 @@
+{
+"Grecia": {
+"id": "Q41",
+"desc": ""
+},
+"Venezuela": {
+"id": "Q717",
+"desc": ""
+},
+"Syriza": {
+"id": "Q222897",
+"desc": ""
+},
+"Cuba": {
+"id": "Q241",
+"desc": ""
+},
+"CGIL": {
+"id": "Q1125068",
+"desc": ""
+},
+"Debito": {
+"id": "Q3196867",
+"desc": ""
+},
+"il manifesto": {
+"id": "Q642381",
+"desc": ""
+},
+"Israele": {
+"id": "Q801",
+"desc": ""
+},
+"FIOM": {
+"id": "Q3740913",
+"desc": ""
+},
+"Imperialismo": {
+"id": "Q7260",
+"desc": ""
+},
+"Matteo Renzi": {
+"id": "Q47563",
+"desc": ""
+},
+"Russia": {
+"id": "Q159",
+"desc": ""
+},
+"Siria": {
+"id": "Q858",
+"desc": ""
+},
+"Hugo Chávez": {
+"id": "Q8440",
+"desc": ""
+},
+"Brasile": {
+"id": "Q155",
+"desc": ""
+},
+"America Latina": {
+"id": "Q12585",
+"desc": ""
+},
+"Argentina": {
+"id": "Q414",
+"desc": ""
+},
+"PD": {
+"id": "Q47729",
+"desc": ""
+},
+"Egitto": {
+"id": "Q79",
+"desc": ""
+},
+"Tsipras": {
+"id": "Q312015",
+"desc": ""
+},
+"Stati Uniti": {
+"id": "Q30",
+"desc": ""
+},
+"Palestina": {
+"id": "Q219060",
+"desc": ""
+},
+"Mario Monti": {
+"id": "Q47904",
+"desc": ""
+},
+"PRC – Rifondazione comunista": {
+"id": "Q780997",
+"desc": ""
+},
+"Libia": {
+"id": "Q1016",
+"desc": ""
+},
+"Spagna": {
+"id": "Q29",
+"desc": ""
+},
+"Nicolás Maduro": {
+"id": "Q58132",
+"desc": ""
+},
+"Maurizio Landini": {
+"id": "Q3852622",
+"desc": ""
+},
+"Ecuador": {
+"id": "Q736",
+"desc": ""
+},
+"Susanna Camusso": {
+"id": "Q591009",
+"desc": ""
+},
+"Giorgio Napolitano": {
+"id": "Q1220",
+"desc": ""
+},
+"Giorgio Cremaschi": {
+"id": "Q3765391",
+"desc": ""
+},
+"Ucraina": {
+"id": "Q212",
+"desc": ""
+},
+"Stalinismo": {
+"id": "Q179121",
+"desc": ""
+},
+"Ipocrisia": {
+"id": "Q201650",
+"desc": ""
+},
+"Che Guevara": {
+"id": "Q5809",
+"desc": ""
+},
+"Trotskij": {
+"id": "Q33391",
+"desc": ""
+},
+"Lenin": {
+"id": "Q1394",
+"desc": ""
+},
+"Gaza": {
+"id": "Q39760",
+"desc": ""
+},
+"Silvio Berlusconi": {
+"id": "Q11860",
+"desc": ""
+},
+"Bolivia": {
+"id": "Q750",
+"desc": ""
+},
+"Barack Obama": {
+"id": "Q76",
+"desc": ""
+},
+"Francia": {
+"id": "Q142",
+"desc": ""
+},
+"Nichi Vendola": {
+"id": "Q507595",
+"desc": ""
+},
+"Beppe Grillo": {
+"id": "Q47683",
+"desc": ""
+},
+"Cina": {
+"id": "Q148",
+"desc": ""
+},
+"Fidel Castro": {
+"id": "Q11256",
+"desc": ""
+},
+"Europa": {
+"id": "Q46",
+"desc": ""
+},
+"M5S": {
+"id": "Q47817",
+"desc": ""
+},
+"Lula": {
+"id": "Q37181",
+"desc": ""
+},
+"Sinistra anticapitalista": {
+"id": "Q21234318",
+"desc": ""
+},
+"FIAT": {
+"id": "Q27597",
+"desc": ""
+},
+"Rafael Correa": {
+"id": "Q19581",
+"desc": ""
+},
+"Sergio Marchionne": {
+"id": "Q1229223",
+"desc": ""
+},
+"Papa Francesco": {
+"id": "Q450675",
+"desc": ""
+},
+"Podemos": {
+"id": "Q16059622",
+"desc": ""
+},
+"Guerra": {
+"id": "Q198",
+"desc": ""
+},
+"Fascismo": {
+"id": "Q6223",
+"desc": ""
+},
+"Elezioni": {
+"id": "Q40231",
+"desc": ""
+},
+"Iraq": {
+"id": "Q796",
+"desc": ""
+},
+"Tunisia": {
+"id": "Q948",
+"desc": ""
+},
+"Crisi": {
+"id": "Q381072",
+"desc": ""
+},
+"Pier Luigi Bersani": {
+"id": "Q47556",
+"desc": ""
+},
+"PCI": {
+"id": "Q461886",
+"desc": ""
+},
+"Sinistra critica": {
+"id": "Q1809637",
+"desc": ""
+},
+"Donald Trump": {
+"id": "Q22686",
+"desc": ""
+},
+"SEL": {
+"id": "Q286140",
+"desc": ""
+},
+"Antonio Ingroia": {
+"id": "Q1591887",
+"desc": ""
+},
+"Bashar al-Assad": {
+"id": "Q44329",
+"desc": ""
+},
+"Raúl Castro": {
+"id": "Q46809",
+"desc": ""
+},
+"Gilbert Achcar": {
+"id": "Q744566",
+"desc": ""
+},
+"Germania": {
+"id": "Q183",
+"desc": ""
+},
+"Gheddafi": {
+"id": "Q19878",
+"desc": ""
+},
+"Portogallo": {
+"id": "Q45",
+"desc": ""
+},
+"Stalin": {
+"id": "Q855",
+"desc": ""
+},
+"Franco Turigliatto": {
+"id": "Q3751642",
+"desc": ""
+},
+"Capitalismo": {
+"id": "Q6206",
+"desc": ""
+},
+"ONU": {
+"id": "Q1065",
+"desc": ""
+},
+"Crisi globale": {
+"id": "Q154510",
+"desc": ""
+},
+"Afghanistan": {
+"id": "Q889",
+"desc": ""
+},
+"Cile": {
+"id": "Q298",
+"desc": ""
+},
+"Evo Morales": {
+"id": "Q42410",
+"desc": ""
+},
+"Vladimir Putin": {
+"id": "Q7747",
+"desc": ""
+},
+"Di Paola": {
+"id": "Q647148",
+"desc": ""
+},
+"Spese militari": {
+"id": "Q3966548",
+"desc": ""
+},
+"Dilma Rousseff": {
+"id": "Q40722",
+"desc": ""
+},
+"Sionismo": {
+"id": "Q42388",
+"desc": ""
+},
+"Togliatti": {
+"id": "Q310158",
+"desc": ""
+},
+"Éric Toussaint": {
+"id": "Q2027918",
+"desc": ""
+},
+"Referendum": {
+"id": "Q43109",
+"desc": ""
+},
+"NATO": {
+"id": "Q7184",
+"desc": ""
+},
+"Sinistra": {
+"id": "Q164597",
+"desc": ""
+},
+"ILVA": {
+"id": "Q3148829",
+"desc": ""
+},
+"Iran": {
+"id": "Q794",
+"desc": ""
+},
+"UE": {
+"id": "Q458",
+"desc": ""
+},
+"Turchia": {
+"id": "Q43",
+"desc": ""
+},
+"Colombia": {
+"id": "Q739",
+"desc": ""
+},
+"Nicaragua": {
+"id": "Q811",
+"desc": ""
+},
+"Catalogna": {
+"id": "Q5705",
+"desc": ""
+},
+"URSS": {
+"id": "Q15180",
+"desc": ""
+},
+"Hollande": {
+"id": "Q157",
+"desc": ""
+},
+"CADTM": {
+"id": "Q2985604",
+"desc": ""
+},
+"Marx": {
+"id": "Q9061",
+"desc": ""
+},
+"Hamas": {
+"id": "Q38799",
+"desc": ""
+},
+"NPA": {
+"id": "Q1045425",
+"desc": ""
+},
+"Fornero": {
+"id": "Q445665",
+"desc": ""
+},
+"PT": {
+"id": "Q657089",
+"desc": ""
+},
+"No TAV": {
+"id": "Q3334478",
+"desc": ""
+},
+"Pensioni": {
+"id": "Q156223",
+"desc": ""
+},
+"CISL": {
+"id": "Q1125097",
+"desc": ""
+},
+"Africa": {
+"id": "Q15",
+"desc": ""
+},
+"Terrorismo": {
+"id": "Q7283",
+"desc": ""
+},
+"Claudio Katz": {
+"id": "Q5409772",
+"desc": ""
+},
+"Gramsci": {
+"id": "Q83003",
+"desc": ""
+},
+"Sindacati": {
+"id": "Q178790",
+"desc": ""
+},
+"Italia": {
+"id": "Q38",
+"desc": ""
+},
+"Polonia": {
+"id": "Q36",
+"desc": ""
+},
+"Stato islamico (ISIS)": {
+"id": "Q2429253",
+"desc": ""
+},
+"Libano": {
+"id": "Q822",
+"desc": ""
+},
+"Jobs Act": {
+"id": "Q19013759",
+"desc": ""
+},
+"Val di Susa": {
+"id": "Q1434647",
+"desc": ""
+},
+"Prodi": {
+"id": "Q38484",
+"desc": ""
+},
+"Quarta Internazionale": {
+"id": "Q206682",
+"desc": ""
+},
+"Costituzione": {
+"id": "Q7755",
+"desc": ""
+},
+"Letta": {
+"id": "Q674957",
+"desc": ""
+},
+"UIL": {
+"id": "Q411914",
+"desc": ""
+},
+"Rosa Luxemburg": {
+"id": "Q7231",
+"desc": ""
+},
+"Grande Guerra": {
+"id": "Q361",
+"desc": ""
+},
+"Haiti": {
+"id": "Q790",
+"desc": ""
+},
+"Guido Viale": {
+"id": "Q3779495",
+"desc": ""
+},
+"Zibechi": {
+"id": "Q7299862",
+"desc": ""
+},
+"Pinotti": {
+"id": "Q3938535",
+"desc": ""
+},
+"Merkel": {
+"id": "Q567",
+"desc": ""
+},
+"Messico": {
+"id": "Q96",
+"desc": ""
+},
+"Alfano": {
+"id": "Q535055",
+"desc": ""
+},
+"Yanis Varoufakis": {
+"id": "Q40688",
+"desc": ""
+},
+"Uruguay": {
+"id": "Q77",
+"desc": ""
+},
+"Euro": {
+"id": "Q4916",
+"desc": ""
+},
+"PSOL": {
+"id": "Q1754827",
+"desc": ""
+},
+"Gran Bretagna": {
+"id": "Q145",
+"desc": ""
+},
+"KKE": {
+"id": "Q192406",
+"desc": ""
+},
+"Scuola": {
+"id": "Q3914",
+"desc": ""
+},
+"Cannavò": {
+"id": "Q3945987",
+"desc": ""
+},
+"Alegre": {
+"id": "Q3719309",
+"desc": ""
+},
+"Algeria": {
+"id": "Q262",
+"desc": ""
+},
+"Cristina Kirchner": {
+"id": "Q40649",
+"desc": ""
+},
+"Di Pietro": {
+"id": "Q47547",
+"desc": ""
+},
+"BCE": {
+"id": "Q8901",
+"desc": ""
+},
+"Crisi economica": {
+"id": "Q290178",
+"desc": ""
+},
+"India": {
+"id": "Q668",
+"desc": ""
+},
+"Sudafrica": {
+"id": "Q258",
+"desc": ""
+},
+"Confindustria": {
+"id": "Q1125309",
+"desc": ""
+},
+"Airaudo": {
+"id": "Q14636376",
+"desc": ""
+},
+"FMI": {
+"id": "Q7804",
+"desc": ""
+},
+"ALBA": {
+"id": "Q8874",
+"desc": ""
+},
+"Islam": {
+"id": "Q432",
+"desc": ""
+},
+"Ungheria": {
+"id": "Q28",
+"desc": ""
+},
+"PSOE": {
+"id": "Q138198",
+"desc": ""
+},
+"PSUV": {
+"id": "Q197864",
+"desc": ""
+},
+"Pisapia": {
+"id": "Q666504",
+"desc": ""
+},
+"Islanda": {
+"id": "Q189",
+"desc": ""
+},
+"Banche": {
+"id": "Q22687",
+"desc": ""
+},
+"Chiesa cattolica": {
+"id": "Q9592",
+"desc": ""
+},
+"D'Alema": {
+"id": "Q47602",
+"desc": ""
+},
+"Bloco": {
+"id": "Q884840",
+"desc": ""
+},
+"Livio Maitan": {
+"id": "Q1337219",
+"desc": ""
+},
+"Sciopero generale": {
+"id": "Q49775",
+"desc": ""
+},
+"F-35": {
+"id": "Q29261",
+"desc": ""
+},
+"Jugoslavia": {
+"id": "Q36704",
+"desc": ""
+},
+"Stefanoni": {
+"id": "Q75743853",
+"desc": ""
+},
+"Colonialismo": {
+"id": "Q7167",
+"desc": ""
+},
+"Morsi": {
+"id": "Q4631",
+"desc": ""
+},
+"Pasok": {
+"id": "Q203934",
+"desc": ""
+},
+"Bertinotti": {
+"id": "Q559577",
+"desc": ""
+},
+"Socialdemocrazia": {
+"id": "Q121254",
+"desc": ""
+},
+"Marxismo": {
+"id": "Q7264",
+"desc": ""
+},
+"Belgio": {
+"id": "Q31",
+"desc": ""
+},
+"Razzismo": {
+"id": "Q8461",
+"desc": ""
+},
+"Tommaso di Francesco": {
+"id": "Q3992756",
+"desc": ""
+},
+"Milano": {
+"id": "Q490",
+"desc": ""
+},
+"Socialismo reale": {
+"id": "Q206313",
+"desc": ""
+},
+"Ernest Mandel": {
+"id": "Q165121",
+"desc": ""
+},
+"Resistenza": {
+"id": "Q706633",
+"desc": ""
+},
+"Salvini": {
+"id": "Q1055449",
+"desc": ""
+},
+"Rivoluzioni arabe": {
+"id": "Q33761",
+"desc": ""
+},
+"Salvatore Cannavò": {
+"id": "Q3945987",
+"desc": ""
+},
+"Ecosocialismo": {
+"id": "Q275595",
+"desc": ""
+},
+"Economia": {
+"id": "Q159810",
+"desc": ""
+},
+"Finmeccanica": {
+"id": "Q910379",
+"desc": ""
+},
+"Mubarak": {
+"id": "Q34105",
+"desc": ""
+},
+"Ferrero": {
+"id": "Q2050381",
+"desc": ""
+},
+"Arabia Saudita": {
+"id": "Q851",
+"desc": ""
+},
+"Allende": {
+"id": "Q440",
+"desc": ""
+},
+"Foibe": {
+"id": "Q1294142",
+"desc": ""
+},
+"Socialismo": {
+"id": "Q7272",
+"desc": ""
+},
+"Guaidò": {
+"id": "Q58833335",
+"desc": ""
+},
+"Sicilia": {
+"id": "Q1460",
+"desc": ""
+},
+"Berlinguer": {
+"id": "Q164995",
+"desc": ""
+},
+"Anticapitalistas": {
+"id": "Q3325616",
+"desc": ""
+},
+"Crimea": {
+"id": "Q7835",
+"desc": ""
+},
+"Donbass": {
+"id": "Q605714",
+"desc": ""
+},
+"Marcegaglia": {
+"id": "Q466740",
+"desc": ""
+},
+"Perù": {
+"id": "Q419",
+"desc": ""
+},
+"Canfora": {
+"id": "Q325441",
+"desc": ""
+},
+"Carotenuto": {
+"id": "Q61805672",
+"desc": ""
+},
+"Irlanda": {
+"id": "Q27",
+"desc": ""
+},
+"Capriles": {
+"id": "Q8781",
+"desc": ""
+},
+"Charlie Hebdo": {
+"id": "Q1043104",
+"desc": ""
+},
+"Gennaro Carotenuto": {
+"id": "Q61805672",
+"desc": ""
+},
+"Ambiente": {
+"id": "Q2249676",
+"desc": ""
+},
+"Pablo Stefanoni": {
+"id": "Q75743853",
+"desc": ""
+}
+}

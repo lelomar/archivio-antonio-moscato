@@ -1,22 +1,57 @@
 {
-  "title": "Movimento operaio – La pagina di Antonio Moscato. Archivio ricostruito (2009-2021)",
+  "title": "Movimento operaio. Il sito di Antonio Moscato (2009-2021), ricostruito",
   "upload_type": "dataset",
   "description": "<p>Archivio ricostruito del sito <em>Movimento operaio – La pagina di Antonio Moscato</em> (antoniomoscato.altervista.org, 2009-2021), disattivato dal servizio che lo ospitava.</p><p>Antonio Moscato (Roma 1938 – 2026) è stato storico del movimento operaio, per decenni docente di Storia del movimento operaio e Storia contemporanea all'università di Lecce, militante della Quarta Internazionale dal 1957, direttore di <em>Bandiera Rossa</em> e fondatore di <em>Critica Comunista</em>.</p><p>Dopo la sua morte, il 24 ottobre 2026, il sito è stato ricostruito da Leonardo Lomartire, suo ex studente, a partire dalle copie conservate dall'Internet Archive. L'archivio è un sito statico completo, consultabile anche senza connessione: 2.928 articoli (2009-2021, in italiano e spagnolo), 180 dei 247 saggi e documenti della sezione «I grandi nodi del Novecento», indice di 732 temi, cronologia, ricerca a testo pieno.</p><p>Versione online: <a href=\"https://lelomar.github.io/archivio-antonio-moscato/\">lelomar.github.io/archivio-antonio-moscato</a>. Per consultarlo offline: scaricare l'archivio, decomprimerlo e aprire index.html.</p><p>I testi appartengono ai rispettivi autori ed eredi e sono riproposti gratuitamente, senza scopo di lucro, a fini di documentazione e memoria. Il lavoro di cura è rilasciato con licenza CC BY-NC-SA 4.0, il codice con licenza GPL-3.0 con obbligo di attribuzione.</p>",
   "creators": [
-    {"name": "Lomartire, Leonardo"}
+    {
+      "name": "Lomartire, Leonardo"
+    }
   ],
   "contributors": [
-    {"name": "Moscato, Antonio", "type": "Other"}
+    {
+      "name": "Moscato, Antonio",
+      "type": "Other"
+    }
   ],
-  "keywords": ["Antonio Moscato", "movimento operaio", "storia contemporanea", "Quarta Internazionale", "trotskismo", "socialismo reale", "Che Guevara", "Cuba", "America Latina", "archivio web", "Wayback Machine", "digital preservation"],
+  "keywords": [
+    "Antonio Moscato",
+    "movimento operaio",
+    "storia contemporanea",
+    "Quarta Internazionale",
+    "trotskismo",
+    "socialismo reale",
+    "Che Guevara",
+    "Cuba",
+    "America Latina",
+    "archivio web",
+    "Wayback Machine",
+    "digital preservation"
+  ],
   "language": "ita",
   "license": "cc-by-nc-sa-4.0",
   "access_right": "open",
   "related_identifiers": [
-    {"identifier": "https://lelomar.github.io/archivio-antonio-moscato/", "relation": "isSupplementTo", "resource_type": "other"},
-    {"identifier": "https://archive.org/details/archivio-antonio-moscato", "relation": "isIdenticalTo", "resource_type": "dataset"},
-    {"identifier": "https://github.com/lelomar/archivio-antonio-moscato/wiki", "relation": "isDocumentedBy", "resource_type": "other"},
-    {"identifier": "https://www.wikidata.org/wiki/Q141880166", "relation": "isDescribedBy", "resource_type": "other"}
+    {
+      "identifier": "https://lelomar.github.io/archivio-antonio-moscato/",
+      "relation": "isSupplementTo",
+      "resource_type": "other"
+    },
+    {
+      "identifier": "https://archive.org/details/archivio-antonio-moscato",
+      "relation": "isIdenticalTo",
+      "resource_type": "dataset"
+    },
+    {
+      "identifier": "https://github.com/lelomar/archivio-antonio-moscato/wiki",
+      "relation": "isDocumentedBy",
+      "resource_type": "other"
+    },
+    {
+      "identifier": "https://www.wikidata.org/wiki/Q141880166",
+      "relation": "isDescribedBy",
+      "resource_type": "other"
+    }
   ],
-  "notes": "Prima versione a cura di Leonardo Lomartire (https://lelomar.substack.com), ottobre 2026."
+  "notes": "Prima versione a cura di Leonardo Lomartire (https://lelomar.substack.com), ottobre 2026.",
+  "version": "1.1.0"
 }

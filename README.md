@@ -14,7 +14,9 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 - 2.928 articoli (2009–2021), divisi nelle rubriche originali
 - 180 dei 247 documenti di *I grandi nodi del Novecento*, con pagine di lettura nel browser
 - ricerca a testo pieno su articoli e documenti, con filtri per rubrica, periodo, tema e lingua
-- 732 temi ricavati dalle parole chiave originali, cronologia anno per anno
+- 721 temi ricavati dalle parole chiave originali (208 collegati a Wikidata), cronologia anno per anno
+- autore di ogni testo con il grado di certezza, data di scrittura dove il testo la dichiara, scheda d'archivio e citazione pronta
+- link ai siti esterni verso le copie d'archivio dei giorni in cui Moscato li citava, con l'indirizzo originale accanto
 
 🔖 **Citazione permanente:** DOI [10.5281/zenodo.23670900](https://doi.org/10.5281/zenodo.23670900) (Zenodo, CERN) — oppure il pulsante «Cite this repository».
 
@@ -24,7 +26,7 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 
 📜 **Registro delle versioni:** [CHANGELOG.md](CHANGELOG.md) — che cosa cambia da una versione all'altra.
 
-🗂️ **Dati e verifiche:** [catalogo dei metadati](dati/catalogo-articoli.csv) (CSV, JSON, Dublin Core), [manifesto di integrità SHA-256](dati/manifesto-integrita.csv) e [confronto con la Wayback Machine](dati/confronto-wayback.md). Verifica dei file: `shasum -a 256 -c SHA256SUMS`. Guida: [dati/LEGGIMI.md](dati/LEGGIMI.md).
+🗂️ **Dati e verifiche:** [catalogo dei metadati](dati/catalogo-articoli.csv) (CSV, JSON, Dublin Core), [manifesto di integrità SHA-256](dati/manifesto-integrita.csv) e [confronto con la Wayback Machine](dati/confronto-wayback.md), [vocabolario dei temi](dati/vocabolario-temi.csv) e [link esterni](dati/link-esterni.csv). Verifica dei file: `shasum -a 256 -c SHA256SUMS`. Guida: [dati/LEGGIMI.md](dati/LEGGIMI.md).
 
 📚 **Documentazione completa:** [wiki del progetto](https://github.com/lelomar/archivio-antonio-moscato/wiki) — consultazione, ricostruzione, modifica, dati, documenti mancanti.
 

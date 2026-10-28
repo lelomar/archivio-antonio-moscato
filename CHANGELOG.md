@@ -14,6 +14,7 @@ Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla v
 - Nella pagina dei temi, i collegamenti per scaricare il vocabolario in CSV, JSON e SKOS, le parole chiave originali e le voci da verificare.
 
 ### Corretto
+- L'immagine di condivisione dell'archivio indicava «247 documenti»: ora dice «180 documenti su 247».
 - Il riquadro «Accadde oggi» della home mostrava solo la data: lo script che inserisce la data di consultazione nelle citazioni ne sovrascriveva il contenuto.
 
 ## [1.2.0] – 27 ottobre 2026

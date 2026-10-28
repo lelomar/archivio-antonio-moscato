@@ -8,7 +8,10 @@ Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i 
 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
 
+## [1.2.1] – 28 ottobre 2026
+
 ### Aggiunto
+- Recuperato l'articolo 12, «Benvenuti!»: la lettera con cui Moscato presentava il sito nella home page, firmata «Recanati 1 febbraio 2016». La prima estrazione non l'aveva riconosciuto perché la pagina non ha l'intestazione standard degli articoli; il testo è ripreso senza modifiche dalla copia della Wayback Machine (`sviluppo/estrai_aggiunti.py`), con scheda d'archivio e provenienza come gli altri. Gli articoli passano da 2.928 a 2.929. La lettera è riprodotta per intero in home, al posto della citazione che ne riportava la prima frase.
 - In home, subito sotto l'apertura, l'effemeride del giorno: un testo pubblicato da Moscato in questa data, lo stesso per tutta la giornata, con il link agli altri testi del giorno.
 - Ai file di grafica e agli script è associato un numero di versione, così dopo ogni aggiornamento i browser scaricano subito quelli nuovi.
 - Nella pagina dei temi, i collegamenti per scaricare il vocabolario in CSV, JSON e SKOS, le parole chiave originali e le voci da verificare.

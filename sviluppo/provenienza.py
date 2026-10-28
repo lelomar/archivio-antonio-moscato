@@ -39,6 +39,7 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
     def ev(eid,oid,da,a,tipo,descr,q='',agente='programma di ricostruzione'):
         eventi.append({'id_evento':eid,'oggetto':oid,'da_livello':da,'a_livello':a,'tipo':tipo,'descrizione':descr,'quantita':q,'agente':agente,'data':oggi})
         return eid
+    _agf=os.path.join(WORK,'testi_aggiunti.json'); AGG={t['id']:t for t in json.load(open(_agf,encoding='utf-8'))} if os.path.exists(_agf) else {}
     for a in arts:
         i=str(a['id']); oid='AM-'+i; r=CA.get(i,{})
         csha,cby=_fsha(os.path.join(root,a['src'])) if a.get('src') else ('','')
@@ -58,6 +59,9 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
                 'url':BASE+f'articoli/{i}.html','file':f'articoli/{i}.html','sha256':esha,'byte':eby}}
         I=[]
         def add(*x,**k): I.append(ev(f'{oid}.i{len(I)+1}',oid,*x,**k))
+        if i in AGG:
+            add('cattura','testo','recupero mirato','testo non riconosciuto dalla prima estrazione e recuperato in seguito dalla stessa copia (estrai_aggiunti.py); escluse l’intestazione vuota del modulo «Ultimi articoli inseriti» e i pulsanti di condivisione',agente='programma di recupero (estrai_aggiunti.py)')
+            if AGG[i].get('date'): add('originale','edizione','data di pubblicazione','data di creazione dell’articolo ricavata dai metadati della stessa pagina importata nel blog WordPress del sito (article:published_time)',agente='programma di recupero (estrai_aggiunti.py)')
         add('cattura','testo','pulizia','rimossi menu, script, pulsanti di condivisione, stili di Word e link a file locali; il testo non è stato modificato')
         if lk['interni']: add('testo','edizione','link interni','collegamenti al vecchio sito ricondotti alle pagine di questo archivio',lk['interni'])
         if lk['wayback_interni']: add('testo','edizione','link interni non recuperati','collegamenti a pagine del vecchio sito non conservate, indirizzati alla Wayback Machine',lk['wayback_interni'])

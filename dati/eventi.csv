@@ -11089,6 +11089,11 @@ AM-wp-la-soluzione-danese.i3,AM-wp-la-soluzione-danese,testo,edizione,attribuzio
 AM-wp-benvenuti.i1,AM-wp-benvenuti,cattura,testo,pulizia,"rimossi menu, script, pulsanti di condivisione, stili di Word e link a file locali; il testo non è stato modificato",,programma di ricostruzione,2026-10-28
 AM-wp-benvenuti.i2,AM-wp-benvenuti,testo,edizione,link esterni non archiviati,"collegamenti a siti esterni senza copia d’archivio, lasciati all’indirizzo originale e segnalati",2,programma di ricostruzione,2026-10-28
 AM-wp-benvenuti.i3,AM-wp-benvenuti,testo,edizione,attribuzione,autore indicato: Antonio Moscato; certezza: alta,,programma di attribuzione (autori2.py),2026-10-28
+AM-12.i1,AM-12,cattura,testo,recupero mirato,testo non riconosciuto dalla prima estrazione e recuperato in seguito dalla stessa copia (estrai_aggiunti.py); escluse l’intestazione vuota del modulo «Ultimi articoli inseriti» e i pulsanti di condivisione,,programma di recupero (estrai_aggiunti.py),2026-10-28
+AM-12.i2,AM-12,originale,edizione,data di pubblicazione,data di creazione dell’articolo ricavata dai metadati della stessa pagina importata nel blog WordPress del sito (article:published_time),,programma di recupero (estrai_aggiunti.py),2026-10-28
+AM-12.i3,AM-12,cattura,testo,pulizia,"rimossi menu, script, pulsanti di condivisione, stili di Word e link a file locali; il testo non è stato modificato",,programma di ricostruzione,2026-10-28
+AM-12.i4,AM-12,testo,edizione,attribuzione,autore indicato: Antonio Moscato; certezza: alta,,programma di attribuzione (autori2.py),2026-10-28
+AM-12.i5,AM-12,testo,edizione,data di scrittura,data di scrittura ricavata dal testo: scritto il 1 febbraio 2016,,programma di datazione (date2.py),2026-10-28
 AM-d6.i1,AM-d6,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-10-28
 AM-d7.i1,AM-d7,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-10-28
 AM-d8.i1,AM-d8,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-10-28

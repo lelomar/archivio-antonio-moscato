@@ -23,7 +23,7 @@ d.text((70*S,34*S),'Archivio ritrovato, 2009–2021',font=archivo(24,700,85),fil
 d.text((64*S,58*S),'MOVIMENTO',font=archivo(196),fill=WHITE)
 d.text((64*S,228*S),'OPERAIO',font=archivo(196),fill=WHITE)
 d.text((70*S,418*S),'Il sito di Antonio Moscato, ricostruito',font=literata(40),fill=WHITE)
-footer(d,'2.928 articoli · 180 documenti su 247 · ricerca a testo pieno')
+footer(d,'2.929 articoli · 180 documenti su 247 · ricerca a testo pieno')
 save(im,'og-archivio.png')
 im,d=base()
 d.text((70*S,34*S),'Un archivio salvato',font=archivo(24,700,85),fill=PINK)

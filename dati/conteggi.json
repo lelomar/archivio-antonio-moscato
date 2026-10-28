@@ -1,5 +1,5 @@
 {
- "articoli": 2928,
+ "articoli": 2929,
  "articoli_joomla_estratti": 2931,
  "articoli_wordpress": 72,
  "articoli_wordpress_unici": 10,
@@ -25,5 +25,6 @@
  "temi_non_classificato": 1863,
  "temi_da_verificare": 43,
  "temi_con_wikidata": 208,
- "articoli_prima_della_pulizia": 2940
+ "articoli_prima_della_pulizia": 2940,
+ "articoli_recuperati_dopo": 1
 }

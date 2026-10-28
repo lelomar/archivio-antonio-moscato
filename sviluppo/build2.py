@@ -8,6 +8,11 @@ DROP_ART={67:'index.html',273:'index.html',272:'index.html',25:'index.html',235:
 DUP_ART={1946:1947,2033:2034,2040:2041,2264:2263,2020:2021,2279:2280}
 ART_REDIR.update(DUP_ART)
 arts=[a for a in arts if a['id'] not in DROP_ART and a['id'] not in DUP_ART]
+# testi recuperati dopo la prima ricostruzione (sviluppo/estrai_aggiunti.py → testi_aggiunti.json)
+_AGF=os.path.join(WORK,'testi_aggiunti.json'); AGGIUNTI=json.load(open(_AGF,encoding='utf-8')) if os.path.exists(_AGF) else []
+for _t in AGGIUNTI:
+    if not any(str(a['id'])==_t['id'] for a in arts):
+        arts.append({'id':int(_t['id']),'title':_t['title'],'date':_t['date'],'catid':int(_t['catid']),'catslug':_t['catslug'],'slug':_t['slug'],'src':_t['src'],'kw':_t['kw'],'html':_t['html'],'score':'0'})
 A={a['id']:a for a in arts}
 def slugify(t):
     t=unicodedata.normalize('NFKD',t.lower()); t=''.join(c for c in t if not unicodedata.combining(c))
@@ -159,6 +164,7 @@ for a in arts: bycat[a['catid']].append(a)
 # --- autori: proposte automatiche + correzioni verificate ---
 import urllib.parse as _up
 _AUT={r['id']:r for r in json.load(open(os.path.join(WORK,'autori_proposte.json')))}
+for _t in AGGIUNTI: _AUT.setdefault(_t['id'],{'id':_t['id'],'autore':_t['autore'],'certezza':'alta','indizio':_t['fonte_autore'],'moscato':''})
 _COR=json.load(open(os.path.join(WORK,'autori_correzioni.json'))) if os.path.exists(os.path.join(WORK,'autori_correzioni.json')) else {}
 for _k,_v in _COR.items():
     if _k in _AUT: _AUT[_k].update(_v); _AUT[_k]['certezza']='verificata'
@@ -204,6 +210,9 @@ def _interventi(a):
         elif h.startswith('#'): c['note']+=1
     c['img']=len(re.findall(r'<img[^>]+src="(\.\./)+assets/img/',b))
     out=['pulizia del codice della pagina (menu, script, pulsanti di condivisione, stili di Word): il testo non è stato modificato']
+    if any(_t['id']==str(a['id']) for _t in AGGIUNTI):
+        out.insert(0,'testo recuperato dopo la prima ricostruzione dalla stessa copia della Wayback Machine (la pagina non ha l’intestazione standard degli articoli); esclusa l’intestazione vuota del modulo «Ultimi articoli inseriti»')
+        out.append('data di pubblicazione ricavata dai metadati della stessa pagina importata nel blog WordPress del sito')
     def pl(n,s1,s2): return f'{n} {s1 if n==1 else s2}'
     if c['int']: out.append(pl(c['int'],'collegamento al vecchio sito ricondotto','collegamenti al vecchio sito ricondotti')+' alle pagine di questo archivio')
     if c['wbi']: out.append(pl(c['wbi'],'collegamento','collegamenti')+' a pagine non conservate, indirizzat'+('o' if c['wbi']==1 else 'i')+' alla Wayback Machine (↗)')
@@ -427,8 +436,9 @@ for _t in ('persona','organizzazione','luogo','evento','concetto','pubblicazione
 CONTI['temi_da_verificare']=len(AMBT)
 CONTI['temi_con_wikidata']=sum(1 for k in kwcount if _wd(k))
 CONTI['articoli_prima_della_pulizia']=CONTI['articoli_joomla_estratti']-1+CONTI['articoli_wordpress_unici']
+CONTI['articoli_recuperati_dopo']=len(AGGIUNTI)
 assert CONTI['documenti_integri']+CONTI['documenti_incompleti']+CONTI['documenti_mancanti']+CONTI['documenti_audio_video']==CONTI['documenti'],CONTI
-assert CONTI['articoli_prima_della_pulizia']-CONTI['pagine_di_servizio_escluse']+1-CONTI['doppioni_uniti']==CONTI['articoli'],CONTI
+assert CONTI['articoli_prima_della_pulizia']-CONTI['pagine_di_servizio_escluse']+1-CONTI['doppioni_uniti']+CONTI['articoli_recuperati_dopo']==CONTI['articoli'],CONTI
 def _n(v): return f'{v:,}'.replace(',','.')
 os.makedirs(os.path.join(OUT,'dati'),exist_ok=True)
 json.dump(CONTI,open(os.path.join(OUT,'dati','conteggi.json'),'w'),ensure_ascii=False,indent=1)
@@ -459,10 +469,19 @@ lead=recent[0]
 featured=''.join(entry(a,'') for a in recent[1:6])
 nodes=''.join(f'<a class="card" href="documenti/cat{x}.html"><b>{esc(dmname(x))}</b><span>{count(x)} documenti</span></a>' for x in topd[:9])
 chi='<a href="biografia.html">Chi era Antonio Moscato</a>' if 22 in A else ''
+_l=A.get(12)
+if _l:
+    _lu,_lts=_PROV.get('12',('',''))
+    _lwb=('https://web.archive.org/web/'+_lts+'/'+_lu) if _lts else ''
+    _lettera=(f'<section class="lettera" aria-labelledby="lettera-t"><h2 class="sec" id="lettera-t">{esc(_l["title"])}</h2>'
+      f'<div class="doc-orig">{clean(_l["html"],"")}</div>'
+      f'<p class="prov">Testo dell’articolo 12 del sito originale, «{esc(_l["title"])}», categoria «homepage»'+(f', dalla <a href="{esc(_lwb)}" target="_blank" rel="noopener">copia della Wayback Machine del {_tsd(_lts)}</a>' if _lwb else '')+'. Riprodotto senza modifiche. <a href="articoli/12.html#sch-12">Scheda d’archivio e provenienza</a>'+(f' · {chi}' if chi else '')+'</p></section>')
+else: _lettera=''
 home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {_n(len(arts))} articoli · {nrec} documenti su {len(docs)}</p><h1>Movimento operaio<span>Il sito di Antonio Moscato, ricostruito</span></h1>
-<blockquote>Il sito «è nato dalla proposta di alcuni studenti di raccogliere e quindi non far disperdere una notevole quantità di saggi, articoli, libri ormai esauriti da tempo».<cite>Antonio Moscato, dalla pagina di benvenuto · {chi}</cite></blockquote></div>
+</div>
 <form class="bigsearch" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca tra articoli e documenti: Togliatti, Grecia, Guevara…" aria-label="Cerca"><button>Cerca</button></form>
 <p class="quick"><a href="progetto.html">Il progetto di recupero</a> · <a href="cerca.html">ricerca avanzata</a> · <a href="#" onclick="return aCaso()">un testo a caso</a></p></section>
+{_lettera}
 <section id="oggi" class="oggi" aria-live="polite"></section>
 <h2 class="sec">Le rubriche</h2><div class="rgrid">{"".join(rcard(c) for c in main_c[:6])}</div><p class="more-l"><a href="attualita.html">Tutte le rubriche →</a></p>
 <div class="two"><section><h2 class="sec">Temi ricorrenti</h2>{cloud("",30)}<p class="more-l"><a href="temi.html">Indice completo dei temi →</a></p></section>
@@ -471,7 +490,7 @@ home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {_n(
 <h2 class="sec">Gli ultimi testi</h2><article class="leadart"><div class="em"><time>{hdate(lead['date'])}</time> <a class="rb" href="categorie/c{lead['catid']}.html">{esc(catname(lead['catid']))}</a></div><h3><a href="articoli/{lead['id']}.html">{esc(lead['title'])}</a></h3><p class="exc">{esc(lead['exc'])}</p></article><ul class="entries">{featured}</ul>
 <script src="assets/meta.js?v={_MV}"></script><script src="assets/oggi.js?v={_AV}"></script>'''
 open(os.path.join(OUT,'index.html'),'w').write(page('Home',home,'','index.html','pg-home'))
-search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto il testo dei 2.928 articoli e tra i documenti. Restringi con i filtri a sinistra; i risultati si aggiornano mentre scrivi.</p></header>
+search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto il testo dei 2.929 articoli e tra i documenti. Restringi con i filtri a sinistra; i risultati si aggiornano mentre scrivi.</p></header>
 <form class="bigsearch" onsubmit="S.run();return false"><input id="q" type="search" placeholder="Parole o “frase esatta”…" autocomplete="off" aria-label="Testo da cercare"><button>Cerca</button></form>
 <div class="sopts"><label><input type="radio" name="dove" value="all" checked> in tutto il testo</label><label><input type="radio" name="dove" value="tit"> solo nei titoli e temi</label>
 <span class="sp"></span><label>Ordina per <select id="ord"><option value="rel">pertinenza</option><option value="new">più recenti</option><option value="old">meno recenti</option></select></label></div>

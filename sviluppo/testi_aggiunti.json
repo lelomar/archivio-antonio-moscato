@@ -1,0 +1,17 @@
+[
+ {
+  "id": "12",
+  "title": "Benvenuti!",
+  "date": "2009-06-16",
+  "catid": "2",
+  "catslug": "homepage",
+  "slug": "benvenuti",
+  "src": "index__q13a2169bf0de.php",
+  "kw": "movimento operaio, anticapitalismo, antistalinismo, democrazia operaia, internazionalismo, rivoluzione,Cuba, Che Guevara, America Latina, Sinistra Critica",
+  "html": "<p class=\"banneritem\" style=\"text-align: justify; margin-bottom: 0cm\">\n<span style=\"font-size:18px;\">Il sito <strong>Movimento operaio, la pagina di Antonio Moscato</strong> è nato nel 2009 dalla proposta di alcuni studenti di raccogliere e non far disperdere una notevole quantità di saggi, articoli, libri ormai esauriti da tempo, di cui ero l’autore o che avevo comunque condiviso con gli studenti.</span></p>\n<p>\n<span style=\"font-size:18px;\">Il momento era favorevole: ero costretto ad andare in pensione ancora nel pieno delle mie energie, e avevo più tempo per riorganizzare il materiale accumulato.</span></p>\n<p>\n<span style=\"font-size:18px;\">Nel corso degli anni una crescita abbastanza rapida del sito lo ha reso meno facilmente consultabile, ed è ora di rinnovarlo radicalmente. L’attacco di hacker, le cui ultime tracce stanno sparendo, ha reso però indilazionabile una profonda ristrutturazione, che chiederà un po’ di tempo. Intanto è di nuovo accessibile l’archivio e la sezione I GRANDI NODI DEL NOVECENTO, che contiene gli scritti più importanti e spesso di grande attualità anche se meno recenti. Visitatelo ed esploratelo con pazienza in attesa di un nuovo assetto del sito.</span></p>\n<p align=\"right\">\n<span style=\"font-size:18px;\">Antonio Moscato</span></p>\n<p>\n<span style=\"font-size:18px;\">Recanati 1 febbraio 2016</span></p>",
+  "autore": "Antonio Moscato",
+  "fonte_autore": "firma in calce («Antonio Moscato, Recanati 1 febbraio 2016»)",
+  "sha256_file": "b59e2434d3eaa970e139080a6d3aa3afb8125adefedf1566468844052d2a190d",
+  "nota": "recuperato dopo la prima ricostruzione (estrai_aggiunti.py)"
+ }
+]

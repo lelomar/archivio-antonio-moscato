@@ -4,7 +4,7 @@ Questo rapporto misura quanto la ricostruzione è fedele alle pagine originali. 
 
 ## Risultato
 
-In media la ricostruzione conserva il **99.91%** delle parole dell'originale (valore minimo 98.78%), e il 53.5% dei testi è identico all'originale. La ricostruzione non aggiunge nulla: le parole assenti nell'originale sono lo 0.13%. I titoli coincidono in 200 casi su 200.
+In media la ricostruzione conserva il **99.92%** delle parole dell'originale (valore minimo 98.78%), e il 54.5% dei testi è identico all'originale. La ricostruzione non aggiunge nulla: le parole assenti nell'originale sono lo 0.13%. I titoli coincidono in 200 casi su 200.
 
 Le sole differenze riscontrate sono le scritte dei pulsanti di condivisione («Facebook») presenti nell'originale di due articoli del blog e assenti nella ricostruzione: nessuna parola dei testi è andata persa.
 

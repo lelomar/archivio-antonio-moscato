@@ -7,7 +7,7 @@ C=json.load(open(os.path.join(OUT,'dati','conteggi.json')))
 def n(x): return int(x.replace('.',''))
 # cifre ammesse per ogni grandezza: il valore corrente e, dove il testo racconta i passaggi, quelli intermedi
 AMM={
- 'articoli':{C['articoli'],C['articoli_prima_della_pulizia'],C['articoli_joomla_estratti'],C['articoli_joomla_estratti']-1},
+ 'articoli':{C['articoli'],C['articoli_prima_della_pulizia'],C['articoli_joomla_estratti'],C['articoli_joomla_estratti']-1,C['articoli']-C.get('articoli_recuperati_dopo',0)},  # l'ultimo: il conteggio prima dei recuperi, citato nel registro delle versioni
  'documenti_tot':{C['documenti']},
  'documenti_in':{C['documenti_in_archivio']},
  'incompleti':{C['documenti_incompleti']},

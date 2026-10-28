@@ -7,7 +7,7 @@
   "licenza": "CC BY-NC-SA 4.0",
   "generato": "2026-10-28",
   "note": "wayback_timestamp indica la copia della Wayback Machine più recente disponibile per l’URL originale.",
-  "articoli": 2928,
+  "articoli": 2929,
   "documenti": 247
  },
  "articoli": [
@@ -154,6 +154,24 @@
    "wayback_timestamp": "20250512211133",
    "wayback_url": "https://web.archive.org/web/20250512211133/https://antoniomoscato.altervista.org/effettuare-accesso/",
    "file_sorgente": "effettuare-accesso/__q3fb7529d2ecd/index.html"
+  },
+  {
+   "id": "12",
+   "tipo": "articolo",
+   "titolo": "Benvenuti!",
+   "autore": "Antonio Moscato",
+   "nota_autore": "",
+   "attribuzione": "alta",
+   "data_scrittura": "scritto il 1 febbraio 2016",
+   "data": "2009-06-16",
+   "rubrica": "Pagine del sito",
+   "lingua": "it",
+   "temi": "",
+   "url_archivio": "https://lelomar.github.io/archivio-antonio-moscato/articoli/12.html",
+   "url_originale": "https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=12%3Abenvenuti&catid=2%3Ahomepage&Itemid=33",
+   "wayback_timestamp": "20210301102924",
+   "wayback_url": "https://web.archive.org/web/20210301102924/https://antoniomoscato.altervista.org/index.php?option=com_content&view=article&id=12%3Abenvenuti&catid=2%3Ahomepage&Itemid=33",
+   "file_sorgente": "index__q13a2169bf0de.php"
   },
   {
    "id": "wp-benvenuti",

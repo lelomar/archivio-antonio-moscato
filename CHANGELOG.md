@@ -9,6 +9,8 @@ Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
 
 ### Aggiunto
+- In home, subito sotto l'apertura, l'effemeride del giorno: un testo pubblicato da Moscato in questa data, lo stesso per tutta la giornata, con il link agli altri testi del giorno.
+- Ai file di grafica e agli script è associato un numero di versione, così dopo ogni aggiornamento i browser scaricano subito quelli nuovi.
 - Nella pagina dei temi, i collegamenti per scaricare il vocabolario in CSV, JSON e SKOS, le parole chiave originali e le voci da verificare.
 
 ### Corretto

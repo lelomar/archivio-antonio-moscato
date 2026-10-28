@@ -15,12 +15,18 @@ function item(a,full){var y=a[2].slice(0,4),url=PRE+'articoli/'+a[0]+'.html';
  if(full){var gg=+a[2].slice(8,10);var txt='Accadde oggi. Il '+(gg==1?'1°':gg)+' '+MESI[+a[2].slice(5,7)-1]+' '+y+' Antonio Moscato pubblicava «'+a[1]+'». Dall’archivio ritrovato: '+BASE+'articoli/'+a[0]+'.html';
   h+='<button type="button" class="social-copy" data-copy="'+esc(txt)+'">Copia per i social</button>'}
  return h+'</li>'}
-// riquadro in home
+// riquadro in home: un solo testo pubblicato in questo giorno, lo stesso per tutta la giornata
 var box=document.getElementById('oggi');
-if(box){var d=new Date(),k=key(d),L=BY[k]||[],near='';
- if(!L.length){for(var i=1;i<4&&!L.length;i++){var d2=new Date(d.getTime()-i*864e5);k=key(d2);L=BY[k]||[]}near=' (nei giorni vicini)'}
- var pick=L.slice().sort(function(){return Math.random()-.5}).slice(0,4).sort(function(x,y){return x[2]<y[2]?-1:1});
- box.innerHTML='<h2 class="sec">Accadde oggi · '+label(k)+near+'</h2><p class="lead">Cosa pubblicava Antonio Moscato sul suo sito in questo giorno, negli anni.</p><ul class="entries">'+pick.map(function(a){return item(a,false)}).join('')+'</ul><p class="more-l"><a href="'+PRE+'accadde-oggi.html#'+k+'">'+(L.length>pick.length?'Tutti i '+L.length+' testi di questo giorno':'Apri la rubrica')+' →</a></p>'}
+if(box){var d=new Date(),k=key(d),L=BY[k]||[],near=false;
+ for(var i=1;i<8&&!L.length;i++){var d2=new Date(d.getTime()-i*864e5);k=key(d2);L=BY[k]||[];near=true}
+ if(L.length){var seed=d.getFullYear()*1000+Math.floor((d-new Date(d.getFullYear(),0,0))/864e5),a=L[seed%L.length];
+  var y=a[2].slice(0,4),gg=+a[2].slice(8,10),dl=(gg==1?'1°':gg)+' '+MESI[+a[2].slice(5,7)-1]+' '+y,url=PRE+'articoli/'+a[0]+'.html';
+  var txt='Accadde oggi. Il '+dl+' Antonio Moscato pubblicava «'+a[1]+'». Dall’archivio ritrovato: '+BASE+'articoli/'+a[0]+'.html';
+  box.innerHTML='<h2 class="sec">Accadde oggi'+(near?' <small>(nei giorni vicini)</small>':'')+'</h2>'+
+   '<article class="leadart oggi-art"><div class="em"><span class="oy">'+y+'</span> <time datetime="'+a[2]+'">'+dl+'</time> <a class="rb" href="'+PRE+'categorie/c'+a[3]+'.html">'+esc(M.cats[a[3]]||'')+'</a>'+(a[4]=='es'?' <span class="lg">ES</span>':'')+'</div>'+
+   '<h3><a href="'+url+'">'+esc(a[1])+'</a></h3>'+(a[6]?'<p class="exc">'+esc(a[6])+'</p>':'')+
+   '<p class="oggi-az"><a href="'+url+'">Leggi il testo →</a> <button type="button" class="social-copy" data-copy="'+esc(txt)+'">Copia per i social</button></p></article>'+
+   '<p class="more-l"><a href="'+PRE+'accadde-oggi.html#'+k+'">'+(L.length>1?'Gli altri '+(L.length-1)+(L.length==2?' testo':' testi')+' del '+label(k):'Accadde oggi, giorno per giorno')+' →</a></p>'}}
 // pagina dedicata
 var pg=document.getElementById('oggi-pagina');
 if(pg){var sm=document.getElementById('om'),sd=document.getElementById('od');

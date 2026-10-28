@@ -399,3 +399,8 @@ h3.vh .d{font:500 14px var(--sans);color:var(--mute);font-stretch:100%}
 .tipi-f[data-f="non-classificato"] .entry:not([data-tipo="non-classificato"]){display:none!important}.tipi-f[data-f="non-classificato"] .ygroup:not(:has(.entry[data-tipo="non-classificato"])){display:none}
 .tipi-f[data-f]:not([data-f=""]) .jump{display:none}
 .phead .forme{font:14px/1.5 var(--sans);color:var(--mute);margin:.5em 0 0;max-width:760px}
+/* Home: l'effemeride del giorno */
+.oggi .sec small{font:500 14px var(--sans);color:var(--mute)}
+.oggi-art{border-left:6px solid var(--red);padding-left:18px}
+.oggi-art .oy{margin-right:6px}
+.oggi-az{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:.6em 0 0;font:600 15px var(--sans)}

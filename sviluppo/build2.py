@@ -125,10 +125,14 @@ for a in arts:
     a['rel']=[i for i,_ in sc.most_common(6) if _>1.0][:6]
 print('prep ok',N,'kw',len(kwcount),'es',sum(1 for a in arts if a['lang']=='es'),flush=True)
 NAV=[('index.html','Home'),('attualita.html','Rubriche'),('temi.html','Temi'),('autori.html','Autori'),('documenti/index.html','I grandi nodi del Novecento'),('anni.html','Cronologia'),('accadde-oggi.html','Accadde oggi'),('cerca.html','Ricerca')]
+import hashlib as _hl, datetime as _dt
+# numero di versione dei file di grafica e script: a ogni modifica il browser scarica subito quelli nuovi
+_AV=_hl.sha256(b''.join(open(os.path.join(OUT,'assets',_f),'rb').read() for _f in ('stile.css','sito.js','oggi.js','cerca.js') if os.path.exists(os.path.join(OUT,'assets',_f)))).hexdigest()[:8]
+_MV=_dt.date.today().strftime('%Y%m%d')
 def page(title,content,pre,active='',body_cls='',lang='it'):
     nav=''.join(f'<a href="{pre}{h}"{" class=on aria-current=page" if h==active else ""}>{esc(t)}</a>' for h,t in NAV)
     return f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(title)} · Movimento operaio, il sito di Antonio Moscato ricostruito</title><link rel="stylesheet" href="{pre}assets/stile.css"><script src="{pre}assets/sito.js"></script></head>
+<title>{esc(title)} · Movimento operaio, il sito di Antonio Moscato ricostruito</title><link rel="stylesheet" href="{pre}assets/stile.css?v={_AV}"><script src="{pre}assets/sito.js?v={_AV}"></script></head>
 <body class="{body_cls}" data-pre="{pre}"><a class="skip" href="#contenuto">Salta al contenuto</a><div id="prog" aria-hidden="true"></div><div class="credit"><div class="wrap"><a href="{pre}progetto.html">Il progetto di recupero</a> a cura di <a href="https://lelomar.substack.com" target="_blank" rel="noopener">Leonardo Lomartire · lelomar.substack.com</a></div></div><header class="top"><div class="wrap bar"><a class="brand" href="{pre}index.html"><span class="k">Movimento operaio</span><span class="s">Il sito di Antonio Moscato, ricostruito</span></a>
 <form class="mini" role="search" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca nell’archivio…" aria-label="Cerca"><button aria-label="Cerca">⌕</button></form><button class="hamb" type="button" aria-expanded="false" aria-controls="menu"><span class="hl" aria-hidden="true"></span>Menu</button></div>
 <div class="wrap"><nav class="mainnav" id="menu" aria-label="Menu principale">{nav}</nav></div></header><main class="wrap" id="contenuto" tabindex="-1">{content}</main>
@@ -459,13 +463,13 @@ home=f'''<section class="hero"><div><p class="kick">Archivio 2009–2021 · {_n(
 <blockquote>Il sito «è nato dalla proposta di alcuni studenti di raccogliere e quindi non far disperdere una notevole quantità di saggi, articoli, libri ormai esauriti da tempo».<cite>Antonio Moscato, dalla pagina di benvenuto · {chi}</cite></blockquote></div>
 <form class="bigsearch" onsubmit="return miniCerca(this)"><input name="q" type="search" placeholder="Cerca tra articoli e documenti: Togliatti, Grecia, Guevara…" aria-label="Cerca"><button>Cerca</button></form>
 <p class="quick"><a href="progetto.html">Il progetto di recupero</a> · <a href="cerca.html">ricerca avanzata</a> · <a href="#" onclick="return aCaso()">un testo a caso</a></p></section>
+<section id="oggi" class="oggi" aria-live="polite"></section>
 <h2 class="sec">Le rubriche</h2><div class="rgrid">{"".join(rcard(c) for c in main_c[:6])}</div><p class="more-l"><a href="attualita.html">Tutte le rubriche →</a></p>
 <div class="two"><section><h2 class="sec">Temi ricorrenti</h2>{cloud("",30)}<p class="more-l"><a href="temi.html">Indice completo dei temi →</a></p></section>
 <section><h2 class="sec">Dodici anni di scritti</h2>{histo("")}<p class="hint">Testi pubblicati per anno: clicca una colonna per aprirlo.</p></section></div>
-<section id="oggi" class="oggi"></section>
 <h2 class="sec">I grandi nodi del Novecento</h2><p class="lead">I saggi e i libri esauriti, materia del lavoro di storico del movimento operaio.</p><div class="cards">{nodes}</div><p class="more-l"><a href="documenti/index.html">Tutti i documenti →</a></p>
 <h2 class="sec">Gli ultimi testi</h2><article class="leadart"><div class="em"><time>{hdate(lead['date'])}</time> <a class="rb" href="categorie/c{lead['catid']}.html">{esc(catname(lead['catid']))}</a></div><h3><a href="articoli/{lead['id']}.html">{esc(lead['title'])}</a></h3><p class="exc">{esc(lead['exc'])}</p></article><ul class="entries">{featured}</ul>
-<script src="assets/meta.js"></script><script src="assets/oggi.js"></script>'''
+<script src="assets/meta.js?v={_MV}"></script><script src="assets/oggi.js?v={_AV}"></script>'''
 open(os.path.join(OUT,'index.html'),'w').write(page('Home',home,'','index.html','pg-home'))
 search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto il testo dei 2.928 articoli e tra i documenti. Restringi con i filtri a sinistra; i risultati si aggiornano mentre scrivi.</p></header>
 <form class="bigsearch" onsubmit="S.run();return false"><input id="q" type="search" placeholder="Parole o “frase esatta”…" autocomplete="off" aria-label="Testo da cercare"><button>Cerca</button></form>
@@ -479,14 +483,15 @@ search='''<header class="phead"><h1>Ricerca</h1><p class="lead">Cerca in tutto i
 <div class="box"><h4>Temi</h4><div id="ftema-sel" class="chips"></div><input id="tq" type="search" placeholder="aggiungi un tema…" list="tdl"><datalist id="tdl"></datalist><div id="ftema" class="chips"></div></div>
 <button class="reset" onclick="S.reset()">Azzera filtri</button></aside>
 <section class="results"><div id="active" class="chips"></div><div id="dres"></div><ol id="res" class="entries"></ol><nav id="pager" class="pager"></nav></section></div>
-<script src="assets/meta.js"></script><script src="assets/cerca.js"></script>'''
+<script src="assets/meta.js?v=__MV__"></script><script src="assets/cerca.js?v=__AV__"></script>'''.replace('__MV__',_MV).replace('__AV__',_AV)
 open(os.path.join(OUT,'cerca.html'),'w').write(page('Ricerca',search,'','cerca.html','pg-search'))
 for f in ['indice.js']:
     p=os.path.join(OUT,'assets',f)
     if os.path.exists(p): os.remove(p)
 
 
-_og='<header class="phead"><p class="kick">Accadde oggi</p><h1 id="ot"></h1><p class="lead">Cosa pubblicava Antonio Moscato sul suo sito in questo giorno dell’anno, dal 2009 al 2021. Scegli una data o scorri i giorni.</p><p class="meta" id="on"></p></header><div class="ocontrols"><button type="button" id="oprev">← Giorno prima</button><select id="od" aria-label="Giorno"></select><select id="om" aria-label="Mese"></select><button type="button" id="onext">Giorno dopo →</button><button type="button" id="otoday">Oggi</button></div><div id="oggi-pagina"><ul class="entries" id="ol"></ul></div><p class="hint">Il pulsante «Copia per i social» prepara una riga pronta da incollare, con il link al testo.</p><script src="assets/meta.js"></script><script src="assets/oggi.js"></script>'
+_og='<header class="phead"><p class="kick">Accadde oggi</p><h1 id="ot"></h1><p class="lead">Cosa pubblicava Antonio Moscato sul suo sito in questo giorno dell’anno, dal 2009 al 2021. Scegli una data o scorri i giorni.</p><p class="meta" id="on"></p></header><div class="ocontrols"><button type="button" id="oprev">← Giorno prima</button><select id="od" aria-label="Giorno"></select><select id="om" aria-label="Mese"></select><button type="button" id="onext">Giorno dopo →</button><button type="button" id="otoday">Oggi</button></div><div id="oggi-pagina"><ul class="entries" id="ol"></ul></div><p class="hint">Il pulsante «Copia per i social» prepara una riga pronta da incollare, con il link al testo.</p><script src="assets/meta.js?v=__MV__"></script><script src="assets/oggi.js?v=__AV__"></script>'
+_og=_og.replace('__MV__',_MV).replace('__AV__',_AV)
 open(os.path.join(OUT,'accadde-oggi.html'),'w').write(page('Accadde oggi',_og,'','accadde-oggi.html'))
 _pt=open(os.path.join(WORK,'progetto.html')).read()
 for _k,_v in CONTI.items(): _pt=_pt.replace('{{'+_k+'}}',_n(_v))

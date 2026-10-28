@@ -217,7 +217,7 @@ def scheda(a,url):
     wb=('https://web.archive.org/web/'+ts+'/'+u) if ts else ''
     aut=a['autore'] or 'Autore non identificato'
     d=hdate(a['date']) if a['date'] else 's.d.'
-    cit=(f"{esc(aut)}, «{esc(a['title'])}», in <em>Movimento operaio – La pagina di Antonio Moscato</em>, {d}; ora in <em>Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito</em>, a cura di Leonardo Lomartire, 2026, {url} (consultato il <span class=\"oggi\">…</span>). DOI: 10.5281/zenodo.23670900.")
+    cit=(f"{esc(aut)}, «{esc(a['title'])}», in <em>Movimento operaio – La pagina di Antonio Moscato</em>, {d}; ora in <em>Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito</em>, a cura di Leonardo Lomartire, 2026, {url} (consultato il <span class=\"consultato\">…</span>). DOI: 10.5281/zenodo.23670900.")
     ya=a['date'][:4] if a['date'] else 's.d.'
     _an=' & '.join(_apa_name(x) for x in re.split(r'\s+e\s+',aut)); _gm=(', '+str(int(a['date'][8:10]))+' '+_MESI[int(a['date'][5:7])-1]) if a['date'] else ''
     apa=(f"{esc(_an)} ({ya}{_gm}). <em>{esc(a['title'])}</em>. In L. Lomartire (a cura di), <em>Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito</em>. Zenodo. https://doi.org/10.5281/zenodo.23670900 · {url}")

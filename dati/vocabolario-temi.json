@@ -1,7 +1,7 @@
 {
  "meta": {
   "titolo": "Vocabolario dei temi",
-  "versione_generata": "2026-10-27",
+  "versione_generata": "2026-10-28",
   "licenza": "CC BY-NC-SA 4.0",
   "descrizione": "Entità normalizzate ricavate dalle parole chiave originali degli articoli. Le parole chiave originali non sono modificate: sono in parole-chiave-originali.csv, con il trattamento ricevuto da ciascuna.",
   "tipi": {

@@ -2,7 +2,7 @@
 (function(){try{if(location.protocol==='file:'){var c=document.currentScript,l=document.createElement('link');l.rel='stylesheet';l.href=c.src.replace(/sito\.js(\?.*)?$/,'fonts/caratteri-offline.css');document.head.appendChild(l)}}catch(e){}})();
 document.documentElement.classList.add('js');
 /* scheda d'archivio: data di consultazione e copia delle citazioni */
-document.addEventListener('DOMContentLoaded',function(){var M=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],d=new Date(),s=d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear();[].forEach.call(document.querySelectorAll('.oggi'),function(e){e.textContent=s})});
+document.addEventListener('DOMContentLoaded',function(){var M=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],d=new Date(),s=d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear();[].forEach.call(document.querySelectorAll('.consultato'),function(e){e.textContent=s})});
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-copy-from]');if(!b)return;var el=document.querySelector(b.getAttribute('data-copy-from'));if(!el)return;var t=el.innerText.replace(/^APA\s+/,'').trim(),old=b.textContent;
 function ok(){b.textContent='Copiata';setTimeout(function(){b.textContent=old},1800)}
 if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,function(){sel()})}else sel();

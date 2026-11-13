@@ -12,7 +12,7 @@ Dopo la sua chiusura è stato ricostruito nell'ottobre 2026, a partire dalle cop
 dall'Internet Archive, come archivio statico che funziona **senza server e senza internet**.
 
 - 2.929 articoli (2009–2021), divisi nelle rubriche originali
-- 180 dei 247 documenti di *I grandi nodi del Novecento* (170 integri e 10 incompleti, troncati al primo megabyte); degli altri 67, 56 non sono mai stati salvati e 11 erano video o audio esterni; pagine di lettura nel browser
+- 182 dei 247 documenti di *I grandi nodi del Novecento* (170 integri, 10 incompleti, troncati al primo megabyte, e 2 ritrovati grazie ai lettori in copie che non sono il file originale); degli altri 65, 54 non sono mai stati salvati e 11 erano video o audio esterni; pagine di lettura nel browser
 - ricerca a testo pieno su articoli e documenti, con filtri per rubrica, periodo, tema e lingua
 - 713 temi con una propria pagina, su 2.948 voci del vocabolario: ogni voce è classificata come persona, organizzazione, luogo, evento, concetto o pubblicazione, 208 sono collegate a Wikidata (e da lì a VIAF, SBN e GeoNames); le parole chiave originali degli articoli restano intatte
 - cronologia anno per anno

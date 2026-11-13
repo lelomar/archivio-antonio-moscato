@@ -8,6 +8,16 @@ Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i 
 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
 
+## [1.2.2] – 13 novembre 2026
+
+**Documenti ritrovati grazie ai lettori.** Due documenti che l'Internet Archive non aveva mai salvato tornano nell'archivio, grazie a Silvio, che ne ha allegato una copia alle schede su GitHub il 5 novembre 2026: «Ernest Mandel - Introduzione al marxismo» (gid 221, scansione dell'edizione Datanews, Roma 1998, 128 pagine; issue #38, segnalazione S-2026-002) e «Maitan - Al termine di una lunga marcia dal PCI al PDS» (gid 212, scansione dell'edizione coop. Massari, Roma 1990, 62 pagine; issue #44, segnalazione S-2026-003). Titolo, autore ed edizione sono stati verificati sul frontespizio e corrispondono alle schede del sito originale. Non sono però i file che il sito offriva in download, che restano perduti: sono copie dello stesso testo. Per questo hanno uno stato nuovo, «ritrovato (copia fornita da un collaboratore)», distinto da «integro», e nella provenienza la cattura è descritta come «altra copia» dell'originale, con chi l'ha fornita, la data, l'allegato da cui proviene e l'impronta SHA-256 del file ricevuto. Ognuno ha la sua pagina di lettura, con il testo estratto dal riconoscimento ottico della scansione. I documenti nell'archivio passano da 180 a 182, i mancanti da 56 a 54.
+
+**Un riferimento per un documento mancante.** Di «Vite parallele Castro-Chavez» (gid 61) Silvio ha segnalato la pubblicazione su *Limes*, consultabile solo in abbonamento (issue #29, segnalazione S-2026-004). Il riferimento è ora nella scheda e nella provenienza, come evento «riferimento bibliografico»; il file resta mancante.
+
+**Autori.** «La politica israeliana in una intervista di Cinzia Nachira a Michel Warschawski» (AM-3195) è ora attribuito a Cinzia Nachira, autrice dell'intervista; prima era attribuito per presunzione ad Antonio Moscato. Fonte: la copia della Wayback Machine del 6 marzo 2021 dell'intervista pubblicata su rproject.it, sito da cui l'articolo dichiara di provenire. Segnalazione S-2026-001, di Leonardo, verificata dal curatore.
+
+**Segnalazioni accolte.** Nuovo registro `dati/segnalazioni-accolte.csv` (e `.json`): ogni correzione arrivata dal pannello dei collaboratori o dalle schede su GitHub e accolta, con il riferimento, lo stato prima e dopo, la fonte, le date e il nome di chi l'ha segnalata, se ha chiesto di essere citato. Lo stesso riferimento compare nella scheda d'archivio del testo e, con la fonte, nell'evento «attribuzione» di `eventi.csv`.
+
 ## [1.2.1] – 28 ottobre 2026
 
 ### Aggiunto

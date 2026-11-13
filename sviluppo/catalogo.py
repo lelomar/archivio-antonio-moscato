@@ -58,10 +58,11 @@ def run(OUT,root,work,arts,docs,catname,dmname,kwname):
         r=rap.get(str(g)) or {}
         # stato del file e modo del recupero sono due informazioni distinte
         if d.get('out') and d.get('broken'): stato='incompleto (troncato a 1 MB)'
+        elif d.get('out') and d.get('dono'): stato='ritrovato (copia fornita da un collaboratore)'
         elif d.get('out'): stato='integro'
         elif dmname(d.get('cat',0))=='Audio e video': stato='audio/video non archiviato'
         else: stato='mancante'
-        recupero=('recupero mirato (dopo la prima ricostruzione)' if r.get('file') else 'prima ricostruzione') if d.get('out') else ''
+        recupero=(f"copia fornita da {d['dono']['credito']} il {d['dono']['data']} (issue #{d['dono']['issue']})" if d.get('dono') else ('recupero mirato (dopo la prima ricostruzione)' if r.get('file') else 'prima ricostruzione')) if d.get('out') else ''
         orig=f"http://antoniomoscato.altervista.org/index.php?option=com_docman&task=doc_download&gid={g}&Itemid=2"
         if r.get('from'):
             m=re.match(r'https://web\.archive\.org/web/(\d+)/(.*)',r['from']); ts,u=(m.group(1),m.group(2)) if m else ('',orig)

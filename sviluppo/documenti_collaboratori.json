@@ -1,0 +1,50 @@
+{
+ "212": {
+  "tipo": "copia",
+  "file": "recupero/collaboratori/AM-D212_Al_termine_di_una_lunga_marcia.pdf",
+  "out": "documenti/file/212-copia-Maitan_Al_termine_di_una_lunga_marcia.pdf",
+  "segnalazione": "S-2026-003",
+  "issue": 44,
+  "issue_url": "https://github.com/lelomar/archivio-antonio-moscato/issues/44",
+  "fornito_da": "Silvio (utente GitHub sifalcia)",
+  "credito": "Silvio",
+  "data": "2026-11-05",
+  "allegato_url": "https://github.com/user-attachments/files/34450012/Al.termine.duna.lunga.marcia.-.dal.Pci.al.Pds.pdf",
+  "nome_file_ricevuto": "Al termine duna lunga marcia - dal Pci al Pds.pdf",
+  "sha256": "c5b2a782a892d4d3a4610ebd78064e264322b74adeb7f3bff506435d6e084972",
+  "byte": 14461803,
+  "pagine": 62,
+  "descrizione": "scansione con riconoscimento del testo del libro di Livio Maitan, «Al termine d’una lunga marcia: dal Pci al Pds», coop. Massari editrice, Roma, prima edizione novembre 1990; metadati del PDF: titolo «Al termine d'una lunga marcia - dal Pci al Pds», autore Livio Maitan, ultima modifica 27 giugno 2014",
+  "verifica": "titolo, autore ed edizione letti nel frontespizio e nei metadati del PDF corrispondono alla scheda del sito originale (gid 212, «Maitan - Al termine di una lunga marcia dal PCI al PDS»); il file non è quello scaricabile dal sito nel 2011 (nome originale «Maitan - Alla fine.pdf»): è una copia dello stesso testo"
+ },
+ "221": {
+  "tipo": "copia",
+  "file": "recupero/collaboratori/AM-D221_Introduzione_al_marxismo.pdf",
+  "out": "documenti/file/221-copia-Mandel_Introduzione_al_marxismo.pdf",
+  "segnalazione": "S-2026-002",
+  "issue": 38,
+  "issue_url": "https://github.com/lelomar/archivio-antonio-moscato/issues/38",
+  "fornito_da": "Silvio (utente GitHub sifalcia)",
+  "credito": "Silvio",
+  "data": "2026-11-05",
+  "allegato_url": "https://github.com/user-attachments/files/34449519/Introduzione.al.marxismo.pdf",
+  "nome_file_ricevuto": "Introduzione al marxismo.pdf",
+  "sha256": "9a04d1d630e185a0a3985c016a50fd2fb57155a02ce77d24916343874fc6bc67",
+  "byte": 4244102,
+  "pagine": 128,
+  "descrizione": "scansione con riconoscimento del testo del libro di Ernest Mandel, «Introduzione al marxismo», Datanews, Roma, prima edizione aprile 1998, traduzione di Ada Cinato; PDF creato il 14 maggio 2014 con Adobe Acrobat 9",
+  "verifica": "titolo e autore letti nel frontespizio corrispondono alla scheda del sito originale (gid 221, «Ernest Mandel - Introduzione al marxismo»); il file non è quello scaricabile dal sito nel 2012 (nome originale «Mandel - Introduzione al marxismo TOT.pdf»): è una copia dello stesso testo"
+ },
+ "61": {
+  "tipo": "riferimento",
+  "segnalazione": "S-2026-004",
+  "issue": 29,
+  "issue_url": "https://github.com/lelomar/archivio-antonio-moscato/issues/29",
+  "fornito_da": "Silvio (utente GitHub sifalcia)",
+  "credito": "Silvio",
+  "data": "2026-11-05",
+  "riferimento": "Limes, rivista italiana di geopolitica",
+  "riferimento_url": "https://www.limesonline.com/rivista/vite-parallele-fidel-castro-e-hugo-chavez-14615829/",
+  "nota": "articolo pubblicato su Limes (il titolo, «Vite parallele: Fidel Castro e Hugo Chávez», è quello indicato dall’indirizzo della pagina), consultabile solo in abbonamento; il file del sito originale resta mancante"
+ }
+}

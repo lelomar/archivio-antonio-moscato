@@ -40,6 +40,7 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
         eventi.append({'id_evento':eid,'oggetto':oid,'da_livello':da,'a_livello':a,'tipo':tipo,'descrizione':descr,'quantita':q,'agente':agente,'data':oggi})
         return eid
     _agf=os.path.join(WORK,'testi_aggiunti.json'); AGG={t['id']:t for t in json.load(open(_agf,encoding='utf-8'))} if os.path.exists(_agf) else {}
+    _cf=os.path.join(WORK,'autori_correzioni.json'); COR=json.load(open(_cf,encoding='utf-8')) if os.path.exists(_cf) else {}
     for a in arts:
         i=str(a['id']); oid='AM-'+i; r=CA.get(i,{})
         csha,cby=_fsha(os.path.join(root,a['src'])) if a.get('src') else ('','')
@@ -70,7 +71,8 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
         if lk['immagini']: add('cattura','edizione','immagini','immagini recuperate dalla Wayback Machine e incluse nell’archivio',lk['immagini'])
         if lk['note']: add('testo','edizione','note','rimandi interni (note e indici) resi funzionanti',lk['note'])
         cert=a.get('cert','')
-        add('testo','edizione','attribuzione',f"autore indicato: {a.get('autore') or 'non identificato'}; certezza: {cert}"+(f"; {a.get('mosc')}" if a.get('mosc') else ''),
+        _cr=COR.get(i,{}); _crd=(f"; corretto con la segnalazione {_cr['segnalazione']}, fonte: {_cr.get('fonte','')}" if _cr.get('segnalazione') else '')
+        add('testo','edizione','attribuzione',f"autore indicato: {a.get('autore') or 'non identificato'}; certezza: {cert}"+(f"; {a.get('mosc')}" if a.get('mosc') else '')+_crd,
             agente='segnalazione verificata dal curatore' if cert=='verificata' else 'programma di attribuzione (autori2.py)'+(', da verificare' if cert in ('media','bassa') else ''))
         if a.get('scritto'): add('testo','edizione','data di scrittura',f"data di scrittura ricavata dal testo: {a['scritto']}",agente='programma di datazione (date2.py)')
         for d in dup_in.get(i,[]): add('originale','edizione','doppione unito',f'l’articolo AM-{d}, pubblicato due volte sul sito, rinvia a questa pagina')
@@ -91,7 +93,13 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
         stato=r.get('stato','')
         if d.get('out'):
             fsha,fby=_fsha(os.path.join(OUT,d['out']))
-            L['cattura']={'id':oid+'.c','deriva_da':oid+'.o','relazione':'copia di','descrizione':'file originale conservato dalla Wayback Machine',
+            if d.get('dono'):
+                _r=d['dono']
+                L['cattura']={'id':oid+'.c','deriva_da':oid+'.o','relazione':'altra copia di','descrizione':'copia dello stesso testo fornita da un collaboratore: non è il file scaricabile dal sito originale, che non è stato conservato',
+                    'wayback_timestamp':'','wayback_url':'','file':d['out'],'sha256':fsha,'byte':fby,'formato':ext.upper(),'integro':None,
+                    'fornito_da':_r['fornito_da'],'data_ricezione':_r['data'],'fonte':_r['issue_url'],'allegato_url':_r['allegato_url'],'nome_file_ricevuto':_r['nome_file_ricevuto'],'sha256_ricevuto':_r['sha256']}
+                add('originale','cattura','copia da collaboratore',f"{_r['descrizione']}; ricevuta il {_r['data']} come allegato alla issue #{_r['issue']} ({_r['issue_url']}), segnalazione {_r['segnalazione']}; verifica: {_r['verifica']}",agente='segnalazione verificata dal curatore')
+            else: L['cattura']={'id':oid+'.c','deriva_da':oid+'.o','relazione':'copia di','descrizione':'file originale conservato dalla Wayback Machine',
                 'wayback_timestamp':r.get('wayback_timestamp',''),'wayback_url':r.get('wayback_url',''),'file':d['out'],'sha256':fsha,'byte':fby,
                 'formato':ext.upper(),'integro':not d.get('broken')}
             if rp.get('file'): add('originale','cattura','recupero mirato','file ritrovato interrogando tutte le copie del link di download, dopo la prima ricostruzione',agente='programma di recupero (recupera.py)')
@@ -112,6 +120,8 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
             L['cattura']={'id':oid+'.c','deriva_da':oid+'.o','relazione':'copia di',
                 'descrizione':'nessuna copia del file: la Wayback Machine ha salvato solo la pagina che lo collegava',
                 'wayback_timestamp':'','wayback_url':'','file':'','sha256':'','byte':''}
+            if d.get('rif'):
+                _r=d['rif']; add('originale','originale','riferimento bibliografico',f"{_r['nota']}: {_r['riferimento_url']}; segnalazione {_r['segnalazione']} del {_r['data']}, issue #{_r['issue']} ({_r['issue_url']})",agente='segnalazione verificata dal curatore')
         tit=(d.get('title') or d.get('filename') or '').replace(' hot!','')
         oggetti.append({'id':oid,'tipo':'documento','titolo':tit,'stato':stato,'livelli':L,'interventi':I})
         c=L.get('cattura',{}); t=L.get('testo',{}); e=L.get('edizione',{})
@@ -127,6 +137,13 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
                      'i':'interventi: eventi che hanno modificato qualcosa fra un livello e l’altro'},
           'nota':'Le impronte delle edizioni valgono per la versione indicata: ogni nuova versione le ricalcola. L’impronta del testo semplice permette di verificare che il testo non sia cambiato anche quando cambia l’impaginazione.'}
     json.dump({'meta':meta,'oggetti':oggetti},open(os.path.join(od,'provenienza.json'),'w'),ensure_ascii=False,indent=1)
+    # segnalazioni accolte (pannello dei collaboratori): registro pubblico, una riga per segnalazione
+    _sf=os.path.join(WORK,'segnalazioni_accolte.json'); SEG=json.load(open(_sf,encoding='utf-8')) if os.path.exists(_sf) else []
+    if SEG:
+        _pub=[{k:v for k,v in x.items() if k!='segnalazione'} for x in SEG]
+        json.dump(_pub,open(os.path.join(od,'segnalazioni-accolte.json'),'w',encoding='utf-8'),ensure_ascii=False,indent=1)
+        with open(os.path.join(od,'segnalazioni-accolte.csv'),'w',newline='',encoding='utf-8') as f:
+            w=csv.DictWriter(f,fieldnames=list(_pub[0].keys())); w.writeheader(); w.writerows(_pub)
     for name,rows in (('provenienza.csv',righe),('eventi.csv',eventi)):
         with open(os.path.join(od,name),'w',newline='',encoding='utf-8-sig') as f:
             w=csv.DictWriter(f,fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)

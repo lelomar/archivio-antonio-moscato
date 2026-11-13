@@ -168,6 +168,7 @@ for _t in AGGIUNTI: _AUT.setdefault(_t['id'],{'id':_t['id'],'autore':_t['autore'
 _COR=json.load(open(os.path.join(WORK,'autori_correzioni.json'))) if os.path.exists(os.path.join(WORK,'autori_correzioni.json')) else {}
 for _k,_v in _COR.items():
     if _k in _AUT: _AUT[_k].update(_v); _AUT[_k]['certezza']='verificata'
+for a in arts: a['segn']=_COR.get(str(a['id']),{}).get('segnalazione','')
 for a in arts:
     r=_AUT.get(str(a['id']),{}); a['autore']=r.get('autore') or ''; a['cert']=r.get('certezza','presunta'); a['mosc']=r.get('moscato','')
 _DS=json.load(open(os.path.join(WORK,'date_scrittura.json'))) if os.path.exists(os.path.join(WORK,'date_scrittura.json')) else {}
@@ -221,7 +222,7 @@ def _interventi(a):
     if c['img']: out.append(pl(c['img'],'immagine recuperata','immagini recuperate')+' e inclusa'+('' if c['img']==1 else '')+' nell’archivio')
     if c['note']: out.append(pl(c['note'],'rimando interno','rimandi interni')+' (note, indici) res'+('o' if c['note']==1 else 'i')+' funzionant'+('e' if c['note']==1 else 'i'))
     cert=a.get('cert','')
-    out.append('autore '+({'verificata':'confermato da una segnalazione','alta':'ricavato da una firma nel testo','media':'proposto dal programma, da verificare','bassa':'proposto dal programma, da verificare','presunta':'presunto: nessuna firma, testo pubblicato sul sito di Moscato'}.get(cert,'da verificare')))
+    out.append('autore '+({'verificata':'corretto con la segnalazione '+a.get('segn','')+' verificata dal curatore','alta':'ricavato da una firma nel testo','media':'proposto dal programma, da verificare','bassa':'proposto dal programma, da verificare','presunta':'presunto: nessuna firma, testo pubblicato sul sito di Moscato'}.get(cert,'da verificare')))
     if a.get('scritto'): out.append('data di scrittura ricavata dal testo')
     for d in _DUPIN.get(str(a['id']),[]): out.append(f'unito il doppione AM-{d}, pubblicato due volte')
     return out
@@ -376,10 +377,14 @@ def docitem(g,d,pre):
     if d.get('out'):
         ext=d['out'].rsplit('.',1)[-1].upper()
         main_href=pre+(d['page'] if d.get('page') else d['out'])
-        extra=((f' <a class="badge" href="{pre}{d["out"]}" data-title="{t}">sfoglia il PDF</a>' if ext=='PDF' else f' <a class="badge" href="{pre}{d["out"]}" download>scarica {ext}</a>') if d.get('page') else '')+(' <span class="badge off" title="Il file è stato troncato a 1 MB al momento dell’archiviazione">incompleto</span>' if d.get('broken') else '')
+        extra=((f' <a class="badge" href="{pre}{d["out"]}" data-title="{t}">sfoglia il PDF</a>' if ext=='PDF' else f' <a class="badge" href="{pre}{d["out"]}" download>scarica {ext}</a>') if d.get('page') else '')+(' <span class="badge off" title="Il file è stato troncato a 1 MB al momento dell’archiviazione">incompleto</span>' if d.get('broken') else '')+(f' <span class="badge" title="Non è il file del sito originale: è una copia dello stesso testo, verificata dal curatore">copia fornita da {esc(d["dono"]["credito"])}</span>' if d.get('dono') else '')
         h=f'<a class="dl" href="{main_href}"><span class="ft ft-{ext.lower()}">{ext}</span><b>{t}</b></a><span class="bgs"><span class="badge">{fsize(d["size"])}{" · "+str(max(1,round(d["words"]/220)))+" min di lettura" if d.get("page") else ""}</span>{extra}</span>'
     else:
         h=f'<span class="dl off"><span class="ft">—</span><b>{t}</b></span><a class="badge ext" target="_blank" rel="noopener" href="{WB}http://antoniomoscato.altervista.org/index.php?option=com_docman&task=doc_download&gid={g}">non recuperato: prova online</a>'
+    if d.get('rif'):
+        _r=d['rif']; ds+=f'<p class="note">Il testo risulta pubblicato su <a href="{esc(_r["riferimento_url"])}" target="_blank" rel="noopener">{esc(_r["riferimento"])}</a>, consultabile solo in abbonamento: il file del sito originale resta mancante. Segnalazione di {esc(_r["credito"])}, {hdate(_r["data"])} (<a href="{esc(_r["issue_url"])}" target="_blank" rel="noopener">issue #{_r["issue"]}</a>).</p>'
+    if d.get('dono'):
+        _r=d['dono']; ds+=f'<p class="note">Il file scaricabile dal sito originale non è stato conservato. Questa è una copia dello stesso testo fornita da {esc(_r["credito"])} il {hdate(_r["data"])} (<a href="{esc(_r["issue_url"])}" target="_blank" rel="noopener">issue #{_r["issue"]}</a>) e verificata dal curatore: {esc(_r["descrizione"])}.</p>'
     return f'<li class="doc entry" id="d{g}" data-t="{esc(norm((d.get("title") or "")+" "+BeautifulSoup(ds,"lxml").get_text(" ")))}">{h}<div class="desc">{ds}</div><span class="d">{esc((d.get("date") or "")[:10])}</span></li>'
 def doclist(c,pre):
     it=sorted(docs_by_cat.get(c,[]),key=lambda x:(x[1].get('title') or '').lower())
@@ -404,10 +409,13 @@ for g,d in docs.items():
     ext=d['out'].rsplit('.',1)[-1].upper(); t=d.get('title') or d.get('filename') or ''
     ds=clean(d['ldesc'],'../../') if (d.get('ldesc') or '').strip() else ''
     note='<p class="note">Testo estratto automaticamente dal PDF: impaginazione, note e tabelle possono risultare imprecise. Per la versione fedele apri il file originale.</p>' if ext=='PDF' else '<p class="note">Versione di lettura convertita dal file originale.</p>'
+    _sf='Sfoglia il PDF' if d.get('dono') else 'Sfoglia il PDF originale'
+    if d.get('dono'):
+        _r=d['dono']; note+=f'<p class="note warn">Il file scaricabile dal sito originale non è stato conservato dall’Internet Archive. Questa è una copia dello stesso testo fornita da {esc(_r["credito"])} il {hdate(_r["data"])} (<a href="{esc(_r["issue_url"])}" target="_blank" rel="noopener">issue #{_r["issue"]}</a>) e verificata dal curatore: {esc(_r["descrizione"])}. Impronta SHA-256 del file ricevuto: <code>{_r["sha256"]}</code>.</p>'
     if d.get('broken'): note+='<p class="note warn">Attenzione: il file originale è stato troncato a 1 MB al momento dell’archiviazione, quindi il testo è incompleto.</p>'
     content=f"""<div class="artgrid"><article class="art"><p class="crumb">{crumb}</p><h1>{esc(t)}</h1>
 <p class="meta">{esc(dmname(c))}{' · pubblicato il '+hdate(d['iso']) if d.get('iso') else ''} · {rtime(d['words'])}</p>{f'<div class="lead">{ds}</div>' if ds else ''}
-<p class="dlbar">{f'<a class="btn" href="../../{d["out"]}" data-title="{esc(t)}">Sfoglia il PDF originale</a><a class="btn alt" href="../../{d["out"]}" download>Scarica ({fsize(d["size"])})</a>' if ext=='PDF' else f'<a class="btn" href="../../{d["out"]}" download>Scarica il file originale ({ext}, {fsize(d["size"])})</a>'}</p>{note}
+<p class="dlbar">{f'<a class="btn" href="../../{d["out"]}" data-title="{esc(t)}">{_sf}</a><a class="btn alt" href="../../{d["out"]}" download>Scarica ({fsize(d["size"])})</a>' if ext=='PDF' else f'<a class="btn" href="../../{d["out"]}" download>Scarica il file originale ({ext}, {fsize(d["size"])})</a>'}</p>{note}
 <div class="testo doctext" id="testo">{BeautifulSoup('<div>'+(d.get('_body') or '')+'</div>','lxml').div.decode_contents() if False else ''}</div></article>
 <aside class="side"><div class="box"><h4>Questo documento</h4><p>{esc(dmname(c))}<br>{ext} · {fsize(d['size'])}<br>{rtime(d['words'])}</p><div class="tools"><button type="button" onclick="fs(-1)" aria-label="Riduci il testo">A−</button><button type="button" onclick="fs(1)" aria-label="Ingrandisci il testo">A+</button><button type="button" onclick="window.print()">Stampa</button></div></div>
 <div class="box"><h4>Nella stessa sezione</h4><ul class="mini-list">{''.join(f'<li><a href="{dlink(gg,x)}">{esc(x.get("title") or "")}</a></li>' for gg,x in sorted(docs_by_cat.get(c,[]),key=lambda z:(z[1].get("title") or "").lower()) if gg!=g)}</ul></div></aside></div>"""
@@ -426,7 +434,7 @@ _rpc=os.path.join(root,'recupero','rapporto.json'); _rpc=json.load(open(_rpc)) i
 _din=[d for d in docs.values() if d.get('out')]; _dout=[(g,d) for g,d in docs.items() if not d.get('out')]
 CONTI={'articoli':len(arts),'articoli_joomla_estratti':len(D['arts']),'articoli_wordpress':len(D['wp']),'articoli_wordpress_unici':len(WP),
  'pagine_di_servizio_escluse':1+len(DROP_ART),'doppioni_uniti':len(DUP_ART),
- 'documenti':len(docs),'documenti_in_archivio':nrec,'documenti_integri':sum(1 for d in _din if not d.get('broken')),'documenti_incompleti':sum(1 for d in _din if d.get('broken')),
+ 'documenti':len(docs),'documenti_in_archivio':nrec,'documenti_integri':sum(1 for d in _din if not d.get('broken') and not d.get('dono')),'documenti_da_collaboratori':sum(1 for d in _din if d.get('dono')),'documenti_incompleti':sum(1 for d in _din if d.get('broken')),
  'documenti_assenti':len(_dout),'documenti_audio_video':sum(1 for g,d in _dout if dmname(d.get('cat',0))=='Audio e video'),
  'documenti_ritrovati_dopo':sum(1 for g,d in docs.items() if d.get('out') and (_rpc.get(str(g)) or {}).get('file')),
  'documenti_ritrovati_dopo_incompleti':sum(1 for g,d in docs.items() if d.get('out') and d.get('broken') and (_rpc.get(str(g)) or {}).get('file'))}
@@ -437,13 +445,14 @@ CONTI['temi_da_verificare']=len(AMBT)
 CONTI['temi_con_wikidata']=sum(1 for k in kwcount if _wd(k))
 CONTI['articoli_prima_della_pulizia']=CONTI['articoli_joomla_estratti']-1+CONTI['articoli_wordpress_unici']
 CONTI['articoli_recuperati_dopo']=len(AGGIUNTI)
-assert CONTI['documenti_integri']+CONTI['documenti_incompleti']+CONTI['documenti_mancanti']+CONTI['documenti_audio_video']==CONTI['documenti'],CONTI
+assert CONTI['documenti_integri']+CONTI['documenti_da_collaboratori']+CONTI['documenti_incompleti']+CONTI['documenti_mancanti']+CONTI['documenti_audio_video']==CONTI['documenti'],CONTI
 assert CONTI['articoli_prima_della_pulizia']-CONTI['pagine_di_servizio_escluse']+1-CONTI['doppioni_uniti']+CONTI['articoli_recuperati_dopo']==CONTI['articoli'],CONTI
 def _n(v): return f'{v:,}'.replace(',','.')
 os.makedirs(os.path.join(OUT,'dati'),exist_ok=True)
 json.dump(CONTI,open(os.path.join(OUT,'dati','conteggi.json'),'w'),ensure_ascii=False,indent=1)
+_cc=CONTI['documenti_da_collaboratori']
 _ci,_cn,_ca,_cm,_cv=(CONTI[k] for k in ('documenti_integri','documenti_incompleti','documenti_assenti','documenti_mancanti','documenti_audio_video'))
-open(os.path.join(OUT,'documenti','index.html'),'w').write(page('I grandi nodi del Novecento',f'<header class="phead"><h1>I grandi nodi del Novecento</h1><p class="lead">Saggi, capitoli di libri esauriti e materiali d’archivio che il sito offriva in download: {len(docs)} documenti censiti. {nrec} sono qui e si aprono da questa pagina: {_ci} integri e {_cn} incompleti, troncati al primo megabyte. Gli altri {_ca} mancano: {_cm} non sono mai stati salvati dall’Internet Archive, {_cv} erano video o audio esterni.</p></header><div class="filt"><input type="search" placeholder="Filtra i documenti di questa pagina…" oninput="filtra(this.value)"><span id="fcount"></span></div><div class="cards">{dcards.replace("{pre}","../")}</div>'+doclist(1,'../')+doclist(0,'../')+'<p class="hint">Per cercare dentro tutti i documenti usa la <a href="../cerca.html">ricerca</a>.</p>','../','documenti/index.html'))
+open(os.path.join(OUT,'documenti','index.html'),'w').write(page('I grandi nodi del Novecento',f'<header class="phead"><h1>I grandi nodi del Novecento</h1><p class="lead">Saggi, capitoli di libri esauriti e materiali d’archivio che il sito offriva in download: {len(docs)} documenti censiti. {nrec} sono qui e si aprono da questa pagina: {_ci} integri, {_cn} incompleti, troncati al primo megabyte'+(f', e {_cc} ritrovati grazie ai lettori, in copie che non sono il file originale del sito' if _cc else '')+f'. Gli altri {_ca} mancano: {_cm} non sono mai stati salvati dall’Internet Archive, {_cv} erano video o audio esterni.</p></header><div class="filt"><input type="search" placeholder="Filtra i documenti di questa pagina…" oninput="filtra(this.value)"><span id="fcount"></span></div><div class="cards">{dcards.replace("{pre}","../")}</div>'+doclist(1,'../')+doclist(0,'../')+'<p class="hint">Per cercare dentro tutti i documenti usa la <a href="../cerca.html">ricerca</a>.</p>','../','documenti/index.html'))
 # data for JS
 CATS={str(c):catname(c) for c in bycat}; CATS['doc']='Documenti · I grandi nodi del Novecento'
 meta=[[str(a['id']),a['title'],a['date'],a['catid'],a['lang'],a['kws'],a['exc'],a['words']] for a in arts]
@@ -517,6 +526,7 @@ for _k,_v in CONTI.items(): _pt=_pt.replace('{{'+_k+'}}',_n(_v))
 _rpf=os.path.join(root,'recupero','rapporto.json'); _mif=os.path.join(root,'recupero','mancanti.json')
 _rp=json.load(open(_rpf)) if os.path.exists(_rpf) else {}
 _mi=json.load(open(_mif)) if os.path.exists(_mif) else [{'gid':g,'title':d.get('title',''),'filename':d.get('filename','')} for g,d in sorted(docs.items()) if not d.get('out')]
+_mi=[x for x in _mi if not docs.get(int(x['gid']),{}).get('out')]  # esclusi quelli ritrovati dopo (anche le copie dei collaboratori)
 def _sec(c):
     ch=[];x=c
     while x and x not in (0,1) and x not in ch: ch.insert(0,x); x=parent.get(x)

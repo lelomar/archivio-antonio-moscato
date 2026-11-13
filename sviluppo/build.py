@@ -61,6 +61,16 @@ for g,d in docs.items():
         dst=os.path.join(OUT,'documenti','file',name)
         if not os.path.exists(dst): shutil.copyfile(os.path.join(root,d['file']),dst)
         d['out']='documenti/file/'+name; d['size']=os.path.getsize(dst)
+# documenti forniti dai collaboratori dopo la pubblicazione (sviluppo/documenti_collaboratori.json)
+_cf=os.path.join(globals().get('WORK',os.path.dirname(os.path.abspath(__file__))),'documenti_collaboratori.json')
+COLLAB={int(k):v for k,v in json.load(open(_cf,encoding='utf-8')).items()} if os.path.exists(_cf) else {}
+for _g,_c in COLLAB.items():
+    if _g not in docs: continue
+    if _c.get('tipo')=='copia' and not docs[_g].get('out'):
+        _dst=os.path.join(OUT,_c['out']); os.makedirs(os.path.dirname(_dst),exist_ok=True)
+        if not os.path.exists(_dst): shutil.copyfile(os.path.join(root,_c['file']),_dst)
+        docs[_g]['out']=_c['out']; docs[_g]['size']=os.path.getsize(_dst); docs[_g]['dono']=_c
+    elif _c.get('tipo')=='riferimento': docs[_g]['rif']=_c
 DMCAT={int(k):v for k,v in D2['dmcat'].items()}; DMSUB={int(k):v for k,v in D2['dmsub'].items()}
 def local_asset(path):
     p=urllib.parse.unquote(path).lstrip('/')

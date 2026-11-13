@@ -16,4 +16,8 @@ Questa cartella contiene i metadati e i controlli di qualità dell'archivio *Mov
 
 **Fedeltà.** `confronto-wayback.md` riassume il confronto tra un campione di testi ricostruiti e le pagine originali conservate dalla Wayback Machine; il dettaglio è in `confronto-wayback.csv`.
 
+**Copie fornite dai collaboratori.** Nel catalogo dei documenti lo stato «ritrovato (copia fornita da un collaboratore)» indica un documento il cui file originale è perduto, sostituito da una copia dello stesso testo ricevuta dopo la pubblicazione e verificata dal curatore. In `provenienza.json` la sua cattura è un'«altra copia» dell'originale, con chi l'ha fornita, la data, la fonte e l'impronta SHA-256 del file ricevuto.
+
+**Segnalazioni accolte.** `segnalazioni-accolte.csv` e `segnalazioni-accolte.json` registrano le correzioni e i documenti proposti dai collaboratori e accolti dopo verifica: riferimento (S-anno-numero), oggetto, valore prima e dopo, fonte, data della segnalazione e della decisione, versione in cui sono entrate e, se chi ha segnalato lo ha chiesto, il nome con cui citarlo.
+
 Licenza dei metadati: CC BY-NC-SA 4.0. I testi restano degli autori.

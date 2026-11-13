@@ -79,13 +79,13 @@ def run(OUT,root,work,arts,docs,catname,dmname,kwname):
     for name,rows in (('catalogo-articoli.csv',rows_a),('catalogo-documenti.csv',rows_d)):
         with open(os.path.join(od,name),'w',newline='',encoding='utf-8-sig') as f:
             w=csv.DictWriter(f,fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)
-    head={'titolo':'Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito. Catalogo','curatore':'Leonardo Lomartire','doi':'10.5281/zenodo.23670900',
+    head={'titolo':'Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito. Catalogo','curatore':'Leonardo Lomartire','doi':'10.5281/zenodo.23670899',
           'wikidata':'https://www.wikidata.org/wiki/Q141880166','licenza':'CC BY-NC-SA 4.0','generato':datetime.date.today().isoformat(),
           'note':'wayback_timestamp indica la copia della Wayback Machine più recente disponibile per l’URL originale.','articoli':len(rows_a),'documenti':len(rows_d)}
     json.dump({'meta':head,'articoli':rows_a,'documenti':rows_d},open(os.path.join(od,'catalogo.json'),'w'),ensure_ascii=False,indent=1)
     X=['<?xml version="1.0" encoding="UTF-8"?>','<records xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">']
     for r in rows_a+rows_d:
-        X.append('<oai_dc:dc>'+''.join(f'<dc:{k}>{xesc(str(v))}</dc:{k}>' for k,v in [('identifier',r['url_archivio']),('title',r['titolo']),('creator',r['autore']),('date',r['data']),('type','Text'),('language',r['lingua']),('subject',r['rubrica'])]+[('subject',t) for t in r.get('temi','').split('; ') if t]+[('format',r.get('formato',''))]*bool(r.get('formato'))+[('source',r['url_originale']),('relation','https://doi.org/10.5281/zenodo.23670900'),('publisher','Movimento operaio – La pagina di Antonio Moscato (antoniomoscato.altervista.org)'),('rights','Testi di Antonio Moscato e degli autori indicati; schede: CC BY-NC-SA 4.0')] if v)+'</oai_dc:dc>')
+        X.append('<oai_dc:dc>'+''.join(f'<dc:{k}>{xesc(str(v))}</dc:{k}>' for k,v in [('identifier',r['url_archivio']),('title',r['titolo']),('creator',r['autore']),('date',r['data']),('type','Text'),('language',r['lingua']),('subject',r['rubrica'])]+[('subject',t) for t in r.get('temi','').split('; ') if t]+[('format',r.get('formato',''))]*bool(r.get('formato'))+[('source',r['url_originale']),('relation','https://doi.org/10.5281/zenodo.23670899'),('publisher','Movimento operaio – La pagina di Antonio Moscato (antoniomoscato.altervista.org)'),('rights','Testi di Antonio Moscato e degli autori indicati; schede: CC BY-NC-SA 4.0')] if v)+'</oai_dc:dc>')
     X.append('</records>')
     open(os.path.join(od,'catalogo-dc.xml'),'w').write('\n'.join(X))
     from collections import Counter

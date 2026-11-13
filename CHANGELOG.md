@@ -1,12 +1,14 @@
 # Registro delle versioni
 
-Questo file elenca che cosa cambia da una versione all'altra dell'archivio *Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito*. Ogni versione pubblicata è depositata su Zenodo: il DOI [10.5281/zenodo.23670900](https://doi.org/10.5281/zenodo.23670900) porta sempre all'insieme delle versioni, e chi ha citato una versione precedente può ritrovarla lì com'era.
+Questo file elenca che cosa cambia da una versione all'altra dell'archivio *Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito*. Ogni versione pubblicata è depositata su Zenodo: il DOI [10.5281/zenodo.23670899](https://doi.org/10.5281/zenodo.23670899) porta sempre all'insieme delle versioni, e chi ha citato una versione precedente può ritrovarla lì com'era.
 
 Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i numeri di versione seguono la convenzione *maggiore.minore.correzione*.
 
 ## [Non ancora pubblicato]
 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
+
+**DOI dell'archivio.** L'archivio cita ora il DOI di concetto di Zenodo, 10.5281/zenodo.23670899, che porta sempre all'ultima versione e all'elenco di tutte le versioni. Fino alla 1.2.2 veniva citato 10.5281/zenodo.23670900, che è il DOI della sola versione 1.0.1: resta valido, ma rimanda a quella versione.
 
 ## [1.2.2] – 13 novembre 2026
 

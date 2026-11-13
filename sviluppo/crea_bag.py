@@ -12,7 +12,7 @@ info=f'''Source-Organization: Leonardo Lomartire (curatore)
 Contact-Name: Leonardo Lomartire
 Contact-Email: lelomar@gmail.com
 External-Description: Movimento operaio. Il sito di Antonio Moscato (2009-2021), ricostruito. Archivio del sito antoniomoscato.altervista.org ricostruito dalle copie della Wayback Machine.
-External-Identifier: https://doi.org/10.5281/zenodo.23670900
+External-Identifier: https://doi.org/10.5281/zenodo.23670899
 Bagging-Date: {datetime.date.today().isoformat()}
 Payload-Oxum: {tot}.{len(sums)}
 Bag-Software-Agent: crea_bag.py (archivio-antonio-moscato)

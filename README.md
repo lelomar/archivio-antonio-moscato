@@ -1,6 +1,6 @@
 # Movimento operaio. Il sito di Antonio Moscato (2009–2021), ricostruito
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23670900.svg)](https://doi.org/10.5281/zenodo.23670900)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23670899.svg)](https://doi.org/10.5281/zenodo.23670899)
 
 **Archivio ricostruito del sito di Antonio Moscato (Roma 1938 – 2026), storico del movimento operaio**
 
@@ -19,7 +19,7 @@ dall'Internet Archive, come archivio statico che funziona **senza server e senza
 - autore di ogni testo con il grado di certezza, data di scrittura dove il testo la dichiara, scheda d'archivio e citazione pronta
 - link ai siti esterni verso le copie d'archivio dei giorni in cui Moscato li citava, con l'indirizzo originale accanto
 
-🔖 **Citazione permanente:** DOI [10.5281/zenodo.23670900](https://doi.org/10.5281/zenodo.23670900) (Zenodo, CERN) — oppure il pulsante «Cite this repository».
+🔖 **Citazione permanente:** DOI [10.5281/zenodo.23670899](https://doi.org/10.5281/zenodo.23670899) (Zenodo, CERN) — oppure il pulsante «Cite this repository».
 
 💾 **Copia di sicurezza:** [Internet Archive](https://archive.org/details/archivio-antonio-moscato) — archivio completo in ZIP, da scaricare e conservare.
 

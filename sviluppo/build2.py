@@ -383,6 +383,8 @@ def docitem(g,d,pre):
         h=f'<span class="dl off"><span class="ft">—</span><b>{t}</b></span><a class="badge ext" target="_blank" rel="noopener" href="{WB}http://antoniomoscato.altervista.org/index.php?option=com_docman&task=doc_download&gid={g}">non recuperato: prova online</a>'
     if d.get('rif'):
         _r=d['rif']; ds+=f'<p class="note">Il testo risulta pubblicato su <a href="{esc(_r["riferimento_url"])}" target="_blank" rel="noopener">{esc(_r["riferimento"])}</a>, consultabile solo in abbonamento: il file del sito originale resta mancante. Segnalazione di {esc(_r["credito"])}, {hdate(_r["data"])} (<a href="{esc(_r["issue_url"])}" target="_blank" rel="noopener">issue #{_r["issue"]}</a>).</p>'
+    if d.get('completato'):
+        _r=d['completato']; ds+=f'<p class="note">La Wayback Machine aveva conservato solo il primo megabyte di questo file. Il file intero è stato trovato in rete il {hdate(_r["scaricato_il"])}: i suoi primi 1.048.576 byte coincidono con la copia troncata, quindi è lo stesso file, ora completo.</p>'
     if d.get('dono'):
         _r=d['dono']; ds+=f'<p class="note">Il file scaricabile dal sito originale non è stato conservato. Questa è una copia dello stesso testo fornita da {esc(_r["credito"])} il {hdate(_r["data"])} (<a href="{esc(_r["issue_url"])}" target="_blank" rel="noopener">issue #{_r["issue"]}</a>) e verificata dal curatore: {esc(_r["descrizione"])}.</p>'
     return f'<li class="doc entry" id="d{g}" data-t="{esc(norm((d.get("title") or "")+" "+BeautifulSoup(ds,"lxml").get_text(" ")))}">{h}<div class="desc">{ds}</div><span class="d">{esc((d.get("date") or "")[:10])}</span></li>'
@@ -410,6 +412,8 @@ for g,d in docs.items():
     ds=clean(d['ldesc'],'../../') if (d.get('ldesc') or '').strip() else ''
     note='<p class="note">Testo estratto automaticamente dal PDF: impaginazione, note e tabelle possono risultare imprecise. Per la versione fedele apri il file originale.</p>' if ext=='PDF' else '<p class="note">Versione di lettura convertita dal file originale.</p>'
     _sf='Sfoglia il PDF' if d.get('dono') else 'Sfoglia il PDF originale'
+    if d.get('completato'):
+        _r=d['completato']; note+=f'<p class="note">La Wayback Machine aveva conservato solo il primo megabyte di questo file (impronta SHA-256 <code>{_r["troncato_sha256"]}</code>). Il file intero è stato trovato in rete il {hdate(_r["scaricato_il"])} (<a href="{esc(_r["fonte_url"])}" target="_blank" rel="noopener">fonte</a>, impronta <code>{_r["sha256"]}</code>): i suoi primi 1.048.576 byte coincidono con la copia troncata, quindi è lo stesso file, ora completo.</p>'
     if d.get('dono'):
         _r=d['dono']; note+=f'<p class="note warn">Il file scaricabile dal sito originale non è stato conservato dall’Internet Archive. Questa è una copia dello stesso testo fornita da {esc(_r["credito"])} il {hdate(_r["data"])} (<a href="{esc(_r["issue_url"])}" target="_blank" rel="noopener">issue #{_r["issue"]}</a>) e verificata dal curatore: {esc(_r["descrizione"])}. Impronta SHA-256 del file ricevuto: <code>{_r["sha256"]}</code>.</p>'
     if d.get('broken'): note+='<p class="note warn">Attenzione: il file originale è stato troncato a 1 MB al momento dell’archiviazione, quindi il testo è incompleto.</p>'
@@ -439,6 +443,7 @@ CONTI={'articoli':len(arts),'articoli_joomla_estratti':len(D['arts']),'articoli_
  'documenti_ritrovati_dopo':sum(1 for g,d in docs.items() if d.get('out') and (_rpc.get(str(g)) or {}).get('file')),
  'documenti_ritrovati_dopo_incompleti':sum(1 for g,d in docs.items() if d.get('out') and d.get('broken') and (_rpc.get(str(g)) or {}).get('file'))}
 CONTI['documenti_mancanti']=CONTI['documenti_assenti']-CONTI['documenti_audio_video']
+CONTI['documenti_completati_dopo']=sum(1 for d in docs.values() if d.get('completato'))
 CONTI['temi_con_pagina']=len(tlist); CONTI['temi_nel_vocabolario']=len(kwcount)
 for _t in ('persona','organizzazione','luogo','evento','concetto','pubblicazione','non classificato'): CONTI['temi_'+_t.replace(' ','_')]=sum(1 for k in kwcount if TIPO.get(k,('',''))[0]==_t)
 CONTI['temi_da_verificare']=len(AMBT)

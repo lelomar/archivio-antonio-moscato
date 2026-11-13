@@ -46,5 +46,21 @@
   "riferimento": "Limes, rivista italiana di geopolitica",
   "riferimento_url": "https://www.limesonline.com/rivista/vite-parallele-fidel-castro-e-hugo-chavez-14615829/",
   "nota": "articolo pubblicato su Limes (il titolo, «Vite parallele: Fidel Castro e Hugo Chávez», è quello indicato dall’indirizzo della pagina), consultabile solo in abbonamento; il file del sito originale resta mancante"
+ },
+ "248": {
+  "tipo": "completamento",
+  "file": "recupero/web/248-Ecuador_Revista_R_febrero_2013-completo.pdf",
+  "out": "documenti/file/248-Ecuador_Revista_R_febrero_2013-completo.pdf",
+  "fonte_url": "https://yachana.org/research/Rfebrero2013.pdf",
+  "scaricato_il": "2026-11-13",
+  "trovato_da": "ricerca del curatore",
+  "sha256": "be84c541d35fa8b78c3380fa140a2e182d49885c024820f19cf549b0ee437b5b",
+  "byte": 2072237,
+  "troncato_sha256": "71000a47370236022db805cae5917e71e0c4a83f8f07634c5b8f474089db7944",
+  "troncato_byte": 1048576,
+  "prefisso_identico": 1048576,
+  "issue": 57,
+  "issue_url": "https://github.com/lelomar/archivio-antonio-moscato/issues/57",
+  "descrizione": "R, revista para un debate político socialista, año 5, número 11, febrero de 2013, Quito"
  }
 }

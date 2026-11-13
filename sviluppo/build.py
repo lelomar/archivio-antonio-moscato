@@ -52,7 +52,10 @@ if os.path.exists(_rp):
 def safe(t):
     t=unicodedata.normalize('NFKD',t); t=''.join(c for c in t if not unicodedata.combining(c))
     return re.sub(r'[^A-Za-z0-9._-]+','_',t).strip('_')[:80] or 'documento'
+_cf0=os.path.join(globals().get('WORK',os.path.dirname(os.path.abspath(__file__))),'documenti_collaboratori.json')
+_COMPL={int(k) for k,v in (json.load(open(_cf0,encoding='utf-8')) if os.path.exists(_cf0) else {}).items() if v.get('tipo')=='completamento'}
 for g,d in docs.items():
+    if g in _COMPL: continue  # file troncato sostituito dalla copia completa (vedi sotto)
     if d.get('file'):
         fn=d.get('filename') or (d.get('title') or 'doc')
         base,ext=os.path.splitext(fn)
@@ -71,6 +74,10 @@ for _g,_c in COLLAB.items():
         if not os.path.exists(_dst): shutil.copyfile(os.path.join(root,_c['file']),_dst)
         docs[_g]['out']=_c['out']; docs[_g]['size']=os.path.getsize(_dst); docs[_g]['dono']=_c
     elif _c.get('tipo')=='riferimento': docs[_g]['rif']=_c
+    elif _c.get('tipo')=='completamento':
+        _dst=os.path.join(OUT,_c['out']); os.makedirs(os.path.dirname(_dst),exist_ok=True)
+        if not os.path.exists(_dst): shutil.copyfile(os.path.join(root,_c['file']),_dst)
+        docs[_g]['out']=_c['out']; docs[_g]['size']=os.path.getsize(_dst); docs[_g]['completato']=_c
 DMCAT={int(k):v for k,v in D2['dmcat'].items()}; DMSUB={int(k):v for k,v in D2['dmsub'].items()}
 def local_asset(path):
     p=urllib.parse.unquote(path).lstrip('/')

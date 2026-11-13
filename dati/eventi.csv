@@ -11263,7 +11263,8 @@ AM-d243.i1,AM-d243,cattura,testo,conversione,"LibreOffice, conversione in HTML e
 AM-d244.i1,AM-d244,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-11-13
 AM-d245.i1,AM-d245,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-11-13
 AM-d247.i1,AM-d247,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-11-13
-AM-d248.i1,AM-d248,originale,cattura,troncamento,il file è stato salvato solo fino al primo megabyte (1.048.576 byte): il testo è incompleto,,"Wayback Machine, al momento dell’archiviazione",2026-11-13
+AM-d248.i1,AM-d248,originale,cattura,completamento,"la copia della Wayback Machine (SHA-256 71000a47370236022db805cae5917e71e0c4a83f8f07634c5b8f474089db7944, 1048576 byte) era troncata al primo megabyte; il 2026-11-13 è stato trovato in rete il file completo (https://yachana.org/research/Rfebrero2013.pdf, SHA-256 be84c541d35fa8b78c3380fa140a2e182d49885c024820f19cf549b0ee437b5b, 2072237 byte), i cui primi 1048576 byte sono identici alla copia troncata: è quindi lo stesso file, ora integro",,"ricerca del curatore, verifica byte per byte",2026-11-13
+AM-d248.i2,AM-d248,cattura,testo,conversione,"pdftotext (Poppler), paragrafi ricomposti",,programma di ricostruzione,2026-11-13
 AM-d249.i1,AM-d249,cattura,testo,conversione,"LibreOffice, conversione in HTML e pulizia del codice",,programma di ricostruzione,2026-11-13
 AM-d251.i1,AM-d251,originale,cattura,recupero mirato,"file ritrovato interrogando tutte le copie del link di download, dopo la prima ricostruzione",,programma di recupero (recupera.py),2026-11-13
 AM-d251.i2,AM-d251,cattura,testo,conversione,"pdftotext (Poppler), paragrafi ricomposti",,programma di ricostruzione,2026-11-13

@@ -10,7 +10,7 @@ AMM={
  'articoli':{C['articoli'],C['articoli_prima_della_pulizia'],C['articoli_joomla_estratti'],C['articoli_joomla_estratti']-1,C['articoli']-C.get('articoli_recuperati_dopo',0)},  # l'ultimo: il conteggio prima dei recuperi, citato nel registro delle versioni
  'documenti_tot':{C['documenti']},
  'documenti_in':{C['documenti_in_archivio']},
- 'incompleti':{C['documenti_incompleti']},
+ 'incompleti':{C['documenti_incompleti'],C['documenti_incompleti']+C.get('documenti_completati_dopo',0)},  # il secondo: il conteggio prima dei completamenti, citato nel registro delle versioni
  'mancanti':{C['documenti_mancanti']},
  'temi':{C.get('temi_con_pagina'),C.get('temi_nel_vocabolario'),C.get('temi_con_wikidata')},
 }

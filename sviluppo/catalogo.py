@@ -62,7 +62,7 @@ def run(OUT,root,work,arts,docs,catname,dmname,kwname):
         elif d.get('out'): stato='integro'
         elif dmname(d.get('cat',0))=='Audio e video': stato='audio/video non archiviato'
         else: stato='mancante'
-        recupero=(f"copia fornita da {d['dono']['credito']} il {d['dono']['data']} (issue #{d['dono']['issue']})" if d.get('dono') else ('recupero mirato (dopo la prima ricostruzione)' if r.get('file') else 'prima ricostruzione')) if d.get('out') else ''
+        recupero=(f"completato il {d['completato']['scaricato_il']} con una copia integra trovata in rete, identica nei primi 1.048.576 byte a quella troncata della Wayback Machine ({d['completato']['fonte_url']})" if d.get('completato') else f"copia fornita da {d['dono']['credito']} il {d['dono']['data']} (issue #{d['dono']['issue']})" if d.get('dono') else ('recupero mirato (dopo la prima ricostruzione)' if r.get('file') else 'prima ricostruzione')) if d.get('out') else ''
         orig=f"http://antoniomoscato.altervista.org/index.php?option=com_docman&task=doc_download&gid={g}&Itemid=2"
         if r.get('from'):
             m=re.match(r'https://web\.archive\.org/web/(\d+)/(.*)',r['from']); ts,u=(m.group(1),m.group(2)) if m else ('',orig)

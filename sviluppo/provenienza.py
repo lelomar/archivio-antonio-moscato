@@ -102,6 +102,11 @@ def run(OUT,root,WORK,arts,docs,dmname,DUP_ART):
             else: L['cattura']={'id':oid+'.c','deriva_da':oid+'.o','relazione':'copia di','descrizione':'file originale conservato dalla Wayback Machine',
                 'wayback_timestamp':r.get('wayback_timestamp',''),'wayback_url':r.get('wayback_url',''),'file':d['out'],'sha256':fsha,'byte':fby,
                 'formato':ext.upper(),'integro':not d.get('broken')}
+            if d.get('completato'):
+                _r=d['completato']
+                L['cattura']['descrizione']='file originale completo: la copia della Wayback Machine era troncata al primo megabyte; il file intero, trovato in rete, coincide byte per byte con essa nei primi 1.048.576 byte'
+                L['cattura']['fonte_completamento']=_r['fonte_url']; L['cattura']['sha256_troncato_wayback']=_r['troncato_sha256']
+                add('originale','cattura','completamento',f"la copia della Wayback Machine (SHA-256 {_r['troncato_sha256']}, {_r['troncato_byte']} byte) era troncata al primo megabyte; il {_r['scaricato_il']} è stato trovato in rete il file completo ({_r['fonte_url']}, SHA-256 {_r['sha256']}, {_r['byte']} byte), i cui primi {_r['prefisso_identico']} byte sono identici alla copia troncata: è quindi lo stesso file, ora integro",agente='ricerca del curatore, verifica byte per byte')
             if rp.get('file'): add('originale','cattura','recupero mirato','file ritrovato interrogando tutte le copie del link di download, dopo la prima ricostruzione',agente='programma di recupero (recupera.py)')
             if d.get('broken'): add('originale','cattura','troncamento','il file è stato salvato solo fino al primo megabyte (1.048.576 byte): il testo è incompleto',agente='Wayback Machine, al momento dell’archiviazione')
             if d.get('page'):

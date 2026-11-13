@@ -8,6 +8,10 @@ Il formato segue [Keep a Changelog](https://keepachangelog.com/it-IT/1.1.0/); i 
 
 Le correzioni segnalate dai lettori e approvate vengono raccolte qui fino alla versione successiva.
 
+## [1.2.3] – 13 novembre 2026
+
+**Un documento incompleto ora è integro.** Della *Revista R* di febbraio 2013 (gid 248, «Ecuador Revista R febrero 2013»), rivista socialista di Quito, la Wayback Machine aveva conservato solo il primo megabyte. Il file intero è stato trovato in rete (yachana.org) e confrontato byte per byte: i suoi primi 1.048.576 byte coincidono con la copia troncata, quindi è lo stesso file che il sito offriva in download. Torna integro, con pagina di lettura; la provenienza registra l'evento «completamento» con le due impronte SHA-256 e la fonte. Gli integri passano da 170 a 171, gli incompleti da 10 a 9.
+
 **DOI dell'archivio.** L'archivio cita ora il DOI di concetto di Zenodo, 10.5281/zenodo.23670899, che porta sempre all'ultima versione e all'elenco di tutte le versioni. Fino alla 1.2.2 veniva citato 10.5281/zenodo.23670900, che è il DOI della sola versione 1.0.1: resta valido, ma rimanda a quella versione.
 
 ## [1.2.2] – 13 novembre 2026
